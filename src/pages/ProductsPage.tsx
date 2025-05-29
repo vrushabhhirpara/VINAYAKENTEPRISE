@@ -138,7 +138,7 @@ const ProductsPage: React.FC = () => {
     "Natural Products",
     "Polymers",
     "Paint Colour",
-    "DEF- Diesel Exhaust Fluid",
+    "Food Feed",
     "Industrial Products",
     "Ceramics",
     "Cosmetics & Personal Care",
