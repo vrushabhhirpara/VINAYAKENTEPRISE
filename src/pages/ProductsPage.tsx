@@ -96,7 +96,8 @@ const ProductsPage: React.FC = () => {
     {
       id: 9,
       name: "Solvents",
-      category: "DEF- Diesel Exhaust Fluid",
+      category: "Upper Chemicals
+        ",
       subcategory: "Automotive",
       image: "https://www.pcaplindia.com/images/DEF-image.png",
       description: "Solvents are essential in various industries, including manufacturing, pharmaceuticals, and chemicals, for tasks such as dissolving, diluting, and extracting substances.",
