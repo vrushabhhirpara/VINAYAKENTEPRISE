@@ -72,7 +72,7 @@ const ProductsPage: React.FC = () => {
       category: "Food Feed",
       subcategory: "Food Grow Supplements",
       image: "https://images.pexels.com/photos/2255459/pexels-photo-2255459.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Nutritional supplements to enhance animal feed formulations.",
+      description: "he agrochemicals business, as it is known, develops crop-protection products.",
       featured: false
     },
     {
