@@ -125,7 +125,6 @@ const Footer: React.FC = () => {
 
         <div className="mt-12 pt-8 border-t border-gray-700 text-center text-gray-400">
           <p>© {new Date().getFullYear()} VinayakEnterprise. All rights reserved.</p>
-          <P>Powered By ANADI TECH</P>
         </div>
       </div>
     </footer>
