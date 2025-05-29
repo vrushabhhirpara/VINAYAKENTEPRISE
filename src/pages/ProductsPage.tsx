@@ -80,7 +80,7 @@ const ProductsPage: React.FC = () => {
       name: "Aqua Chemicals",
       category: "Water Refinary",
       subcategory: "Base Chemicals",
-      image: "https://images.pexels.com/photos/8325701/pexels-photo-8325701.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      image: "https://jkmchemtrade.com/upload/categories/4471230925113924.jpg",
       description: "This likely refers to chemicals used in aquaculture or the treatment of water in aquatic systems, such as ponds, aquariums, and fisheries.",
       featured: false
     },
