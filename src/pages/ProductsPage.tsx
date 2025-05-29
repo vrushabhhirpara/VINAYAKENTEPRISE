@@ -51,7 +51,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 4,
       name: "Paint, Ink & Coatings",
-      category: "Water Treatment",
+      category: "Paint Colour",
       subcategory: "Purification",
       image: "https://images.pexels.com/photos/2253429/pexels-photo-2253429.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Effective chemicals for water purification and treatment systems.",
