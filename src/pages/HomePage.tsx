@@ -285,7 +285,7 @@ const FeaturedProducts: React.FC = () => {
       name: "Paint, Ink & Coatings",
       category: "Paint Colour",
       image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
-      description: "Effective chemicals for water purification and treatment systems."
+      description: "Effective chemicals for Paint Making and Ink Injecting."
     }
   ];
   
