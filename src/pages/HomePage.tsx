@@ -270,8 +270,8 @@ const FeaturedProducts: React.FC = () => {
       id: 2,
       name: "Personal Care",
       category: "Pharmaceuticals",
-      image:"https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
-      description: "Pure compounds for pharmaceutical research and manufacturing."
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Pure Natural Product And Manufacturing."
     },
     {
       id: 3,
