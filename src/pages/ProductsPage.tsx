@@ -35,7 +35,7 @@ const ProductsPage: React.FC = () => {
       name: "Personal Care",
       category: "Natural Products",
       subcategory: "Active Ingredients",
-      image: "https://images.pexels.com/photos/3825584/pexels-photo-3825584.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Pure compounds for pharmaceutical research and manufacturing.",
       featured: true
     },
