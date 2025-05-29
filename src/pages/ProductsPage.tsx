@@ -78,7 +78,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 7,
       name: "Aqua Chemicals",
-      category: "Chloro Alkali & Chemical Synthesis",
+      category: "Water Refinary",
       subcategory: "Base Chemicals",
       image: "https://images.pexels.com/photos/8325701/pexels-photo-8325701.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Essential chemicals for various industrial applications.",
