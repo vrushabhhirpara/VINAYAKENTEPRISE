@@ -81,7 +81,7 @@ const ProductsPage: React.FC = () => {
       category: "Water Refinary",
       subcategory: "Base Chemicals",
       image: "https://images.pexels.com/photos/8325701/pexels-photo-8325701.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Essential chemicals for various industrial applications.",
+      description: "This likely refers to chemicals used in aquaculture or the treatment of water in aquatic systems, such as ponds, aquariums, and fisheries.",
       featured: false
     },
     {
