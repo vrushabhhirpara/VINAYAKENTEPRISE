@@ -148,7 +148,7 @@ const ContactPage: React.FC = () => {
                   <div>
                     <h3 className="font-semibold text-lg">Email</h3>
                     <p className="text-gray-600">
-                      General Inquiries: inquiry@vinayakenterprise2011.in<br />
+                      General Inquiries: inquiry@vinayakenterprise2011.net<br />
                       Technical Support: vinayakenterprise2011@gmail.com
                     </p>
                   </div>
