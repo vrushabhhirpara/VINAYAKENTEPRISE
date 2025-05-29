@@ -106,7 +106,7 @@ const ProductsPage: React.FC = () => {
       id: 10,
       name: "Cattle & Poultry Feed",
       category: "Animal Feed",
-      subcategory: "Processing Aids",
+      subcategory: "Animal Suppliment",
       image: "https://images.pexels.com/photos/357428/pexels-photo-357428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Specialized chemicals for ceramic manufacturing processes.",
       featured: false
