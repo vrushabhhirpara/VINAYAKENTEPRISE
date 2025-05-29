@@ -98,7 +98,7 @@ const ProductsPage: React.FC = () => {
       name: "Chemical Intermediates",
       category: "Upper Chemicals",
       subcategory: "Various Industries",
-      image: "https://img.freepik.com/free-photo/transparent-plastic-bottles-filled-with-yellow-substance_273609-13382.jpg?semt=ais_hybrid&w=740",
+      image: "https://www.thoughtco.com/thmb/X4xEq_SMbjth5zJgBkOjGetWw3k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/scientist-pouring-iron-chloride-into-beaker-of-potassium-thiocyanate-702545775-58cc47493df78c3c4fa0bdef.jpg",
       description: "In chemical synthesis, intermediates are transient substances formed during a reaction and consumed in a later step to produce the final product.",
       featured: false
     },
