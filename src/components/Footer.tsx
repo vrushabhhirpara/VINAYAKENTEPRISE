@@ -94,7 +94,7 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/products/water-treatment" className="text-gray-300 hover:text-primary-light transition-colors">
+                <Link to="/products/Personal Care" className="text-gray-300 hover:text-primary-light transition-colors">
                   Water Treatment
                 </Link>
               </li>
