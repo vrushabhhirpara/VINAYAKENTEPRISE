@@ -99,7 +99,7 @@ const ProductsPage: React.FC = () => {
       category: "Upper Chemicals",
       subcategory: "Various Industries",
       image: "https://img.freepik.com/free-photo/transparent-plastic-bottles-filled-with-yellow-substance_273609-13382.jpg?semt=ais_hybrid&w=740",
-      description: "Solvents are essential in various industries, including manufacturing, pharmaceuticals, and chemicals, for tasks such as dissolving, diluting, and extracting substances.",
+      description: "In chemical synthesis, intermediates are transient substances formed during a reaction and consumed in a later step to produce the final product.",
       featured: false
     },
     {
