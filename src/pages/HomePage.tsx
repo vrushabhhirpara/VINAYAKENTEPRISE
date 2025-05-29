@@ -268,9 +268,9 @@ const FeaturedProducts: React.FC = () => {
     },
     {
       id: 2,
-      name: "Pharmaceutical Compounds",
+      name: "Personal Care",
       category: "Pharmaceuticals",
-      image: "https://www.shutterstock.com/image-photo/multiple-pills-spilling-out-orange-600nw-2553468549.jpg",
+      image:"https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Pure compounds for pharmaceutical research and manufacturing."
     },
     {
@@ -363,7 +363,7 @@ const IndustriesSection: React.FC = () => {
   const industries = [
     {
       id: 1,
-      name: "Pharmaceuticals",
+      name: "Personal Care",
       icon: <Flask className="h-8 w-8" />,
       color: "bg-blue-50 text-blue-600"
     },
