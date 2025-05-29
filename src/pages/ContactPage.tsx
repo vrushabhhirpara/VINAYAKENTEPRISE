@@ -317,7 +317,7 @@ const ContactPage: React.FC = () => {
                           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                         >
                           <option value="">Select Industry</option>
-                          <option value="pharmaceuticals">Cosmetics &Personal Care</option>
+                          <option value="Natural Product">Cosmetics &Personal Care</option>
                           <option value="food">Food & Beverage</option>
                           <option value="agriculture">Agriculture & Animal Feed</option>
                           <option value="textile">Home Care</option>
