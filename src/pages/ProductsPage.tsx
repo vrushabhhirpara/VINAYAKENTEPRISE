@@ -63,7 +63,7 @@ const ProductsPage: React.FC = () => {
       category: "Food",
       subcategory: "Nutrition",
       image: "https://www.emro.who.int/images/stories/nutrition/balanced-diet.jpg",
-      description: "Vibrant and long-lasting dyes for textile manufacturing.",
+      description: "A balanced diet and understanding of nutrition are crucial for maintaining good health and preventing diseases.",
       featured: false
     },
     {
