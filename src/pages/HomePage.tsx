@@ -381,7 +381,7 @@ const IndustriesSection: React.FC = () => {
     },
     {
       id: 4,
-      name: "Textiles",
+      name: "Home Care",
       icon: <Beaker className="h-8 w-8" />,
       color: "bg-purple-50 text-purple-600"
     },
