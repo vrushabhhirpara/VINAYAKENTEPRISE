@@ -113,7 +113,7 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 11,
-      name: "Cosmetic Ingredients",
+      name: "Cattle & Poultry Feed",
       category: "Cosmetics & Personal Care",
       subcategory: "Active Ingredients",
       image: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
