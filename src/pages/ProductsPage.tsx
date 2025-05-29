@@ -108,7 +108,7 @@ const ProductsPage: React.FC = () => {
       category: "Animal Feed",
       subcategory: "Animal Suppliment",
       image: "https://images.pexels.com/photos/357428/pexels-photo-357428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Specialized chemicals for ceramic manufacturing processes.",
+      description: "This application suggests the supply of additives or supplements used in animal feed to enhance the nutrition and health of cattle and poultry.",
       featured: false
     },
     {
