@@ -59,7 +59,7 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 5,
-      name: "Textile Dyes",
+      name: "Food & Nutrition",
       category: "Textile",
       subcategory: "Colorants",
       image: "https://images.pexels.com/photos/6758029/pexels-photo-6758029.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
