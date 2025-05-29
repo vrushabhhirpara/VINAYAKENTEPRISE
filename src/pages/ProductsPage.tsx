@@ -107,7 +107,7 @@ const ProductsPage: React.FC = () => {
       name: "Cattle & Poultry Feed",
       category: "Animal Feed",
       subcategory: "Animal Suppliment",
-      image: "https://images.pexels.com/photos/357428/pexels-photo-357428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
       description: "This application suggests the supply of additives or supplements used in animal feed to enhance the nutrition and health of cattle and poultry.",
       featured: false
     },
