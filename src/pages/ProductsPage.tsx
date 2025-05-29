@@ -99,7 +99,7 @@ const ProductsPage: React.FC = () => {
       category: "DEF- Diesel Exhaust Fluid",
       subcategory: "Automotive",
       image: "https://www.pcaplindia.com/images/DEF-image.png",
-      description: "Premium quality DEF for reducing harmful emissions in diesel engines.",
+      description: "Solvents are essential in various industries, including manufacturing, pharmaceuticals, and chemicals, for tasks such as dissolving, diluting, and extracting substances.",
       featured: false
     },
     {
