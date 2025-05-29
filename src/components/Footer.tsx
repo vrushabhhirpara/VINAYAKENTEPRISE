@@ -80,7 +80,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/products/Chemical Intermediates" className="text-gray-300 hover:text-primary-light transition-colors">
-                  Pharmaceuticals
+                  Upper Chemicals
                 </Link>
               </li>
               <li>
