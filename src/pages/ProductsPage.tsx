@@ -62,7 +62,7 @@ const ProductsPage: React.FC = () => {
       name: "Food & Nutrition",
       category: "Food",
       subcategory: "Nutrition",
-      image: "https://images.pexels.com/photos/6758029/pexels-photo-6758029.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      image: "https://www.emro.who.int/images/stories/nutrition/balanced-diet.jpg",
       description: "Vibrant and long-lasting dyes for textile manufacturing.",
       featured: false
     },
