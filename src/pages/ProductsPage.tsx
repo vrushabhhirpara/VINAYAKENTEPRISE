@@ -140,7 +140,7 @@ const ProductsPage: React.FC = () => {
     "Paint Colour",
     "Food Feed",
     "Industrial Products",
-    "Ceramics",
+    "Upper Chemicals",
     "Cosmetics & Personal Care",
     "Flavours & Fragrances",
     "Water Refinary"
