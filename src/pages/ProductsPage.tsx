@@ -71,7 +71,7 @@ const ProductsPage: React.FC = () => {
       name: "Agrochemicals",
       category: "Food Feed",
       subcategory: "Food Grow Supplements",
-      image: "https://images.pexels.com/photos/2255459/pexels-photo-2255459.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      image: "https://blog.sathguru.com/wp-content/uploads/2021/01/Opportunity-for-India-becoming-a-global-agro-chemical-manufacturing-hub.jpg",
       description: "The agrochemicals business, as it is known, develops crop-protection products.",
       featured: false
     },
