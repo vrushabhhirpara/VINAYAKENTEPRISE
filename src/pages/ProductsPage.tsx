@@ -70,7 +70,7 @@ const ProductsPage: React.FC = () => {
       id: 6,
       name: "Agrochemicals",
       category: "Food Feed",
-      subcategory: "Nutritional Supplements",
+      subcategory: "Food Grow Supplements",
       image: "https://images.pexels.com/photos/2255459/pexels-photo-2255459.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Nutritional supplements to enhance animal feed formulations.",
       featured: false
