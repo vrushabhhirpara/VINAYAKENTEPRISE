@@ -32,7 +32,7 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 2,
-      name: "Pharmaceutical Compounds",
+      name: "Personal Care",
       category: "Natural Products",
       subcategory: "Active Ingredients",
       image: "https://images.pexels.com/photos/3825584/pexels-photo-3825584.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
