@@ -52,7 +52,7 @@ const ProductsPage: React.FC = () => {
       id: 4,
       name: "Paint, Ink & Coatings",
       category: "Paint Colour",
-      subcategory: "Purification",
+      subcategory: "Colour Product",
       image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
       description: "Effective chemicals for water purification and treatment systems.",
       featured: true
