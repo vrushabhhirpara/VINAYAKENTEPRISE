@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Product Categories</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/products/animal-feed" className="text-gray-300 hover:text-primary-light transition-colors">
+                <Link to="/products/Cattle & Poultry Feed" className="text-gray-300 hover:text-primary-light transition-colors">
                   Animal Feed
                 </Link>
               </li>
