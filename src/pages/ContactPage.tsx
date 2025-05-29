@@ -320,7 +320,7 @@ const ContactPage: React.FC = () => {
                           <option value="pharmaceuticals">Pharmaceuticals</option>
                           <option value="food">Food & Beverage</option>
                           <option value="agriculture">Agriculture & Animal Feed</option>
-                          <option value="textile">Textile</option>
+                          <option value="textile">Home Care</option>
                           <option value="water">Water Treatment</option>
                           <option value="industrial">Industrial Manufacturing</option>
                           <option value="other">Other</option>
