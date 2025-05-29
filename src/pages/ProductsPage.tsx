@@ -95,7 +95,7 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 9,
-      name: "Diesel Exhaust Fluid",
+      name: "Solvents",
       category: "DEF- Diesel Exhaust Fluid",
       subcategory: "Automotive",
       image: "https://www.pcaplindia.com/images/DEF-image.png",
