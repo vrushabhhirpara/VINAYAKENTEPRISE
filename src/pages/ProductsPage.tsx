@@ -95,7 +95,7 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 9,
-      name: "Solvents",
+      name: "Chemical Intermediates",
       category: "Upper Chemicals",
       subcategory: "Various Industries",
       image: "https://img.freepik.com/free-photo/transparent-plastic-bottles-filled-with-yellow-substance_273609-13382.jpg?semt=ais_hybrid&w=740",
