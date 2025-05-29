@@ -135,7 +135,7 @@ const ProductsPage: React.FC = () => {
     "All",
     "Animal Feed",
     "Food & Beverage",
-    "Pharmaceuticals",
+    "Natural Products",
     "Polymers",
     "Textile",
     "DEF- Diesel Exhaust Fluid",
