@@ -282,9 +282,9 @@ const FeaturedProducts: React.FC = () => {
     },
     {
       id: 4,
-      name: "Water Treatment Solutions",
-      category: "Water Treatment",
-      image: "https://images.pexels.com/photos/2253429/pexels-photo-2253429.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      name: "Paint, Ink & Coatings",
+      category: "Paint Colour",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webpauto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Effective chemicals for water purification and treatment systems."
     }
   ];
@@ -393,7 +393,7 @@ const IndustriesSection: React.FC = () => {
     },
     {
       id: 6,
-      name: "Water Treatment",
+      name: "Paint, Ink & Coatings",
       icon: <Beaker className="h-8 w-8" />,
       color: "bg-cyan-50 text-cyan-600"
     },
