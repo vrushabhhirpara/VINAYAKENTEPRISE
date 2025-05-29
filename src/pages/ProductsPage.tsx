@@ -141,7 +141,6 @@ const ProductsPage: React.FC = () => {
     "Food Feed",
     "Industrial Products",
     "Upper Chemicals",
-    "Cosmetics & Personal Care",
     "Flavours & Fragrances",
     "Water Refinary"
   ];
