@@ -104,7 +104,7 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 10,
-      name: "Ceramic Processing Chemicals",
+      name: "Cattle & Poultry Feed",
       category: "Ceramics",
       subcategory: "Processing Aids",
       image: "https://images.pexels.com/photos/357428/pexels-photo-357428.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -113,7 +113,7 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 11,
-      name: "Cattle & Poultry Feed",
+      name: "Cosmetic Ingredients",
       category: "Cosmetics & Personal Care",
       subcategory: "Active Ingredients",
       image: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
