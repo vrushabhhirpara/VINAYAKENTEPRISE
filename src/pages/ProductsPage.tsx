@@ -60,7 +60,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 5,
       name: "Food & Nutrition",
-      category: "Food",
+      category: "Food Feed",
       subcategory: "Nutrition",
       image: "https://www.emro.who.int/images/stories/nutrition/balanced-diet.jpg",
       description: "A balanced diet and understanding of nutrition are crucial for maintaining good health and preventing diseases.",
