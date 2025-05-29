@@ -134,7 +134,6 @@ const ProductsPage: React.FC = () => {
   const categories = [
     "All",
     "Animal Feed",
-    "Chloro Alkali & Chemical Synthesis",
     "Food & Beverage",
     "Pharmaceuticals",
     "Polymers",
