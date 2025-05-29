@@ -143,7 +143,7 @@ const ProductsPage: React.FC = () => {
     "Ceramics",
     "Cosmetics & Personal Care",
     "Flavours & Fragrances",
-    "Water Treatment"
+    "Water Refinary"
   ];
   
   // Filter products based on selected category and search query
