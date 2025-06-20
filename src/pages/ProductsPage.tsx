@@ -132,7 +132,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 14,
       name: "Textile Chemicals",
-      category: "Industrial Products",
+      category: "",
       subcategory: "Textile Processing",
       image: "https://images.pexels.com/photos/6069112/pexels-photo-6069112.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Specialized chemicals for textile processing and finishing.",
