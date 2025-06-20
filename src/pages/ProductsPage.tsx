@@ -117,7 +117,7 @@ const ProductsPage: React.FC = () => {
       category: "",
       subcategory: "Home Care Product",
       image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fclaimsclinical.com%2Fhomecare-products%2F&psig=AOvVaw38HB9UAPI1fk6JaHnRs_OP&ust=1750519993221000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOD27qSpgI4DFQAAAAAdAAAAABAK",
-      description: "Premium active ingredients for cosmetic and anti-aging formulations.",
+      description: "Premium active ingredients for Home Care Products and anti-aging formulations.",
       featured: false
     },
     {
