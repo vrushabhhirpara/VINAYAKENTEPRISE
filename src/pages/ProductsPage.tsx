@@ -51,7 +51,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 4,
       name: "Paint & Coating Chemicals",
-      category: "Paint Colour",
+      category: "",
       subcategory: "Colour Product",
       image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
       description: "Specialized chemicals for paint manufacturing and ink production.",
