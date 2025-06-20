@@ -113,8 +113,8 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 11,
-      name: "Cosmetic Active Ingredients",
-      category: "Natural Products",
+      name: "Home Care",
+      category: "",
       subcategory: "Active Ingredients",
       image: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Premium active ingredients for cosmetic and anti-aging formulations.",
