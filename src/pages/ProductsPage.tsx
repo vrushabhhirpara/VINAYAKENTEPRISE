@@ -125,14 +125,11 @@ const ProductsPage: React.FC = () => {
   const categories = [
     "All",
     "Animal Feed",
-    "Food & Beverage",
     "Natural Products",
     "Polymers",
     "Paint Colour",
     "Food Feed",
     "Industrial Products",
-    "Upper Chemicals",
-    "Flavours & Fragrances",
     "Water Refinary"
   ];
   
