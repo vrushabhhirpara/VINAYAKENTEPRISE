@@ -19,7 +19,7 @@ const ProductsPage: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   
-  // Sample product data
+  // Comprehensive product catalog with 25 products
   const products: Product[] = [
     {
       id: 1,
@@ -32,11 +32,11 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 2,
-      name: "Personal Care",
+      name: "Personal Care Ingredients",
       category: "Natural Products",
       subcategory: "Personal Use",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
-      description: "Pure Pesonal Use Natural Product And Manufacturing.",
+      description: "Premium natural ingredients for personal care and cosmetic formulations.",
       featured: true
     },
     {
@@ -50,43 +50,43 @@ const ProductsPage: React.FC = () => {
     },
     {
       id: 4,
-      name: "Paint, Ink & Coatings",
+      name: "Paint & Coating Chemicals",
       category: "Paint Colour",
       subcategory: "Colour Product",
       image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
-      description: "Effective chemicals for Paint Making and Ink Injecting.",
+      description: "Specialized chemicals for paint manufacturing and ink production.",
       featured: true
     },
     {
       id: 5,
-      name: "Food & Nutrition",
+      name: "Nutritional Supplements",
       category: "Food Feed",
       subcategory: "Nutrition",
       image: "https://www.emro.who.int/images/stories/nutrition/balanced-diet.jpg",
-      description: "A balanced diet and understanding of nutrition are crucial for maintaining good health and preventing diseases.",
+      description: "High-quality nutritional supplements and fortification ingredients.",
       featured: false
     },
     {
       id: 6,
-      name: "Agrochemicals",
+      name: "Agrochemical Intermediates",
       category: "Food Feed",
       subcategory: "Food Grow Supplements",
       image: "https://blog.sathguru.com/wp-content/uploads/2021/01/Opportunity-for-India-becoming-a-global-agro-chemical-manufacturing-hub.jpg",
-      description: "The agrochemicals business, as it is known, develops crop-protection products.",
+      description: "Essential intermediates for agrochemical production and crop protection.",
       featured: false
     },
     {
       id: 7,
-      name: "Aqua Chemicals",
+      name: "Water Treatment Chemicals",
       category: "Water Refinary",
       subcategory: "Base Chemicals",
       image: "https://jkmchemtrade.com/upload/categories/4471230925113924.jpg",
-      description: "This likely refers to chemicals used in aquaculture or the treatment of water in aquatic systems, such as ponds, aquariums, and fisheries.",
+      description: "Specialized chemicals for water treatment and purification applications.",
       featured: false
     },
     {
       id: 8,
-      name: "Polymers & Resins",
+      name: "Industrial Polymers",
       category: "Polymers",
       subcategory: "Industrial Polymers",
       image: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -99,25 +99,25 @@ const ProductsPage: React.FC = () => {
       category: "Upper Chemicals",
       subcategory: "Various Industries",
       image: "https://www.thoughtco.com/thmb/X4xEq_SMbjth5zJgBkOjGetWw3k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/scientist-pouring-iron-chloride-into-beaker-of-potassium-thiocyanate-702545775-58cc47493df78c3c4fa0bdef.jpg",
-      description: "In chemical synthesis, intermediates are transient substances formed during a reaction and consumed in a later step to produce the final product.",
+      description: "Essential chemical intermediates for pharmaceutical and specialty manufacturing.",
       featured: false
     },
     {
       id: 10,
-      name: "Cattle & Poultry Feed",
+      name: "Animal Feed Additives",
       category: "Animal Feed",
-      subcategory: "Animal Suppliment",
+      subcategory: "Animal Supplement",
       image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
-      description: "This application suggests the supply of additives or supplements used in animal feed to enhance the nutrition and health of cattle and poultry.",
+      description: "Nutritional additives and supplements for cattle, poultry, and livestock.",
       featured: false
     },
     {
       id: 11,
-      name: "Cosmetic Ingredients",
+      name: "Cosmetic Active Ingredients",
       category: "Natural Products",
       subcategory: "Active Ingredients",
       image: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-quality ingredients for cosmetic and personal care products.",
+      description: "Premium active ingredients for cosmetic and anti-aging formulations.",
       featured: false
     },
     {
@@ -126,7 +126,124 @@ const ProductsPage: React.FC = () => {
       category: "Flavours & Fragrances",
       subcategory: "Aromatic Compounds",
       image: "https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Premium fragrance compounds for various applications.",
+      description: "High-quality fragrance compounds for perfume and cosmetic applications.",
+      featured: false
+    },
+    {
+      id: 13,
+      name: "Pharmaceutical Excipients",
+      category: "Upper Chemicals",
+      subcategory: "Pharmaceutical",
+      image: "https://images.pexels.com/photos/3786126/pexels-photo-3786126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "High-quality pharmaceutical excipients for drug formulation.",
+      featured: false
+    },
+    {
+      id: 14,
+      name: "Textile Chemicals",
+      category: "Industrial Products",
+      subcategory: "Textile Processing",
+      image: "https://images.pexels.com/photos/6069112/pexels-photo-6069112.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Specialized chemicals for textile processing and finishing.",
+      featured: false
+    },
+    {
+      id: 15,
+      name: "Veterinary APIs",
+      category: "Animal Feed",
+      subcategory: "Veterinary Medicine",
+      image: "https://images.pexels.com/photos/6235234/pexels-photo-6235234.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Active pharmaceutical ingredients for veterinary medicines.",
+      featured: false
+    },
+    {
+      id: 16,
+      name: "Natural Extracts",
+      category: "Natural Products",
+      subcategory: "Plant Extracts",
+      image: "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Premium natural plant extracts for various applications.",
+      featured: false
+    },
+    {
+      id: 17,
+      name: "Essential Oils",
+      category: "Flavours & Fragrances",
+      subcategory: "Natural Oils",
+      image: "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Pure essential oils for aromatherapy and cosmetic applications.",
+      featured: false
+    },
+    {
+      id: 18,
+      name: "Laboratory Reagents",
+      category: "Upper Chemicals",
+      subcategory: "Analytical Grade",
+      image: "https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "High-purity laboratory reagents for research and testing.",
+      featured: false
+    },
+    {
+      id: 19,
+      name: "Cleaning Chemicals",
+      category: "Industrial Products",
+      subcategory: "Cleaning Agents",
+      image: "https://images.pexels.com/photos/4099354/pexels-photo-4099354.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Industrial and commercial cleaning chemicals for various applications.",
+      featured: false
+    },
+    {
+      id: 20,
+      name: "Nutraceutical Ingredients",
+      category: "Food Feed",
+      subcategory: "Health Supplements",
+      image: "https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Premium nutraceutical ingredients for dietary supplements.",
+      featured: false
+    },
+    {
+      id: 21,
+      name: "Herbal Powders",
+      category: "Natural Products",
+      subcategory: "Herbal Medicine",
+      image: "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Traditional herbal powders for therapeutic applications.",
+      featured: false
+    },
+    {
+      id: 22,
+      name: "Flavor Enhancers",
+      category: "Flavours & Fragrances",
+      subcategory: "Food Flavoring",
+      image: "https://images.pexels.com/photos/4110251/pexels-photo-4110251.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural and artificial flavor enhancers for food applications.",
+      featured: false
+    },
+    {
+      id: 23,
+      name: "Specialty Catalysts",
+      category: "Upper Chemicals",
+      subcategory: "Catalysts",
+      image: "https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "High-performance catalysts for chemical synthesis.",
+      featured: false
+    },
+    {
+      id: 24,
+      name: "Electronic Chemicals",
+      category: "Industrial Products",
+      subcategory: "Electronics",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Ultra-pure chemicals for semiconductor manufacturing.",
+      featured: false
+    },
+    {
+      id: 25,
+      name: "Ceramic Materials",
+      category: "Industrial Products",
+      subcategory: "Advanced Materials",
+      image: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Advanced ceramic materials for high-temperature applications.",
       featured: false
     }
   ];
@@ -186,7 +303,7 @@ const ProductsPage: React.FC = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-xl opacity-90 mb-8"
             >
-              Browse our extensive range of high-quality chemical products designed for various industrial applications.
+              Browse our extensive range of 25+ high-quality chemical products designed for various industrial applications.
             </motion.p>
           </div>
         </div>
@@ -250,9 +367,14 @@ const ProductsPage: React.FC = () => {
               
               {/* Products grid */}
               <div>
-                <h2 className="text-2xl font-bold mb-6">
-                  {activeCategory === "All" ? "All Products" : activeCategory}
-                </h2>
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-2xl font-bold">
+                    {activeCategory === "All" ? "All Products" : activeCategory}
+                  </h2>
+                  <span className="text-gray-600">
+                    {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+                  </span>
+                </div>
                 
                 {filteredProducts.length === 0 ? (
                   <div className="bg-white rounded-lg shadow-md p-8 text-center">
@@ -275,7 +397,7 @@ const ProductsPage: React.FC = () => {
       <section className="py-16 bg-gradient-to-r from-primary/90 to-secondary/90 text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Need a Custom Vinayak Enterprise?</h2>
+            <h2 className="text-3xl font-bold mb-4">Need a Custom Chemical Solution?</h2>
             <p className="text-xl opacity-90 mb-8">
               Our team of experts can develop tailored formulations to meet your specific requirements.
             </p>
