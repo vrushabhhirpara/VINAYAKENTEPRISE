@@ -105,7 +105,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 10,
       name: "Animal Feed Additives",
-      category: "Animal Feed",
+      category: "",
       subcategory: "Animal Supplement",
       image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
       description: "Nutritional additives and supplements for cattle, poultry, and livestock.",
