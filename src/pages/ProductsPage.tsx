@@ -78,8 +78,8 @@ const ProductsPage: React.FC = () => {
     {
       id: 7,
       name: "Water Treatment Chemicals",
-      category: "Water Refinary",
-      subcategory: "Base Chemicals",
+      category: "",
+      subcategory: "Water Chemicals",
       image: "https://jkmchemtrade.com/upload/categories/4471230925113924.jpg",
       description: "Specialized chemicals for water treatment and purification applications.",
       featured: false
