@@ -42,7 +42,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 3,
       name: "Food Grade Additives",
-      category: "Food & Beverage",
+      category: "",
       subcategory: "Preservatives",
       image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Safe additives and ingredients for food and beverage production.",
