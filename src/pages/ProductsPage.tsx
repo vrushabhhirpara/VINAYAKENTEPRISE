@@ -23,8 +23,8 @@ const ProductsPage: React.FC = () => {
   const products: Product[] = [
     {
       id: 1,
-      name: "Industrial Solvents",
-      category: "Industrial Products",
+      name: "Industrial Products",
+      category: "",
       subcategory: "Solvents",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "High-quality solvents for industrial cleaning and manufacturing processes.",
