@@ -121,15 +121,6 @@ const ProductsPage: React.FC = () => {
       featured: false
     },
     {
-      id: 12,
-      name: "Fragrance Compounds",
-      category: "Flavours & Fragrances",
-      subcategory: "Aromatic Compounds",
-      image: "https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-quality fragrance compounds for perfume and cosmetic applications.",
-      featured: false
-    },
-    {
       id: 13,
       name: "Pharmaceutical Excipients",
       category: "Upper Chemicals",
