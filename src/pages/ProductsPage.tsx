@@ -69,7 +69,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 6,
       name: "Agrochemical Intermediates",
-      category: "Food Feed",
+      category: "",
       subcategory: "Food Grow Supplements",
       image: "https://blog.sathguru.com/wp-content/uploads/2021/01/Opportunity-for-India-becoming-a-global-agro-chemical-manufacturing-hub.jpg",
       description: "Essential intermediates for agrochemical production and crop protection.",
