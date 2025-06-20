@@ -139,15 +139,6 @@ const ProductsPage: React.FC = () => {
       featured: false
     },
     {
-      id: 15,
-      name: "Veterinary APIs",
-      category: "Animal Feed",
-      subcategory: "Veterinary Medicine",
-      image: "https://images.pexels.com/photos/6235234/pexels-photo-6235234.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Active pharmaceutical ingredients for veterinary medicines.",
-      featured: false
-    },
-    {
       id: 16,
       name: "Natural Extracts",
       category: "Natural Products",
