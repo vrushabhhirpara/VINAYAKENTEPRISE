@@ -60,7 +60,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 5,
       name: "Nutritional Supplements",
-      category: "Food Feed",
+      category: "",
       subcategory: "Nutrition",
       image: "https://www.emro.who.int/images/stories/nutrition/balanced-diet.jpg",
       description: "High-quality nutritional supplements and fortification ingredients.",
