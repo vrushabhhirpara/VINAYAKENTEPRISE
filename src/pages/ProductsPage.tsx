@@ -96,7 +96,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 9,
       name: "Chemical Intermediates",
-      category: "Upper Chemicals",
+      category: "",
       subcategory: "Various Industries",
       image: "https://www.thoughtco.com/thmb/X4xEq_SMbjth5zJgBkOjGetWw3k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/scientist-pouring-iron-chloride-into-beaker-of-potassium-thiocyanate-702545775-58cc47493df78c3c4fa0bdef.jpg",
       description: "Essential chemical intermediates for pharmaceutical and specialty manufacturing.",
