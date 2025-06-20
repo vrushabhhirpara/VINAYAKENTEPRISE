@@ -318,7 +318,6 @@ const ContactPage: React.FC = () => {
                         >
                           <option value="">Select Industry</option>
                           <option value="Natural Product">Cosmetics &Personal Care</option>
-                          <option value="food">Food & Beverage</option>
                           <option value="agriculture">Agriculture & Animal Feed</option>
                           <option value="textile">Home Care</option>
                           <option value="water">Water Treatment</option>
