@@ -87,7 +87,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 8,
       name: "Industrial Polymers",
-      category: "Polymers",
+      category: "",
       subcategory: "Industrial Polymers",
       image: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "High-performance polymers for manufacturing and industrial use.",
