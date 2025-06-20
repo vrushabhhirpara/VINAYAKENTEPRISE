@@ -123,7 +123,7 @@ const ProductsPage: React.FC = () => {
     {
       id: 13,
       name: "Pharmaceutical Excipients",
-      category: "Upper Chemicals",
+      category: "",
       subcategory: "Pharmaceutical",
       image: "https://images.pexels.com/photos/3786126/pexels-photo-3786126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "High-quality pharmaceutical excipients for drug formulation.",
