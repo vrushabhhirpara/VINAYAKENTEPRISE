@@ -45,6 +45,22 @@ const Header: React.FC = () => {
           },
           'google_translate_element'
         );
+        
+        // Initialize mobile version
+        setTimeout(() => {
+          if (document.getElementById('google_translate_element_mobile')) {
+            new (window as any).google.translate.TranslateElement(
+              {
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,gu,mr,ta,te,kn,ml,bn,pa,ur,fr,es,de,it,pt,ru,ja,ko,zh,ar',
+                layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
+                multilanguagePage: true
+              },
+              'google_translate_element_mobile'
+            );
+          }
+        }, 1000);
       }
     };
 
@@ -105,18 +121,13 @@ const Header: React.FC = () => {
 
           {/* Google Translate and Mobile Menu */}
           <div className="flex items-center space-x-4">
-            {/* Google Translate Widget */}
-            <div className="flex items-center">
-              <div id="google_translate_element" className="google-translate-container"></div>
-              <div className="flex items-center text-xs text-gray-500 ml-2">
-                <Globe size={14} className="mr-1" />
-                <span className="hidden sm:inline">Powered by</span>
-                <img 
-                  src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" 
-                  alt="Google Translate" 
-                  className="h-3 ml-1"
-                />
+            {/* Google Translate Widget - Enhanced Large Rectangle */}
+            <div className="google-translate-wrapper">
+              <div className="google-translate-label">
+                <Globe size={12} className="inline mr-1" />
+                Language
               </div>
+              <div id="google_translate_element" className="google-translate-container"></div>
             </div>
 
             {/* Mobile Menu Button */}
@@ -149,16 +160,18 @@ const Header: React.FC = () => {
               <MobileNavLink to="/services" label="Services" />
               <MobileNavLink to="/contact" label="Contact Us" />
               
-              {/* Mobile Google Translate */}
-              <div className="px-4 py-2 border-t border-gray-200 mt-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700">Language</span>
-                  <div className="flex items-center text-xs text-gray-500">
-                    <Globe size={12} className="mr-1" />
-                    <span>Google Translate</span>
+              {/* Mobile Google Translate - Enhanced */}
+              <div className="px-4 py-4 border-t border-gray-200 mt-2">
+                <div className="google-translate-wrapper">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">
+                      <Globe size={16} className="mr-2" />
+                      Select Language
+                    </span>
+                    <span className="text-xs text-gray-500">Google Translate</span>
                   </div>
+                  <div id="google_translate_element_mobile" className="google-translate-container"></div>
                 </div>
-                <div id="google_translate_element_mobile" className="mt-2"></div>
               </div>
             </div>
           </motion.div>

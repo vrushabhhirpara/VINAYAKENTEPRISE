@@ -99,21 +99,71 @@
   }
 }
 
-/* Google Translate Styles */
+/* Google Translate Styles - Enhanced Large Rectangle Design */
 .google-translate-container {
+  @apply inline-block relative;
+}
+
+/* Main Google Translate Widget Styling */
+.google-translate-container .goog-te-gadget {
   @apply inline-block;
 }
 
-.google-translate-container .goog-te-combo {
-  @apply bg-white border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
-  min-width: 120px;
+.google-translate-container .goog-te-gadget-simple {
+  @apply inline-block bg-white border-2 border-primary rounded-lg shadow-md hover:shadow-lg transition-all duration-300;
+  min-width: 200px;
+  height: 45px;
 }
 
-.google-translate-container .goog-te-combo option {
-  @apply text-sm;
+.google-translate-container .goog-te-gadget-simple .goog-te-menu-value {
+  @apply flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 cursor-pointer;
+  height: 100%;
+  line-height: 1;
 }
 
-/* Hide Google Translate banner */
+.google-translate-container .goog-te-gadget-simple .goog-te-menu-value:hover {
+  @apply text-primary bg-primary/5;
+}
+
+.google-translate-container .goog-te-gadget-simple .goog-te-menu-value span:first-child {
+  @apply text-base font-medium;
+}
+
+.google-translate-container .goog-te-gadget-simple .goog-te-menu-value span:last-child {
+  @apply text-primary ml-2;
+  font-size: 12px;
+}
+
+/* Dropdown Arrow Styling */
+.google-translate-container .goog-te-gadget-simple .goog-te-menu-value::after {
+  content: '▼';
+  @apply text-primary ml-2;
+  font-size: 10px;
+}
+
+/* Dropdown Menu Styling */
+.goog-te-menu-frame {
+  @apply border-2 border-primary rounded-lg shadow-xl;
+  min-width: 200px !important;
+}
+
+.goog-te-menu2 {
+  @apply bg-white rounded-lg overflow-hidden;
+}
+
+.goog-te-menu2-item {
+  @apply px-4 py-3 text-base hover:bg-primary/10 hover:text-primary cursor-pointer border-b border-gray-100;
+}
+
+.goog-te-menu2-item:last-child {
+  @apply border-b-0;
+}
+
+.goog-te-menu2-item-selected {
+  @apply bg-primary/20 text-primary font-medium;
+}
+
+/* Hide Google Translate banner and branding */
 .goog-te-banner-frame {
   display: none !important;
 }
@@ -126,43 +176,76 @@ body {
   display: none !important;
 }
 
-/* Style the Google Translate widget */
-.goog-te-gadget {
-  @apply inline-block;
-}
-
-.goog-te-gadget .goog-te-combo {
-  @apply bg-white border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
-  min-width: 120px;
-  font-family: inherit;
-}
-
-.goog-te-gadget-simple {
-  @apply inline-block;
-}
-
-.goog-te-gadget-simple .goog-te-menu-value {
-  @apply text-sm text-gray-700;
-}
-
-.goog-te-gadget-simple .goog-te-menu-value span {
-  @apply text-sm;
-}
-
+/* Remove default Google styling */
 .goog-te-gadget-icon {
   display: none !important;
 }
 
-.goog-te-gadget-simple .goog-te-menu-value:hover {
-  @apply text-primary;
+.goog-te-gadget .goog-te-combo {
+  @apply bg-white border-2 border-primary rounded-lg px-4 py-3 text-base font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary-dark shadow-md hover:shadow-lg transition-all duration-300;
+  min-width: 200px;
+  height: 45px;
+  font-family: inherit;
+}
+
+.goog-te-gadget .goog-te-combo option {
+  @apply text-base py-2;
 }
 
 /* Mobile responsive adjustments */
-@media (max-width: 640px) {
-  .google-translate-container .goog-te-combo {
-    min-width: 100px;
-    font-size: 12px;
+@media (max-width: 768px) {
+  .google-translate-container .goog-te-gadget-simple {
+    min-width: 160px;
+    height: 40px;
   }
+  
+  .google-translate-container .goog-te-gadget-simple .goog-te-menu-value {
+    @apply px-3 py-2 text-sm;
+  }
+  
+  .google-translate-container .goog-te-gadget-simple .goog-te-menu-value span:first-child {
+    @apply text-sm;
+  }
+  
+  .goog-te-gadget .goog-te-combo {
+    min-width: 160px;
+    height: 40px;
+    @apply px-3 py-2 text-sm;
+  }
+  
+  .goog-te-menu-frame {
+    min-width: 160px !important;
+  }
+  
+  .goog-te-menu2-item {
+    @apply px-3 py-2 text-sm;
+  }
+}
+
+@media (max-width: 640px) {
+  .google-translate-container .goog-te-gadget-simple {
+    min-width: 140px;
+    height: 38px;
+  }
+  
+  .google-translate-container .goog-te-gadget-simple .goog-te-menu-value {
+    @apply px-2 py-2 text-sm;
+  }
+  
+  .goog-te-gadget .goog-te-combo {
+    min-width: 140px;
+    height: 38px;
+    @apply px-2 py-2 text-sm;
+  }
+}
+
+/* Enhanced styling for better visibility */
+.google-translate-wrapper {
+  @apply bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-gray-200;
+}
+
+.google-translate-label {
+  @apply text-xs font-medium text-gray-600 mb-1 block;
 }
 
 /* Animations */
@@ -197,7 +280,7 @@ body {
 /* Custom backgrounds */
 .bg-texture {
   background-color: #ffffff;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.4'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .bg-chemical-pattern {
