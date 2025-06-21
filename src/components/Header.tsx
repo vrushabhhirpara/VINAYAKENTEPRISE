@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, FlaskRound as Flask, ChevronDown } from 'lucide-react';
+import { Menu, X, FlaskRound as Flask, ChevronDown, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Header: React.FC = () => {
@@ -20,6 +20,37 @@ const Header: React.FC = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+
+  // Initialize Google Translate
+  useEffect(() => {
+    const addGoogleTranslateScript = () => {
+      if (!document.getElementById('google-translate-script')) {
+        const script = document.createElement('script');
+        script.id = 'google-translate-script';
+        script.type = 'text/javascript';
+        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        document.body.appendChild(script);
+      }
+    };
+
+    const initializeGoogleTranslate = () => {
+      if (typeof (window as any).google !== 'undefined' && (window as any).google.translate) {
+        new (window as any).google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi,gu,mr,ta,te,kn,ml,bn,pa,ur,fr,es,de,it,pt,ru,ja,ko,zh,ar',
+            layout: (window as any).google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+            multilanguagePage: true
+          },
+          'google_translate_element'
+        );
+      }
+    };
+
+    (window as any).googleTranslateElementInit = initializeGoogleTranslate;
+    addGoogleTranslateScript();
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -72,18 +103,35 @@ const Header: React.FC = () => {
             />
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 focus:outline-none"
-            onClick={toggleMenu}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <X size={24} className="text-gray-800" />
-            ) : (
-              <Menu size={24} className="text-gray-800" />
-            )}
-          </button>
+          {/* Google Translate and Mobile Menu */}
+          <div className="flex items-center space-x-4">
+            {/* Google Translate Widget */}
+            <div className="flex items-center">
+              <div id="google_translate_element" className="google-translate-container"></div>
+              <div className="flex items-center text-xs text-gray-500 ml-2">
+                <Globe size={14} className="mr-1" />
+                <span className="hidden sm:inline">Powered by</span>
+                <img 
+                  src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" 
+                  alt="Google Translate" 
+                  className="h-3 ml-1"
+                />
+              </div>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 focus:outline-none"
+              onClick={toggleMenu}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <X size={24} className="text-gray-800" />
+              ) : (
+                <Menu size={24} className="text-gray-800" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -100,6 +148,18 @@ const Header: React.FC = () => {
               <MobileNavLink to="/products" label="Products" />
               <MobileNavLink to="/services" label="Services" />
               <MobileNavLink to="/contact" label="Contact Us" />
+              
+              {/* Mobile Google Translate */}
+              <div className="px-4 py-2 border-t border-gray-200 mt-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">Language</span>
+                  <div className="flex items-center text-xs text-gray-500">
+                    <Globe size={12} className="mr-1" />
+                    <span>Google Translate</span>
+                  </div>
+                </div>
+                <div id="google_translate_element_mobile" className="mt-2"></div>
+              </div>
             </div>
           </motion.div>
         )}
