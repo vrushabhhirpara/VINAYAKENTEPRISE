@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Truck, FlaskRound as Flask, Beaker, Award } from 'lucide-react';
+import { getFeaturedProducts } from '../data/products';
 
 const HomePage: React.FC = () => {
   return (
@@ -162,7 +163,7 @@ const ServiceSection: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Comprehensive Services</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From custom formulations to quality testing, we provide end-to-end Vinayak Enterprise for your industry needs.
+            From custom formulations to quality testing, we provide end-to-end chemical solutions for your industry needs.
           </p>
         </div>
         
@@ -176,7 +177,7 @@ const ServiceSection: React.FC = () => {
           <ServiceCard 
             icon={<Beaker className="h-12 w-12 text-primary" />}
             title="Custom Formulations"
-            description="Tailored Vinayak Enterprise designed specifically for your unique requirements and applications."
+            description="Tailored chemical solutions designed specifically for your unique requirements and applications."
             variants={itemVariants}
           />
           <ServiceCard 
@@ -258,36 +259,7 @@ const FeaturedProducts: React.FC = () => {
     }
   };
   
-  const products = [
-    {
-      id: 1,
-      name: "Industrial Solvents",
-      category: "Industrial Products",
-      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-quality solvents for industrial cleaning and manufacturing processes."
-    },
-    {
-      id: 2,
-      name: "Personal Care",
-      category: "Natural Products",
-      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
-      description: "Pure Pesonal Use Natural Product And Manufacturing."
-    },
-    {
-      id: 3,
-      name: "Food Grade Additives",
-      category: "Food & Beverage",
-      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Safe additives and ingredients for food and beverage production."
-    },
-    {
-      id: 4,
-      name: "Paint, Ink & Coatings",
-      category: "Paint Colour",
-      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
-      description: "Effective chemicals for Paint Making and Ink Injecting."
-    }
-  ];
+  const featuredProducts = getFeaturedProducts();
   
   return (
     <section className="py-20 bg-chemical-pattern">
@@ -306,7 +278,7 @@ const FeaturedProducts: React.FC = () => {
           animate={controls}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
         >
-          {products.map((product) => (
+          {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} variants={itemVariants} />
           ))}
         </motion.div>
@@ -393,7 +365,7 @@ const IndustriesSection: React.FC = () => {
     },
     {
       id: 6,
-      name: "Paint, Ink & Coatings",
+      name: "Paint & Coatings",
       icon: <Beaker className="h-8 w-8" />,
       color: "bg-cyan-50 text-cyan-600"
     },
@@ -405,7 +377,7 @@ const IndustriesSection: React.FC = () => {
     },
     {
       id: 8,
-      name: "Cosmetics",
+      name: "Water Treatment",
       icon: <Beaker className="h-8 w-8" />,
       color: "bg-pink-50 text-pink-600"
     }
@@ -417,7 +389,7 @@ const IndustriesSection: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Industries We Serve</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Providing specialized Vinayak Enterprise across various industries worldwide.
+            Providing specialized chemical solutions across various industries worldwide.
           </p>
         </div>
         
@@ -425,7 +397,7 @@ const IndustriesSection: React.FC = () => {
           {industries.map((industry) => (
             <Link 
               key={industry.id}
-              to={`/products#${industry.name.toLowerCase().replace(/\s+/g, '-')}`}
+              to={`/products?category=${encodeURIComponent(industry.name)}`}
               className="group"
             >
               <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 
@@ -453,8 +425,8 @@ const TestimonialsSection: React.FC = () => {
       id: 1,
       name: "Dharmendra Hirpara",
       company: "Vinayak Enterprise",
-      quote: "Vinayak Enterprise has been our trusted partner for pharmaceutical ingredients for over 14 years. Their consistent quality and reliable service have been instrumental to our success.",
-    avatar: "https://ibb.co/9mB9PzJM"
+      quote: "Vinayak Enterprise has been our trusted partner for chemical solutions for over 14 years. Their consistent quality and reliable service have been instrumental to our success.",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
     },
   ];
   
@@ -474,7 +446,7 @@ const TestimonialsSection: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What Our Clients Say</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Don't just take our word for it—hear from the companies who rely on our Vinayak Enterprise
+            Don't just take our word for it—hear from the companies who rely on our chemical solutions.
           </p>
         </div>
         
@@ -531,7 +503,7 @@ const CTASection: React.FC = () => {
     <section className="py-20 bg-primary">
       <div className="container-custom">
         <div className="max-w-4xl mx-auto text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Find Your Vinayak Enterprise?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Find Your Chemical Solution?</h2>
           <p className="text-xl opacity-90 mb-8">
             Contact our team of experts today to discuss your specific requirements and discover how Vinayak Enterprise can help your business succeed.
           </p>
