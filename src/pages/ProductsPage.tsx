@@ -29,7 +29,9 @@ const ProductsPage: React.FC = () => {
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "High-quality solvents for industrial cleaning and manufacturing processes.",
       featured: true
-            id: 2,
+    },
+    {
+      id: 2,
       name: "Industrial Products",
       category: "",
       subcategory: "Solvents",
@@ -47,7 +49,7 @@ const ProductsPage: React.FC = () => {
       featured: true
     },
     {
-      id: 3,
+      id: 4,
       name: "Food Grade Additives",
       category: "",
       subcategory: "Preservatives",
@@ -56,7 +58,7 @@ const ProductsPage: React.FC = () => {
       featured: true
     },
     {
-      id: 4,
+      id: 5,
       name: "Paint & Coating Chemicals",
       category: "",
       subcategory: "Colour Product",
@@ -65,7 +67,7 @@ const ProductsPage: React.FC = () => {
       featured: true
     },
     {
-      id: 5,
+      id: 6,
       name: "Nutritional Supplements",
       category: "",
       subcategory: "Nutrition",
@@ -74,7 +76,7 @@ const ProductsPage: React.FC = () => {
       featured: false
     },
     {
-      id: 6,
+      id: 7,
       name: "Agrochemical Intermediates",
       category: "",
       subcategory: "Food Grow Supplements",
@@ -83,7 +85,7 @@ const ProductsPage: React.FC = () => {
       featured: false
     },
     {
-      id: 7,
+      id: 8,
       name: "Water Treatment Chemicals",
       category: "",
       subcategory: "Water Chemicals",
@@ -92,7 +94,7 @@ const ProductsPage: React.FC = () => {
       featured: false
     },
     {
-      id: 8,
+      id: 9,
       name: "Industrial Polymers",
       category: "",
       subcategory: "Industrial Polymers",
@@ -101,7 +103,7 @@ const ProductsPage: React.FC = () => {
       featured: false
     },
     {
-      id: 9,
+      id: 10,
       name: "Chemical Intermediates",
       category: "",
       subcategory: "Various Industries",
@@ -110,7 +112,7 @@ const ProductsPage: React.FC = () => {
       featured: false
     },
     {
-      id: 10,
+      id: 11,
       name: "Animal Feed Additives",
       category: "",
       subcategory: "Animal Supplement",
@@ -119,7 +121,7 @@ const ProductsPage: React.FC = () => {
       featured: false
     },
     {
-      id: 11,
+      id: 12,
       name: "Home Care",
       category: "",
       subcategory: "Home Care Product",
