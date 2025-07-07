@@ -19,7 +19,7 @@ const ProductsPage: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   
-  // Comprehensive product catalog with 25 products
+  // Comprehensive product catalog with 50 products
   const products: Product[] = [
     {
       id: 1,
