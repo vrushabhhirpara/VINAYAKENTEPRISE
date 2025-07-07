@@ -22,15 +22,6 @@ const ProductsPage: React.FC = () => {
   // Comprehensive product catalog with 50 products
   const products: Product[] = [
     {
-      id: 1,
-      name: "Nonylphenol Ethoxylate",
-      category: "",
-      subcategory: "Solvents",
-      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-quality solvents for industrial cleaning and manufacturing processes.",
-      featured: true
-    },
-    {
       id: 2,
       name: "Industrial Products",
       category: "",
