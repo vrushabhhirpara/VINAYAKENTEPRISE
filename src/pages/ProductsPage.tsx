@@ -22,7 +22,7 @@ const ProductsPage: React.FC = () => {
   // Comprehensive product catalog with 50 products
   const products: Product[] = [
     {
-      id: 2,
+      id: 1,
       name: "Industrial Products",
       category: "",
       subcategory: "Solvents",
@@ -31,7 +31,7 @@ const ProductsPage: React.FC = () => {
       featured: true
     },
     {
-      id: 3,
+      id: 2,
       name: "Cosmetic & Personal Care",
       category: "",
       subcategory: "Personal Use",
