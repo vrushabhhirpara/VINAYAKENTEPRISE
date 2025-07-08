@@ -21,8 +21,7 @@ import {
   Globe,
   Factory,
   Award,
-  Zap,
-  ArrowRight
+  Zap
 } from 'lucide-react';
 
 interface ProductDetail {
@@ -111,7 +110,7 @@ const ProductDetailPage: React.FC = () => {
   const productDatabase: ProductDetail[] = [
     {
       id: 1,
-      name: "Industrial Solvents",
+      name: "Nonylphenol Ethoxylate (NPE)",
       category: "Industrial Solvents",
       subcategory: "Surfactants",
       images: [
