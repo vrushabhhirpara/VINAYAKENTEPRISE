@@ -111,7 +111,7 @@ const ProductDetailPage: React.FC = () => {
   const productDatabase: ProductDetail[] = [
     {
       id: 1,
-      name: "Nonylphenol Ethoxylate (NPE)",
+      name: "Industrial Solvents",
       category: "Industrial Solvents",
       subcategory: "Surfactants",
       images: [
