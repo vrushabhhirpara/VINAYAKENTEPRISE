@@ -21,8 +21,7 @@ import {
   Globe,
   Factory,
   Award,
-  Zap,
-  ArrowRight
+  Zap
 } from 'lucide-react';
 
 interface ProductDetail {
