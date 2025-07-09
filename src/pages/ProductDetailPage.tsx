@@ -548,7 +548,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 202,
-      name: "Glycerin",
+      name: "Sodium Methyle Paraben",
       category: "Cosmetic & Personal Care",
       subcategory: "Humectants",
       image: "https://5.imimg.com/data5/SELLER/Default/2023/10/351523658/UT/NP/JG/143402947/homecare-products.jpg",
