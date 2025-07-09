@@ -37,7 +37,7 @@ const ProductDetailPage: React.FC = () => {
 
   // All products with 40 products per category
   const allProducts: Product[] = [
-    // Industrial Solvents (20 products)
+    // Industrial Solvents (40 products)
     {
       id: 1,
       name: "Nonylphenol Ethoxylate",
