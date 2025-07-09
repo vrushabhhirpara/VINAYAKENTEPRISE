@@ -48,7 +48,7 @@ const ProductDetailPage: React.FC = () => {
       featured: true,
       chemicalFormula: "C15H24O(C2H4O)nH",
       casNumber: "9016-45-9",
-      hsCode: "3402.13.00",
+      hsCode: "28100020",
       purity: "99%",
       applications: ["Industrial cleaning", "Textile processing", "Paint formulations", "Agricultural chemicals"],
       specifications: {
