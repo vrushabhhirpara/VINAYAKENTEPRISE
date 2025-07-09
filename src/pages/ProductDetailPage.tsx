@@ -460,7 +460,7 @@ const ProductDetailPage: React.FC = () => {
       id: 119,
       name: "Glacial Acetic Acid",
       category: "Industrial Solvents",
-      subcategory: "Amides",
+      subcategory: "",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Polar aprotic solvent for chemical reactions.",
       featured: false,
