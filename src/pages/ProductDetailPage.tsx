@@ -180,7 +180,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C7H8",
       casNumber: "108-88-3",
-      hsCode: "2902.30.00",
+      hsCode: "2905",
       purity: "99%",
       applications: ["Paint solvent", "Adhesive production", "Chemical synthesis", "Fuel additive"],
       specifications: {
