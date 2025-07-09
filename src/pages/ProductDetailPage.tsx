@@ -2024,7 +2024,7 @@ const ProductDetailPage: React.FC = () => {
       },
       packaging: ["25kg drums", "100kg drums"],
       safetyInfo: ["Feed grade", "Light sensitive", "Use precise dosing"]
-    }
+    },
   ];
 
   useEffect(() => {
