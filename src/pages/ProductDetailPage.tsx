@@ -2049,7 +2049,7 @@ const ProductDetailPage: React.FC = () => {
       safetyInfo: ["Avoid inhalation", "Use in well-ventilated area", "Keep away from heat"]
     },
     {
-      id: 111,
+      id: 521,
       name: "Copper Sulphate Crystals",
       category: "Agriculture",
       subcategory: "",
@@ -2071,7 +2071,7 @@ const ProductDetailPage: React.FC = () => {
       safetyInfo: ["Generally recognized as safe", "Avoid prolonged skin contact", "Store at room temperature"]
     },
     {
-      id: 202,
+      id: 522,
       name: "Sodium Methyle Paraben",
       category: "Cosmetic & Personal Care",
       subcategory: "",
