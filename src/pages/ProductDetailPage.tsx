@@ -400,7 +400,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C10H16",
       casNumber: "8006-64-2",
-      hsCode: "3805.10.00",
+      hsCode: "28332210",
       purity: "95%",
       applications: ["Paint thinner", "Varnish solvent", "Cleaning agent", "Art supplies"],
       specifications: {
