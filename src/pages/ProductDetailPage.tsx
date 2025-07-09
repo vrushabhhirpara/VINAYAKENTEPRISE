@@ -62,7 +62,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 101,
-      name: "Sodium Hydroxide",
+      name: "Stearic Acid Powder",
       category: "Industrial Solvents",
       subcategory: "Alkalis",
       image: "https://jkmchemtrade.com/upload/categories/4471230925113924.jpg",
