@@ -1,25 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  ArrowLeft, 
-  Share2, 
-  Download, 
-  Phone, 
-  Mail, 
-  MapPin,
-  CheckCircle,
-  AlertTriangle,
-  Info,
-  Package,
-  Truck,
-  Shield,
-  Clock,
-  Star,
-  Send
-} from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Truck, Award, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
 
-interface ProductDetail {
+interface Product {
   id: number;
   name: string;
   category: string;
@@ -27,1199 +11,2379 @@ interface ProductDetail {
   image: string;
   description: string;
   featured: boolean;
-  hsCode?: string;
-  casNumber?: string;
   chemicalFormula?: string;
-  molecularWeight?: string;
+  casNumber?: string;
+  hsCode?: string;
   purity?: string;
-  appearance?: string;
-  solubility?: string;
   applications: string[];
-  specifications: { [key: string]: string };
-  safetyInfo: string[];
+  specifications: {
+    appearance: string;
+    solubility: string;
+    meltingPoint?: string;
+    boilingPoint?: string;
+    density?: string;
+    ph?: string;
+  };
   packaging: string[];
-  storageConditions: string;
-  shelfLife: string;
-  certifications: string[];
-  relatedProducts: number[];
+  safetyInfo: string[];
 }
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [activeTab, setActiveTab] = useState('overview');
-  const [inquiryForm, setInquiryForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    quantity: '',
-    message: ''
-  });
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [activeTab, setActiveTab] = useState<string>('overview');
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
-  // Comprehensive product catalog with 25 products
-  const products: ProductDetail[] = [
+  // All products with 20 products per category
+  const allProducts: Product[] = [
+    // Industrial Solvents (20 products)
     {
       id: 1,
-      name: "Industrial Solvents",
-      category: "Industrial Products",
-      subcategory: "Solvents",
+      name: "Nonylphenol Ethoxylate",
+      category: "Industrial Solvents",
+      subcategory: "Surfactants",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-quality industrial solvents designed for cleaning, degreasing, and manufacturing processes across various industries.",
+      description: "Non-ionic surfactant used in industrial cleaning and textile processing.",
       featured: true,
-      hsCode: "2814",
-      casNumber: "7664-41-7",
-      chemicalFormula: "Various",
-      molecularWeight: "Variable",
-      purity: "≥99.5%",
-      appearance: "Clear liquid",
-      solubility: "Miscible with water",
-      applications: [
-        "Industrial cleaning and degreasing",
-        "Paint and coating formulations",
-        "Adhesive manufacturing",
-        "Pharmaceutical intermediates",
-        "Electronic component cleaning"
-      ],
+      chemicalFormula: "C15H24O(C2H4O)nH",
+      casNumber: "9016-45-9",
+      hsCode: "3402.13.00",
+      purity: "99%",
+      applications: ["Industrial cleaning", "Textile processing", "Paint formulations", "Agricultural chemicals"],
       specifications: {
-        "Purity": "≥99.5%",
-        "Water Content": "≤0.1%",
-        "Acidity": "≤0.01%",
-        "Color": "Colorless",
-        "Density": "0.85-0.95 g/cm³"
+        appearance: "Clear to pale yellow liquid",
+        solubility: "Soluble in water and organic solvents",
+        density: "1.02-1.06 g/cm³",
+        ph: "6.0-8.0"
       },
-      safetyInfo: [
-        "Store in cool, dry place away from heat sources",
-        "Use appropriate PPE including gloves and eye protection",
-        "Ensure adequate ventilation during use",
-        "Keep away from incompatible materials"
-      ],
-      packaging: [
-        "25 kg HDPE drums",
-        "200 kg steel drums",
-        "1000 kg IBC containers",
-        "Bulk tanker delivery available"
-      ],
-      storageConditions: "Store at 15-25°C in original sealed containers",
-      shelfLife: "24 months from date of manufacture",
-      certifications: ["ISO 9001", "REACH Compliant", "GMP Certified"],
-      relatedProducts: [2, 3, 8]
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Wear protective equipment", "Avoid skin contact", "Store in cool, dry place"]
     },
+    {
+      id: 101,
+      name: "Sodium Hydroxide",
+      category: "Industrial Solvents",
+      subcategory: "Alkalis",
+      image: "https://jkmchemtrade.com/upload/categories/4471230925113924.jpg",
+      description: "Strong alkali used in various industrial processes and water treatment.",
+      featured: false,
+      chemicalFormula: "NaOH",
+      casNumber: "1310-73-2",
+      hsCode: "2815.11.00",
+      purity: "99%",
+      applications: ["Water treatment", "Soap manufacturing", "Paper production", "Chemical processing"],
+      specifications: {
+        appearance: "White solid pellets",
+        solubility: "Highly soluble in water",
+        meltingPoint: "318°C",
+        density: "2.13 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Highly corrosive", "Wear protective equipment", "Avoid contact with skin and eyes"]
+    },
+    {
+      id: 102,
+      name: "Methanol",
+      category: "Industrial Solvents",
+      subcategory: "Alcohols",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Versatile industrial solvent and chemical intermediate.",
+      featured: false,
+      chemicalFormula: "CH3OH",
+      casNumber: "67-56-1",
+      hsCode: "2905.11.00",
+      purity: "99.9%",
+      applications: ["Solvent", "Fuel additive", "Chemical synthesis", "Antifreeze"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "64.7°C",
+        density: "0.792 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Highly flammable", "Toxic if ingested", "Use in ventilated area"]
+    },
+    {
+      id: 103,
+      name: "Ethanol",
+      category: "Industrial Solvents",
+      subcategory: "Alcohols",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "High-purity ethanol for industrial and pharmaceutical applications.",
+      featured: false,
+      chemicalFormula: "C2H5OH",
+      casNumber: "64-17-5",
+      hsCode: "2207.10.00",
+      purity: "99.5%",
+      applications: ["Solvent", "Disinfectant", "Chemical intermediate", "Fuel additive"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "78.4°C",
+        density: "0.789 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Flammable", "Keep away from heat", "Use proper ventilation"]
+    },
+    {
+      id: 104,
+      name: "Isopropanol",
+      category: "Industrial Solvents",
+      subcategory: "Alcohols",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Versatile cleaning solvent and disinfectant.",
+      featured: false,
+      chemicalFormula: "C3H8O",
+      casNumber: "67-63-0",
+      hsCode: "2905.12.00",
+      purity: "99%",
+      applications: ["Cleaning agent", "Disinfectant", "Solvent", "Dehydrating agent"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "82.6°C",
+        density: "0.786 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "25L cans"],
+      safetyInfo: ["Flammable", "Avoid inhalation", "Keep container closed"]
+    },
+    {
+      id: 105,
+      name: "Acetone",
+      category: "Industrial Solvents",
+      subcategory: "Ketones",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Fast-evaporating solvent for industrial applications.",
+      featured: false,
+      chemicalFormula: "C3H6O",
+      casNumber: "67-64-1",
+      hsCode: "2914.11.00",
+      purity: "99.5%",
+      applications: ["Paint thinner", "Cleaning solvent", "Chemical intermediate", "Nail polish remover"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "56.1°C",
+        density: "0.784 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "25L cans"],
+      safetyInfo: ["Highly flammable", "Use with adequate ventilation", "Keep away from ignition sources"]
+    },
+    {
+      id: 106,
+      name: "Toluene",
+      category: "Industrial Solvents",
+      subcategory: "Aromatics",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Aromatic solvent for paints, coatings, and adhesives.",
+      featured: false,
+      chemicalFormula: "C7H8",
+      casNumber: "108-88-3",
+      hsCode: "2902.30.00",
+      purity: "99%",
+      applications: ["Paint solvent", "Adhesive production", "Chemical synthesis", "Fuel additive"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Insoluble in water",
+        boilingPoint: "110.6°C",
+        density: "0.867 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Flammable", "Avoid prolonged inhalation", "Use respiratory protection"]
+    },
+    {
+      id: 107,
+      name: "Xylene",
+      category: "Industrial Solvents",
+      subcategory: "Aromatics",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Mixed xylene isomers for industrial solvent applications.",
+      featured: false,
+      chemicalFormula: "C8H10",
+      casNumber: "1330-20-7",
+      hsCode: "2902.41.00",
+      purity: "98%",
+      applications: ["Paint thinner", "Printing inks", "Rubber production", "Leather processing"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Insoluble in water",
+        boilingPoint: "138-144°C",
+        density: "0.864 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Flammable", "Harmful if inhaled", "Use in well-ventilated area"]
+    },
+    {
+      id: 108,
+      name: "Benzene",
+      category: "Industrial Solvents",
+      subcategory: "Aromatics",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "High-purity benzene for chemical synthesis.",
+      featured: false,
+      chemicalFormula: "C6H6",
+      casNumber: "71-43-2",
+      hsCode: "2902.20.00",
+      purity: "99.9%",
+      applications: ["Chemical intermediate", "Solvent", "Fuel component", "Pharmaceutical synthesis"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Slightly soluble in water",
+        boilingPoint: "80.1°C",
+        density: "0.879 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Carcinogenic", "Highly regulated", "Requires special handling"]
+    },
+    {
+      id: 109,
+      name: "Dichloromethane",
+      category: "Industrial Solvents",
+      subcategory: "Chlorinated Solvents",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Versatile chlorinated solvent for various applications.",
+      featured: false,
+      chemicalFormula: "CH2Cl2",
+      casNumber: "75-09-2",
+      hsCode: "2903.12.00",
+      purity: "99.5%",
+      applications: ["Paint stripper", "Degreasing agent", "Extraction solvent", "Aerosol propellant"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Slightly soluble in water",
+        boilingPoint: "39.6°C",
+        density: "1.33 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "25L cans"],
+      safetyInfo: ["Suspected carcinogen", "Use with extreme caution", "Adequate ventilation required"]
+    },
+    {
+      id: 110,
+      name: "Ethyl Acetate",
+      category: "Industrial Solvents",
+      subcategory: "Esters",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Fast-drying solvent for coatings and adhesives.",
+      featured: false,
+      chemicalFormula: "C4H8O2",
+      casNumber: "141-78-6",
+      hsCode: "2915.31.00",
+      purity: "99%",
+      applications: ["Paint solvent", "Nail polish", "Glue solvent", "Extraction medium"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Moderately soluble in water",
+        boilingPoint: "77.1°C",
+        density: "0.902 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "25L cans"],
+      safetyInfo: ["Flammable", "May cause drowsiness", "Use adequate ventilation"]
+    },
+    {
+      id: 111,
+      name: "Butyl Acetate",
+      category: "Industrial Solvents",
+      subcategory: "Esters",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Slow-evaporating solvent for high-quality finishes.",
+      featured: false,
+      chemicalFormula: "C6H12O2",
+      casNumber: "123-86-4",
+      hsCode: "2915.33.00",
+      purity: "99%",
+      applications: ["Lacquer solvent", "Paint thinner", "Printing inks", "Adhesives"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Slightly soluble in water",
+        boilingPoint: "126.1°C",
+        density: "0.882 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "25L cans"],
+      safetyInfo: ["Flammable", "Avoid prolonged skin contact", "Use in ventilated area"]
+    },
+    {
+      id: 112,
+      name: "Cyclohexane",
+      category: "Industrial Solvents",
+      subcategory: "Aliphatics",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Cyclic hydrocarbon solvent for various applications.",
+      featured: false,
+      chemicalFormula: "C6H12",
+      casNumber: "110-82-7",
+      hsCode: "2902.11.00",
+      purity: "99%",
+      applications: ["Paint thinner", "Rubber cement", "Extraction solvent", "Chemical intermediate"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Insoluble in water",
+        boilingPoint: "80.7°C",
+        density: "0.779 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Highly flammable", "Harmful if inhaled", "Keep away from heat sources"]
+    },
+    {
+      id: 113,
+      name: "Hexane",
+      category: "Industrial Solvents",
+      subcategory: "Aliphatics",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Linear hydrocarbon solvent for extraction processes.",
+      featured: false,
+      chemicalFormula: "C6H14",
+      casNumber: "110-54-3",
+      hsCode: "2901.10.00",
+      purity: "95%",
+      applications: ["Oil extraction", "Cleaning agent", "Adhesive production", "Laboratory reagent"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Insoluble in water",
+        boilingPoint: "68.7°C",
+        density: "0.659 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "25L cans"],
+      safetyInfo: ["Extremely flammable", "Neurotoxic", "Use with extreme caution"]
+    },
+    {
+      id: 114,
+      name: "Heptane",
+      category: "Industrial Solvents",
+      subcategory: "Aliphatics",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Straight-chain alkane solvent for specialized applications.",
+      featured: false,
+      chemicalFormula: "C7H16",
+      casNumber: "142-82-5",
+      hsCode: "2901.10.00",
+      purity: "99%",
+      applications: ["Laboratory standard", "Extraction solvent", "Fuel component", "Chemical synthesis"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Insoluble in water",
+        boilingPoint: "98.4°C",
+        density: "0.684 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "25L cans"],
+      safetyInfo: ["Flammable", "Avoid inhalation", "Store in cool place"]
+    },
+    {
+      id: 115,
+      name: "White Spirit",
+      category: "Industrial Solvents",
+      subcategory: "Petroleum Solvents",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Petroleum-derived solvent for paints and coatings.",
+      featured: false,
+      chemicalFormula: "Mixed hydrocarbons",
+      casNumber: "8052-41-3",
+      hsCode: "2710.12.00",
+      purity: "98%",
+      applications: ["Paint thinner", "Degreasing", "Dry cleaning", "Metal cleaning"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Insoluble in water",
+        boilingPoint: "150-200°C",
+        density: "0.76-0.78 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "20L cans"],
+      safetyInfo: ["Flammable", "Avoid prolonged skin contact", "Use adequate ventilation"]
+    },
+    {
+      id: 116,
+      name: "Turpentine",
+      category: "Industrial Solvents",
+      subcategory: "Natural Solvents",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural solvent derived from pine resin.",
+      featured: false,
+      chemicalFormula: "C10H16",
+      casNumber: "8006-64-2",
+      hsCode: "3805.10.00",
+      purity: "95%",
+      applications: ["Paint thinner", "Varnish solvent", "Cleaning agent", "Art supplies"],
+      specifications: {
+        appearance: "Clear to pale yellow liquid",
+        solubility: "Insoluble in water",
+        boilingPoint: "150-180°C",
+        density: "0.86-0.87 g/cm³"
+      },
+      packaging: ["200L drums", "20L cans", "5L bottles"],
+      safetyInfo: ["Flammable", "May cause skin irritation", "Natural but still hazardous"]
+    },
+    {
+      id: 117,
+      name: "Diethyl Ether",
+      category: "Industrial Solvents",
+      subcategory: "Ethers",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Highly volatile ether for extraction and synthesis.",
+      featured: false,
+      chemicalFormula: "C4H10O",
+      casNumber: "60-29-7",
+      hsCode: "2909.11.00",
+      purity: "99.5%",
+      applications: ["Extraction solvent", "Laboratory reagent", "Chemical synthesis", "Anesthetic (historical)"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Slightly soluble in water",
+        boilingPoint: "34.6°C",
+        density: "0.713 g/cm³"
+      },
+      packaging: ["200L drums", "25L cans", "1L bottles"],
+      safetyInfo: ["Extremely flammable", "Forms explosive peroxides", "Requires special storage"]
+    },
+    {
+      id: 118,
+      name: "Tetrahydrofuran",
+      category: "Industrial Solvents",
+      subcategory: "Ethers",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Cyclic ether solvent for polymer applications.",
+      featured: false,
+      chemicalFormula: "C4H8O",
+      casNumber: "109-99-9",
+      hsCode: "2932.20.00",
+      purity: "99%",
+      applications: ["Polymer solvent", "Chemical synthesis", "Extraction medium", "Reaction solvent"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "66°C",
+        density: "0.889 g/cm³"
+      },
+      packaging: ["200L drums", "25L cans", "1L bottles"],
+      safetyInfo: ["Highly flammable", "Forms peroxides", "Use stabilized grade"]
+    },
+    {
+      id: 119,
+      name: "Dimethylformamide",
+      category: "Industrial Solvents",
+      subcategory: "Amides",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Polar aprotic solvent for chemical reactions.",
+      featured: false,
+      chemicalFormula: "C3H7NO",
+      casNumber: "68-12-2",
+      hsCode: "2924.12.00",
+      purity: "99.8%",
+      applications: ["Reaction solvent", "Polymer production", "Pharmaceutical synthesis", "Electronics cleaning"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "153°C",
+        density: "0.944 g/cm³"
+      },
+      packaging: ["200L drums", "25L cans", "1L bottles"],
+      safetyInfo: ["Suspected carcinogen", "Readily absorbed through skin", "Use with extreme caution"]
+    },
+    {
+      id: 120,
+      name: "Dimethyl Sulfoxide",
+      category: "Industrial Solvents",
+      subcategory: "Sulfur Compounds",
+      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Highly polar solvent with unique properties.",
+      featured: false,
+      chemicalFormula: "C2H6OS",
+      casNumber: "67-68-5",
+      hsCode: "2930.90.00",
+      purity: "99.9%",
+      applications: ["Reaction solvent", "Cryoprotectant", "Pharmaceutical applications", "Electronics industry"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "189°C",
+        density: "1.092 g/cm³"
+      },
+      packaging: ["200L drums", "25L cans", "1L bottles"],
+      safetyInfo: ["Penetrates skin rapidly", "Generally low toxicity", "Store away from light"]
+    },
+
+    // Personal Care (20 products)
     {
       id: 2,
-      name: "Personal Care Ingredients",
-      category: "Natural Products",
-      subcategory: "Personal Use",
+      name: "Sodium Lauryl Sulfate",
+      category: "Personal Care",
+      subcategory: "Surfactants",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
-      description: "Premium natural ingredients for personal care and cosmetic formulations, ensuring safety and efficacy.",
+      description: "Anionic surfactant widely used in personal care and cleaning products.",
       featured: true,
-      hsCode: "3304",
-      casNumber: "Various",
-      chemicalFormula: "Natural extracts",
-      molecularWeight: "Variable",
-      purity: "≥98%",
-      appearance: "Various forms",
-      solubility: "Water/oil soluble variants",
-      applications: [
-        "Skincare product formulations",
-        "Hair care treatments",
-        "Cosmetic manufacturing",
-        "Natural soap production",
-        "Anti-aging formulations"
-      ],
+      chemicalFormula: "C12H25SO4Na",
+      casNumber: "151-21-3",
+      hsCode: "3402.11.00",
+      purity: "95%",
+      applications: ["Shampoos", "Toothpaste", "Detergents", "Industrial cleaners"],
       specifications: {
-        "Purity": "≥98%",
-        "Heavy Metals": "≤10 ppm",
-        "Microbiological": "Compliant",
-        "pH": "5.5-7.0",
-        "Moisture": "≤5%"
+        appearance: "White crystalline powder",
+        solubility: "Easily soluble in water",
+        meltingPoint: "204-207°C",
+        ph: "7.0-9.5"
       },
-      safetyInfo: [
-        "Non-toxic and skin-safe formulations",
-        "Dermatologically tested ingredients",
-        "Hypoallergenic properties",
-        "No harmful preservatives"
-      ],
-      packaging: [
-        "1 kg aluminum containers",
-        "5 kg plastic drums",
-        "25 kg fiber drums",
-        "Custom packaging available"
-      ],
-      storageConditions: "Store in cool, dry place below 25°C",
-      shelfLife: "36 months from date of manufacture",
-      certifications: ["COSMOS Certified", "Ecocert", "FDA Approved"],
-      relatedProducts: [11, 12]
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Avoid inhalation", "Use in well-ventilated area", "Keep away from heat"]
     },
+    {
+      id: 201,
+      name: "Polyethylene Glycol 400",
+      category: "Personal Care",
+      subcategory: "Solvents",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Versatile solvent and humectant for pharmaceutical and cosmetic applications.",
+      featured: false,
+      chemicalFormula: "H(OCH2CH2)nOH",
+      casNumber: "25322-68-3",
+      hsCode: "3907.20.00",
+      purity: "99%",
+      applications: ["Pharmaceutical formulations", "Cosmetic products", "Industrial solvents", "Food additives"],
+      specifications: {
+        appearance: "Clear, colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "250°C",
+        density: "1.13 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Generally recognized as safe", "Avoid prolonged skin contact", "Store at room temperature"]
+    },
+    {
+      id: 202,
+      name: "Glycerin",
+      category: "Personal Care",
+      subcategory: "Humectants",
+      image: "https://5.imimg.com/data5/SELLER/Default/2023/10/351523658/UT/NP/JG/143402947/homecare-products.jpg",
+      description: "Pure glycerin for cosmetic, pharmaceutical, and food applications.",
+      featured: false,
+      chemicalFormula: "C3H8O3",
+      casNumber: "56-81-5",
+      hsCode: "2905.45.00",
+      purity: "99.5%",
+      applications: ["Cosmetic formulations", "Pharmaceutical products", "Food additive", "Industrial applications"],
+      specifications: {
+        appearance: "Clear, colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "290°C",
+        density: "1.26 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Generally recognized as safe", "Store at room temperature", "Avoid contamination"]
+    },
+    {
+      id: 203,
+      name: "Cetyl Alcohol",
+      category: "Personal Care",
+      subcategory: "Fatty Alcohols",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Fatty alcohol used as emulsifier and thickener in cosmetics.",
+      featured: false,
+      chemicalFormula: "C16H34O",
+      casNumber: "36653-82-4",
+      hsCode: "2905.17.00",
+      purity: "95%",
+      applications: ["Cosmetic emulsifier", "Hair conditioner", "Skin cream", "Lotion thickener"],
+      specifications: {
+        appearance: "White waxy solid",
+        solubility: "Insoluble in water",
+        meltingPoint: "49-51°C",
+        density: "0.811 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Generally safe for cosmetic use", "Avoid inhalation of dust", "Store in cool place"]
+    },
+    {
+      id: 204,
+      name: "Stearyl Alcohol",
+      category: "Personal Care",
+      subcategory: "Fatty Alcohols",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Long-chain fatty alcohol for cosmetic formulations.",
+      featured: false,
+      chemicalFormula: "C18H38O",
+      casNumber: "112-92-5",
+      hsCode: "2905.17.00",
+      purity: "95%",
+      applications: ["Cosmetic thickener", "Emulsion stabilizer", "Hair care products", "Skin moisturizers"],
+      specifications: {
+        appearance: "White waxy flakes",
+        solubility: "Insoluble in water",
+        meltingPoint: "58-60°C",
+        density: "0.812 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Safe for cosmetic use", "Non-irritating to skin", "Store in dry conditions"]
+    },
+    {
+      id: 205,
+      name: "Cocamidopropyl Betaine",
+      category: "Personal Care",
+      subcategory: "Surfactants",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Mild amphoteric surfactant for gentle cleansing products.",
+      featured: false,
+      chemicalFormula: "C19H38N2O3",
+      casNumber: "61789-40-0",
+      hsCode: "3402.13.00",
+      purity: "30% active",
+      applications: ["Baby shampoo", "Facial cleansers", "Body wash", "Mild detergents"],
+      specifications: {
+        appearance: "Clear to pale yellow liquid",
+        solubility: "Soluble in water",
+        ph: "4.5-6.5",
+        density: "1.04 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC"],
+      safetyInfo: ["Very mild surfactant", "Low irritation potential", "Store at room temperature"]
+    },
+    {
+      id: 206,
+      name: "Sodium Laureth Sulfate",
+      category: "Personal Care",
+      subcategory: "Surfactants",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Milder alternative to SLS for personal care products.",
+      featured: false,
+      chemicalFormula: "C12H25(OCH2CH2)nOSO3Na",
+      casNumber: "68585-34-2",
+      hsCode: "3402.13.00",
+      purity: "70% active",
+      applications: ["Shampoos", "Body wash", "Facial cleansers", "Bubble bath"],
+      specifications: {
+        appearance: "Clear to pale yellow liquid",
+        solubility: "Soluble in water",
+        ph: "6.5-8.5",
+        density: "1.03 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC"],
+      safetyInfo: ["Milder than SLS", "Low skin irritation", "Biodegradable"]
+    },
+    {
+      id: 207,
+      name: "Propylene Glycol",
+      category: "Personal Care",
+      subcategory: "Solvents",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Versatile solvent and humectant for cosmetic applications.",
+      featured: false,
+      chemicalFormula: "C3H8O2",
+      casNumber: "57-55-6",
+      hsCode: "2905.32.00",
+      purity: "99.5%",
+      applications: ["Cosmetic solvent", "Humectant", "Antifreeze", "Food additive"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "188.2°C",
+        density: "1.036 g/cm³"
+      },
+      packaging: ["200L drums", "1000L IBC"],
+      safetyInfo: ["Generally recognized as safe", "Low toxicity", "Food grade available"]
+    },
+    {
+      id: 208,
+      name: "Butylene Glycol",
+      category: "Personal Care",
+      subcategory: "Solvents",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Multifunctional ingredient for skincare formulations.",
+      featured: false,
+      chemicalFormula: "C4H10O2",
+      casNumber: "107-88-0",
+      hsCode: "2905.39.00",
+      purity: "99%",
+      applications: ["Skincare products", "Cosmetic solvent", "Humectant", "Preservative booster"],
+      specifications: {
+        appearance: "Clear colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "230°C",
+        density: "1.005 g/cm³"
+      },
+      packaging: ["200L drums", "25L cans"],
+      safetyInfo: ["Safe for cosmetic use", "Non-comedogenic", "Well tolerated by skin"]
+    },
+    {
+      id: 209,
+      name: "Hyaluronic Acid",
+      category: "Personal Care",
+      subcategory: "Active Ingredients",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "High molecular weight humectant for anti-aging products.",
+      featured: false,
+      chemicalFormula: "(C14H21NO11)n",
+      casNumber: "9067-32-7",
+      hsCode: "3913.90.00",
+      purity: "95%",
+      applications: ["Anti-aging serums", "Moisturizers", "Injectable fillers", "Eye creams"],
+      specifications: {
+        appearance: "White powder",
+        solubility: "Soluble in water",
+        ph: "6.0-7.5",
+        density: "1.2 g/cm³"
+      },
+      packaging: ["1kg containers", "5kg containers"],
+      safetyInfo: ["Biocompatible", "Non-toxic", "Store in dry conditions"]
+    },
+    {
+      id: 210,
+      name: "Niacinamide",
+      category: "Personal Care",
+      subcategory: "Active Ingredients",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Vitamin B3 derivative for skincare applications.",
+      featured: false,
+      chemicalFormula: "C6H6N2O",
+      casNumber: "98-92-0",
+      hsCode: "2933.39.00",
+      purity: "99%",
+      applications: ["Anti-aging products", "Acne treatments", "Brightening serums", "Moisturizers"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Freely soluble in water",
+        meltingPoint: "128-131°C",
+        ph: "6.0-7.0"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Generally safe", "Well tolerated", "Stable ingredient"]
+    },
+    {
+      id: 211,
+      name: "Retinol",
+      category: "Personal Care",
+      subcategory: "Active Ingredients",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Vitamin A for anti-aging and skin renewal products.",
+      featured: false,
+      chemicalFormula: "C20H30O",
+      casNumber: "68-26-8",
+      hsCode: "2936.21.00",
+      purity: "95%",
+      applications: ["Anti-aging creams", "Acne treatments", "Skin renewal products", "Night serums"],
+      specifications: {
+        appearance: "Yellow crystalline powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "62-64°C",
+        density: "0.947 g/cm³"
+      },
+      packaging: ["100g containers", "1kg containers"],
+      safetyInfo: ["Light sensitive", "Requires stabilization", "Use with caution"]
+    },
+    {
+      id: 212,
+      name: "Salicylic Acid",
+      category: "Personal Care",
+      subcategory: "Active Ingredients",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Beta hydroxy acid for exfoliating and acne treatments.",
+      featured: false,
+      chemicalFormula: "C7H6O3",
+      casNumber: "69-72-7",
+      hsCode: "2918.21.00",
+      purity: "99%",
+      applications: ["Acne treatments", "Exfoliating products", "Anti-dandruff shampoos", "Wart removers"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Slightly soluble in water",
+        meltingPoint: "158-160°C",
+        ph: "2.4 (saturated solution)"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Skin irritant", "Use in low concentrations", "Avoid eye contact"]
+    },
+    {
+      id: 213,
+      name: "Lactic Acid",
+      category: "Personal Care",
+      subcategory: "Active Ingredients",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Alpha hydroxy acid for gentle exfoliation.",
+      featured: false,
+      chemicalFormula: "C3H6O3",
+      casNumber: "50-21-5",
+      hsCode: "2918.11.00",
+      purity: "88%",
+      applications: ["Chemical peels", "Exfoliating lotions", "pH adjustment", "Anti-aging products"],
+      specifications: {
+        appearance: "Clear to pale yellow liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "122°C",
+        density: "1.21 g/cm³"
+      },
+      packaging: ["200L drums", "25L cans"],
+      safetyInfo: ["Corrosive", "Wear protective equipment", "Avoid skin contact"]
+    },
+    {
+      id: 214,
+      name: "Tocopherol (Vitamin E)",
+      category: "Personal Care",
+      subcategory: "Antioxidants",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Natural antioxidant for cosmetic preservation.",
+      featured: false,
+      chemicalFormula: "C29H50O2",
+      casNumber: "59-02-9",
+      hsCode: "2936.28.00",
+      purity: "95%",
+      applications: ["Antioxidant", "Skin conditioning", "Product preservation", "Anti-aging formulations"],
+      specifications: {
+        appearance: "Clear yellow to amber oil",
+        solubility: "Insoluble in water",
+        boilingPoint: "200°C",
+        density: "0.95 g/cm³"
+      },
+      packaging: ["25kg drums", "5kg containers"],
+      safetyInfo: ["Generally safe", "Light sensitive", "Store under nitrogen"]
+    },
+    {
+      id: 215,
+      name: "Ascorbic Acid (Vitamin C)",
+      category: "Personal Care",
+      subcategory: "Antioxidants",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Powerful antioxidant for brightening and anti-aging.",
+      featured: false,
+      chemicalFormula: "C6H8O6",
+      casNumber: "50-81-7",
+      hsCode: "2936.27.00",
+      purity: "99%",
+      applications: ["Brightening serums", "Anti-aging products", "Antioxidant formulations", "Collagen boosters"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Freely soluble in water",
+        meltingPoint: "190-192°C",
+        ph: "2.1-2.6"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Unstable in solution", "Light and air sensitive", "Requires stabilization"]
+    },
+    {
+      id: 216,
+      name: "Panthenol (Pro-Vitamin B5)",
+      category: "Personal Care",
+      subcategory: "Conditioning Agents",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Moisturizing and conditioning agent for hair and skin.",
+      featured: false,
+      chemicalFormula: "C9H19NO4",
+      casNumber: "81-13-0",
+      hsCode: "2924.19.00",
+      purity: "98%",
+      applications: ["Hair conditioners", "Skin moisturizers", "Healing ointments", "Baby products"],
+      specifications: {
+        appearance: "Clear viscous liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "118-120°C",
+        density: "1.2 g/cm³"
+      },
+      packaging: ["200L drums", "25L cans"],
+      safetyInfo: ["Very safe ingredient", "Non-irritating", "Well tolerated"]
+    },
+    {
+      id: 217,
+      name: "Allantoin",
+      category: "Personal Care",
+      subcategory: "Conditioning Agents",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Soothing and healing agent for sensitive skin products.",
+      featured: false,
+      chemicalFormula: "C4H6N4O3",
+      casNumber: "97-59-6",
+      hsCode: "2933.99.00",
+      purity: "98%",
+      applications: ["Sensitive skin products", "After-sun lotions", "Healing creams", "Baby care products"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Slightly soluble in water",
+        meltingPoint: "238°C",
+        ph: "5.5-6.5"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Very safe", "Non-sensitizing", "Suitable for sensitive skin"]
+    },
+    {
+      id: 218,
+      name: "Ceramides",
+      category: "Personal Care",
+      subcategory: "Skin Barrier Agents",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Lipid molecules for skin barrier repair and moisturization.",
+      featured: false,
+      chemicalFormula: "Variable",
+      casNumber: "100403-19-8",
+      hsCode: "3504.00.00",
+      purity: "95%",
+      applications: ["Moisturizers", "Barrier repair creams", "Anti-aging products", "Sensitive skin formulations"],
+      specifications: {
+        appearance: "White to off-white powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "85-95°C",
+        density: "0.9 g/cm³"
+      },
+      packaging: ["1kg containers", "5kg containers"],
+      safetyInfo: ["Biocompatible", "Non-irritating", "Naturally occurring"]
+    },
+    {
+      id: 219,
+      name: "Peptides Complex",
+      category: "Personal Care",
+      subcategory: "Active Ingredients",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Bioactive peptides for anti-aging and skin repair.",
+      featured: false,
+      chemicalFormula: "Variable",
+      casNumber: "Various",
+      hsCode: "3504.00.00",
+      purity: "95%",
+      applications: ["Anti-aging serums", "Wrinkle creams", "Firming products", "Eye treatments"],
+      specifications: {
+        appearance: "White to off-white powder",
+        solubility: "Soluble in water",
+        ph: "5.0-7.0",
+        density: "1.1 g/cm³"
+      },
+      packaging: ["100g containers", "1kg containers"],
+      safetyInfo: ["Generally safe", "Biocompatible", "Store refrigerated"]
+    },
+    {
+      id: 220,
+      name: "Zinc Oxide",
+      category: "Personal Care",
+      subcategory: "UV Filters",
+      image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
+      description: "Mineral UV filter and skin protectant.",
+      featured: false,
+      chemicalFormula: "ZnO",
+      casNumber: "1314-13-2",
+      hsCode: "2817.00.00",
+      purity: "99%",
+      applications: ["Sunscreens", "Diaper rash creams", "Calamine lotions", "Mineral makeup"],
+      specifications: {
+        appearance: "White powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "1975°C",
+        density: "5.61 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Generally safe", "Non-comedogenic", "Suitable for sensitive skin"]
+    },
+
+    // Food & Nutrition (20 products)
     {
       id: 3,
-      name: "Food Grade Additives",
-      category: "Food & Beverage",
+      name: "Citric Acid Monohydrate",
+      category: "Food & Nutrition",
+      subcategory: "Food Additives",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural preservative and flavoring agent for food and beverage industry.",
+      featured: true,
+      chemicalFormula: "C6H8O7·H2O",
+      casNumber: "5949-29-1",
+      hsCode: "2918.14.00",
+      purity: "99.5%",
+      applications: ["Food preservation", "Beverage acidulant", "Pharmaceutical excipient", "Cosmetic formulations"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Very soluble in water",
+        meltingPoint: "153°C",
+        ph: "1.85 (0.5% solution)"
+      },
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Food grade quality", "Store in dry conditions", "Avoid moisture"]
+    },
+    {
+      id: 301,
+      name: "Acetic Acid",
+      category: "Food & Nutrition",
       subcategory: "Preservatives",
       image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Safe and effective food-grade additives for preservation, flavor enhancement, and nutritional fortification.",
-      featured: true,
-      hsCode: "2106",
-      casNumber: "Various",
-      chemicalFormula: "Food grade compounds",
-      molecularWeight: "Variable",
-      purity: "Food grade",
-      appearance: "Powder/liquid",
-      solubility: "Water soluble",
-      applications: [
-        "Food preservation",
-        "Flavor enhancement",
-        "Nutritional fortification",
-        "Texture improvement",
-        "Color stabilization"
-      ],
+      description: "Food-grade acetic acid for preservation and flavoring applications.",
+      featured: false,
+      chemicalFormula: "CH3COOH",
+      casNumber: "64-19-7",
+      hsCode: "2915.21.00",
+      purity: "99.5%",
+      applications: ["Food preservation", "Vinegar production", "Chemical synthesis", "Textile processing"],
       specifications: {
-        "Purity": "Food Grade",
-        "Heavy Metals": "≤5 ppm",
-        "Arsenic": "≤1 ppm",
-        "Lead": "≤2 ppm",
-        "Microbiological": "Compliant"
+        appearance: "Clear, colorless liquid",
+        solubility: "Miscible with water",
+        boilingPoint: "118°C",
+        density: "1.05 g/cm³"
       },
-      safetyInfo: [
-        "GRAS (Generally Recognized as Safe) status",
-        "Compliant with food safety regulations",
-        "No harmful residues",
-        "Suitable for human consumption"
-      ],
-      packaging: [
-        "25 kg paper bags with PE liner",
-        "500 kg big bags",
-        "Custom food-grade packaging",
-        "Sterile packaging options"
-      ],
-      storageConditions: "Store in dry, cool place away from direct sunlight",
-      shelfLife: "24 months in original packaging",
-      certifications: ["FDA Approved", "FSSAI Certified", "Halal Certified"],
-      relatedProducts: [5, 6]
+      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
+      safetyInfo: ["Corrosive liquid", "Use in ventilated area", "Avoid inhalation of vapors"]
     },
+    {
+      id: 302,
+      name: "Potassium Sorbate",
+      category: "Food & Nutrition",
+      subcategory: "Preservatives",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Effective food preservative with antimicrobial properties.",
+      featured: false,
+      chemicalFormula: "C6H7KO2",
+      casNumber: "24634-61-5",
+      hsCode: "2916.19.00",
+      purity: "99%",
+      applications: ["Food preservation", "Beverage preservation", "Cosmetic preservation", "Wine making"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Soluble in water",
+        meltingPoint: "270°C",
+        ph: "7.0-8.5"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade quality", "Store in cool, dry place", "Avoid moisture"]
+    },
+    {
+      id: 303,
+      name: "Sodium Benzoate",
+      category: "Food & Nutrition",
+      subcategory: "Preservatives",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Widely used food preservative for acidic foods.",
+      featured: false,
+      chemicalFormula: "C7H5NaO2",
+      casNumber: "532-32-1",
+      hsCode: "2916.31.00",
+      purity: "99%",
+      applications: ["Soft drinks", "Fruit juices", "Pickles", "Salad dressings"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Soluble in water",
+        meltingPoint: "410°C",
+        ph: "8.0-8.5"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "GRAS status", "Store in dry place"]
+    },
+    {
+      id: 304,
+      name: "Calcium Propionate",
+      category: "Food & Nutrition",
+      subcategory: "Preservatives",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Mold inhibitor for baked goods and dairy products.",
+      featured: false,
+      chemicalFormula: "C6H10CaO4",
+      casNumber: "4075-81-4",
+      hsCode: "2915.50.00",
+      purity: "99%",
+      applications: ["Bread preservation", "Cheese preservation", "Animal feed", "Cosmetics"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Soluble in water",
+        meltingPoint: "300°C",
+        ph: "8.5-10.5"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Generally safe", "Store in dry conditions"]
+    },
+    {
+      id: 305,
+      name: "Ascorbic Acid (Vitamin C)",
+      category: "Food & Nutrition",
+      subcategory: "Vitamins",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Essential vitamin and antioxidant for food fortification.",
+      featured: false,
+      chemicalFormula: "C6H8O6",
+      casNumber: "50-81-7",
+      hsCode: "2936.27.00",
+      purity: "99%",
+      applications: ["Food fortification", "Antioxidant", "Nutritional supplements", "Beverage additive"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Freely soluble in water",
+        meltingPoint: "190-192°C",
+        ph: "2.1-2.6"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Food grade", "Light sensitive", "Store in cool, dry place"]
+    },
+    {
+      id: 306,
+      name: "Tocopherol (Vitamin E)",
+      category: "Food & Nutrition",
+      subcategory: "Vitamins",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural antioxidant vitamin for food preservation.",
+      featured: false,
+      chemicalFormula: "C29H50O2",
+      casNumber: "59-02-9",
+      hsCode: "2936.28.00",
+      purity: "95%",
+      applications: ["Food antioxidant", "Nutritional supplements", "Oil stabilization", "Animal feed"],
+      specifications: {
+        appearance: "Clear yellow to amber oil",
+        solubility: "Insoluble in water",
+        boilingPoint: "200°C",
+        density: "0.95 g/cm³"
+      },
+      packaging: ["25kg drums", "5kg containers"],
+      safetyInfo: ["Food grade", "Light sensitive", "Store under nitrogen"]
+    },
+    {
+      id: 307,
+      name: "Thiamine Hydrochloride (Vitamin B1)",
+      category: "Food & Nutrition",
+      subcategory: "Vitamins",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Essential B vitamin for food fortification.",
+      featured: false,
+      chemicalFormula: "C12H17ClN4OS·HCl",
+      casNumber: "67-03-8",
+      hsCode: "2936.21.00",
+      purity: "98%",
+      applications: ["Food fortification", "Nutritional supplements", "Animal feed", "Pharmaceutical"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Freely soluble in water",
+        meltingPoint: "248-250°C",
+        ph: "2.7-3.4"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Food grade", "Light sensitive", "Store in dry place"]
+    },
+    {
+      id: 308,
+      name: "Riboflavin (Vitamin B2)",
+      category: "Food & Nutrition",
+      subcategory: "Vitamins",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Yellow vitamin for food coloring and fortification.",
+      featured: false,
+      chemicalFormula: "C17H20N4O6",
+      casNumber: "83-88-5",
+      hsCode: "2936.24.00",
+      purity: "98%",
+      applications: ["Food fortification", "Natural coloring", "Nutritional supplements", "Animal feed"],
+      specifications: {
+        appearance: "Yellow-orange crystalline powder",
+        solubility: "Slightly soluble in water",
+        meltingPoint: "280°C",
+        ph: "5.5-7.0"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Food grade", "Light sensitive", "Store protected from light"]
+    },
+    {
+      id: 309,
+      name: "Niacin (Vitamin B3)",
+      category: "Food & Nutrition",
+      subcategory: "Vitamins",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Essential B vitamin for food fortification.",
+      featured: false,
+      chemicalFormula: "C6H5NO2",
+      casNumber: "59-67-6",
+      hsCode: "2933.39.00",
+      purity: "99%",
+      applications: ["Food fortification", "Nutritional supplements", "Animal feed", "Pharmaceutical"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Freely soluble in water",
+        meltingPoint: "236-239°C",
+        ph: "2.0-4.0"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Food grade", "Stable compound", "Store in dry place"]
+    },
+    {
+      id: 310,
+      name: "Folic Acid",
+      category: "Food & Nutrition",
+      subcategory: "Vitamins",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Essential vitamin for food fortification and supplements.",
+      featured: false,
+      chemicalFormula: "C19H19N7O6",
+      casNumber: "59-30-3",
+      hsCode: "2936.29.00",
+      purity: "97%",
+      applications: ["Food fortification", "Nutritional supplements", "Pharmaceutical", "Animal feed"],
+      specifications: {
+        appearance: "Yellow-orange crystalline powder",
+        solubility: "Slightly soluble in water",
+        meltingPoint: "250°C",
+        ph: "4.0-4.8"
+      },
+      packaging: ["25kg drums", "1kg containers"],
+      safetyInfo: ["Food grade", "Light sensitive", "Store protected from light"]
+    },
+    {
+      id: 311,
+      name: "Xanthan Gum",
+      category: "Food & Nutrition",
+      subcategory: "Thickeners",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural thickening and stabilizing agent.",
+      featured: false,
+      chemicalFormula: "(C35H49O29)n",
+      casNumber: "11138-66-2",
+      hsCode: "3913.90.00",
+      purity: "99%",
+      applications: ["Food thickener", "Gluten-free baking", "Salad dressings", "Sauces"],
+      specifications: {
+        appearance: "Cream to white powder",
+        solubility: "Soluble in water",
+        ph: "6.0-8.0",
+        density: "1.5 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Natural product", "Store in dry place"]
+    },
+    {
+      id: 312,
+      name: "Guar Gum",
+      category: "Food & Nutrition",
+      subcategory: "Thickeners",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural thickening agent from guar beans.",
+      featured: false,
+      chemicalFormula: "(C6H10O5)n",
+      casNumber: "9000-30-0",
+      hsCode: "1302.32.00",
+      purity: "99%",
+      applications: ["Food thickener", "Ice cream stabilizer", "Gluten-free products", "Pet food"],
+      specifications: {
+        appearance: "White to yellowish powder",
+        solubility: "Soluble in water",
+        ph: "5.4-7.0",
+        density: "1.5 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Natural product", "May cause dust irritation"]
+    },
+    {
+      id: 313,
+      name: "Carrageenan",
+      category: "Food & Nutrition",
+      subcategory: "Thickeners",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Seaweed-derived gelling and thickening agent.",
+      featured: false,
+      chemicalFormula: "(C12H16O12S2)n",
+      casNumber: "9000-07-1",
+      hsCode: "1302.31.00",
+      purity: "95%",
+      applications: ["Dairy products", "Meat products", "Desserts", "Plant-based alternatives"],
+      specifications: {
+        appearance: "White to tan powder",
+        solubility: "Soluble in hot water",
+        ph: "8.0-11.0",
+        density: "1.3 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Natural seaweed extract", "Store in dry place"]
+    },
+    {
+      id: 314,
+      name: "Pectin",
+      category: "Food & Nutrition",
+      subcategory: "Thickeners",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural gelling agent for jams and jellies.",
+      featured: false,
+      chemicalFormula: "(C6H10O7)n",
+      casNumber: "9000-69-5",
+      hsCode: "1302.20.00",
+      purity: "95%",
+      applications: ["Jam making", "Jelly production", "Fruit preparations", "Confectionery"],
+      specifications: {
+        appearance: "Light tan to white powder",
+        solubility: "Soluble in water",
+        ph: "2.8-3.2",
+        density: "1.5 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Natural fruit extract", "Store in dry conditions"]
+    },
+    {
+      id: 315,
+      name: "Lecithin",
+      category: "Food & Nutrition",
+      subcategory: "Emulsifiers",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural emulsifier from soybeans or sunflower.",
+      featured: false,
+      chemicalFormula: "C42H80NO8P",
+      casNumber: "8002-43-5",
+      hsCode: "2923.20.00",
+      purity: "95%",
+      applications: ["Chocolate production", "Baking", "Margarine", "Nutritional supplements"],
+      specifications: {
+        appearance: "Light brown viscous liquid",
+        solubility: "Partially soluble in water",
+        density: "1.03 g/cm³",
+        ph: "6.0-8.0"
+      },
+      packaging: ["200L drums", "25L cans"],
+      safetyInfo: ["Food grade", "Natural product", "Store at room temperature"]
+    },
+    {
+      id: 316,
+      name: "Mono- and Diglycerides",
+      category: "Food & Nutrition",
+      subcategory: "Emulsifiers",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Versatile emulsifiers for food applications.",
+      featured: false,
+      chemicalFormula: "C21H42O4",
+      casNumber: "123-94-4",
+      hsCode: "3823.70.00",
+      purity: "90%",
+      applications: ["Baking", "Ice cream", "Margarine", "Confectionery"],
+      specifications: {
+        appearance: "White to cream colored flakes",
+        solubility: "Insoluble in water",
+        meltingPoint: "58-62°C",
+        density: "0.97 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Generally safe", "Store in cool place"]
+    },
+    {
+      id: 317,
+      name: "Polysorbate 80",
+      category: "Food & Nutrition",
+      subcategory: "Emulsifiers",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Synthetic emulsifier for food and cosmetic applications.",
+      featured: false,
+      chemicalFormula: "C64H124O26",
+      casNumber: "9005-65-6",
+      hsCode: "3402.13.00",
+      purity: "95%",
+      applications: ["Ice cream", "Baked goods", "Vitamins", "Pharmaceuticals"],
+      specifications: {
+        appearance: "Amber colored viscous liquid",
+        solubility: "Soluble in water",
+        density: "1.08 g/cm³",
+        ph: "6.0-8.0"
+      },
+      packaging: ["200L drums", "25L cans"],
+      safetyInfo: ["Food grade", "FDA approved", "Store at room temperature"]
+    },
+    {
+      id: 318,
+      name: "Calcium Chloride",
+      category: "Food & Nutrition",
+      subcategory: "Firming Agents",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Firming agent and nutritional supplement.",
+      featured: false,
+      chemicalFormula: "CaCl2",
+      casNumber: "10043-52-4",
+      hsCode: "2827.20.00",
+      purity: "99%",
+      applications: ["Cheese making", "Canned vegetables", "Sports drinks", "Tofu production"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Very soluble in water",
+        meltingPoint: "772°C",
+        density: "2.15 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Hygroscopic", "Store in dry place"]
+    },
+    {
+      id: 319,
+      name: "Sodium Alginate",
+      category: "Food & Nutrition",
+      subcategory: "Thickeners",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Seaweed-derived thickener and gelling agent.",
+      featured: false,
+      chemicalFormula: "(C6H7NaO6)n",
+      casNumber: "9005-38-3",
+      hsCode: "3913.90.00",
+      purity: "95%",
+      applications: ["Molecular gastronomy", "Ice cream", "Salad dressings", "Meat products"],
+      specifications: {
+        appearance: "White to light tan powder",
+        solubility: "Soluble in water",
+        ph: "6.0-8.0",
+        density: "1.6 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Natural seaweed product", "Store in dry place"]
+    },
+    {
+      id: 320,
+      name: "Erythritol",
+      category: "Food & Nutrition",
+      subcategory: "Sweeteners",
+      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      description: "Natural zero-calorie sweetener.",
+      featured: false,
+      chemicalFormula: "C4H10O4",
+      casNumber: "149-32-6",
+      hsCode: "2905.49.00",
+      purity: "99.5%",
+      applications: ["Sugar-free products", "Diabetic foods", "Low-calorie beverages", "Confectionery"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Soluble in water",
+        meltingPoint: "121°C",
+        density: "1.45 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Food grade", "Generally safe", "May cause laxative effect"]
+    },
+
+    // Paint, Ink & Coatings (20 products)
     {
       id: 4,
-      name: "Paint & Coating Chemicals",
-      category: "Paint Colour",
-      subcategory: "Colour Product",
+      name: "Titanium Dioxide",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Pigments",
       image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
-      description: "Specialized chemicals for paint manufacturing, ink production, and protective coating applications.",
+      description: "High-quality white pigment for paints, coatings, and plastic applications.",
       featured: true,
-      hsCode: "3208",
-      casNumber: "Various",
-      chemicalFormula: "Mixed compounds",
-      molecularWeight: "Variable",
-      purity: "≥95%",
-      appearance: "Liquid/powder",
-      solubility: "Organic solvents",
-      applications: [
-        "Paint and coating formulations",
-        "Ink manufacturing",
-        "Protective coatings",
-        "Automotive paints",
-        "Industrial coatings"
-      ],
+      chemicalFormula: "TiO2",
+      casNumber: "13463-67-7",
+      hsCode: "3206.11.00",
+      purity: "98%",
+      applications: ["Paint manufacturing", "Plastic coloring", "Paper coating", "Cosmetic formulations"],
       specifications: {
-        "Purity": "≥95%",
-        "Viscosity": "Variable",
-        "Color": "As specified",
-        "Volatile Content": "≤5%",
-        "pH": "6.0-8.0"
+        appearance: "White powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "1843°C",
+        density: "4.23 g/cm³"
       },
-      safetyInfo: [
-        "Use in well-ventilated areas",
-        "Avoid skin and eye contact",
-        "Store away from heat and ignition sources",
-        "Use appropriate respiratory protection"
-      ],
-      packaging: [
-        "20 kg metal containers",
-        "200 kg steel drums",
-        "1000 kg IBC tanks",
-        "Bulk delivery available"
-      ],
-      storageConditions: "Store at 10-30°C, protect from freezing",
-      shelfLife: "18 months from manufacture date",
-      certifications: ["ISO 14001", "OSHA Compliant", "VOC Compliant"],
-      relatedProducts: [1, 8, 9]
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Avoid inhalation of dust", "Use respiratory protection", "Store in dry place"]
     },
+    {
+      id: 401,
+      name: "Iron Oxide Red",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "High-quality red iron oxide pigment for paints and coatings.",
+      featured: false,
+      chemicalFormula: "Fe2O3",
+      casNumber: "1309-37-1",
+      hsCode: "2821.10.00",
+      purity: "95%",
+      applications: ["Paint coloring", "Concrete coloring", "Plastic pigmentation", "Ceramic glazes"],
+      specifications: {
+        appearance: "Red powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "1565°C",
+        density: "5.24 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Avoid inhalation of dust", "Use dust mask", "Store in dry place"]
+    },
+    {
+      id: 402,
+      name: "Iron Oxide Yellow",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Bright yellow iron oxide pigment for various applications.",
+      featured: false,
+      chemicalFormula: "FeOOH",
+      casNumber: "51274-00-1",
+      hsCode: "2821.10.00",
+      purity: "95%",
+      applications: ["Paint coloring", "Construction materials", "Plastics", "Ceramics"],
+      specifications: {
+        appearance: "Yellow powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "350°C (decomposes)",
+        density: "4.26 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Non-toxic pigment", "Avoid dust inhalation", "Store in dry place"]
+    },
+    {
+      id: 403,
+      name: "Iron Oxide Black",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Deep black iron oxide pigment for coatings and plastics.",
+      featured: false,
+      chemicalFormula: "Fe3O4",
+      casNumber: "1317-61-9",
+      hsCode: "2821.10.00",
+      purity: "95%",
+      applications: ["Black paint", "Automotive coatings", "Plastic coloring", "Magnetic applications"],
+      specifications: {
+        appearance: "Black powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "1597°C",
+        density: "5.17 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Safe iron oxide", "Avoid dust inhalation", "Magnetic properties"]
+    },
+    {
+      id: 404,
+      name: "Chrome Oxide Green",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Durable green pigment with excellent lightfastness.",
+      featured: false,
+      chemicalFormula: "Cr2O3",
+      casNumber: "1308-38-9",
+      hsCode: "2819.90.00",
+      purity: "98%",
+      applications: ["Automotive paints", "Ceramic glazes", "Camouflage coatings", "Artist paints"],
+      specifications: {
+        appearance: "Green powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "2435°C",
+        density: "5.21 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Contains chromium", "Use respiratory protection", "Handle with care"]
+    },
+    {
+      id: 405,
+      name: "Ultramarine Blue",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Brilliant blue pigment for paints and plastics.",
+      featured: false,
+      chemicalFormula: "Na8Al6Si6O24S2",
+      casNumber: "57455-37-5",
+      hsCode: "3206.42.00",
+      purity: "95%",
+      applications: ["Paint coloring", "Plastic masterbatches", "Detergent whitening", "Cosmetics"],
+      specifications: {
+        appearance: "Blue powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "1500°C",
+        density: "2.4 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Non-toxic pigment", "Avoid dust inhalation", "Stable in alkaline conditions"]
+    },
+    {
+      id: 406,
+      name: "Carbon Black",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "High-quality carbon black for deep black coloration.",
+      featured: false,
+      chemicalFormula: "C",
+      casNumber: "1333-86-4",
+      hsCode: "2803.00.00",
+      purity: "99%",
+      applications: ["Black paint", "Printing inks", "Rubber reinforcement", "Plastic coloring"],
+      specifications: {
+        appearance: "Black powder",
+        solubility: "Insoluble in water",
+        density: "1.8-2.1 g/cm³",
+        ph: "7.0-9.0"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Potential carcinogen", "Use respiratory protection", "Avoid dust generation"]
+    },
+    {
+      id: 407,
+      name: "Zinc Oxide",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "White pigment with UV protection properties.",
+      featured: false,
+      chemicalFormula: "ZnO",
+      casNumber: "1314-13-2",
+      hsCode: "2817.00.00",
+      purity: "99%",
+      applications: ["Anti-corrosive paints", "UV protection", "Rubber vulcanization", "Ceramics"],
+      specifications: {
+        appearance: "White powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "1975°C",
+        density: "5.61 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Generally safe", "Avoid inhalation", "UV protective properties"]
+    },
+    {
+      id: 408,
+      name: "Barium Sulfate",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Extenders",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "High-density extender pigment for paints.",
+      featured: false,
+      chemicalFormula: "BaSO4",
+      casNumber: "7727-43-7",
+      hsCode: "2833.27.00",
+      purity: "98%",
+      applications: ["Paint extender", "Powder coatings", "Automotive primers", "X-ray contrast"],
+      specifications: {
+        appearance: "White powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "1580°C",
+        density: "4.5 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Chemically inert", "Avoid dust inhalation", "High density material"]
+    },
+    {
+      id: 409,
+      name: "Calcium Carbonate",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Extenders",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Versatile extender and filler for paint formulations.",
+      featured: false,
+      chemicalFormula: "CaCO3",
+      casNumber: "471-34-1",
+      hsCode: "2836.50.00",
+      purity: "98%",
+      applications: ["Paint filler", "Paper coating", "Plastic filler", "Sealants"],
+      specifications: {
+        appearance: "White powder",
+        solubility: "Slightly soluble in water",
+        meltingPoint: "825°C",
+        density: "2.71 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Generally safe", "Natural mineral", "Avoid dust inhalation"]
+    },
+    {
+      id: 410,
+      name: "Talc",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Extenders",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Soft mineral extender for improved paint properties.",
+      featured: false,
+      chemicalFormula: "Mg3Si4O10(OH)2",
+      casNumber: "14807-96-6",
+      hsCode: "2526.20.00",
+      purity: "95%",
+      applications: ["Paint extender", "Anti-settling agent", "Matting agent", "Plastic filler"],
+      specifications: {
+        appearance: "White to off-white powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "1500°C",
+        density: "2.7-2.8 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Use asbestos-free grade", "Avoid inhalation", "Natural mineral"]
+    },
+    {
+      id: 411,
+      name: "Mica",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Effect Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Pearlescent effect pigment for decorative coatings.",
+      featured: false,
+      chemicalFormula: "KAl2(AlSi3O10)(OH)2",
+      casNumber: "12001-26-2",
+      hsCode: "2525.10.00",
+      purity: "95%",
+      applications: ["Metallic paints", "Automotive coatings", "Decorative finishes", "Cosmetics"],
+      specifications: {
+        appearance: "Silvery flakes",
+        solubility: "Insoluble in water",
+        meltingPoint: "1200°C",
+        density: "2.8 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Natural mineral", "Avoid inhalation", "Creates metallic effects"]
+    },
+    {
+      id: 412,
+      name: "Aluminum Paste",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Metallic Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Metallic aluminum pigment for silver finishes.",
+      featured: false,
+      chemicalFormula: "Al",
+      casNumber: "7429-90-5",
+      hsCode: "3206.50.00",
+      purity: "65% Al",
+      applications: ["Metallic paints", "Roof coatings", "Automotive finishes", "Industrial coatings"],
+      specifications: {
+        appearance: "Silver paste",
+        solubility: "Insoluble in water",
+        density: "1.5-2.0 g/cm³",
+        ph: "7.0-9.0"
+      },
+      packaging: ["25kg pails", "200kg drums"],
+      safetyInfo: ["Flammable when dry", "Keep away from water", "Use in ventilated area"]
+    },
+    {
+      id: 413,
+      name: "Bronze Powder",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Metallic Pigments",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Copper-zinc alloy powder for bronze effects.",
+      featured: false,
+      chemicalFormula: "Cu/Zn alloy",
+      casNumber: "7440-50-8",
+      hsCode: "3206.50.00",
+      purity: "90%",
+      applications: ["Bronze paints", "Decorative coatings", "Printing inks", "Art supplies"],
+      specifications: {
+        appearance: "Bronze powder",
+        solubility: "Insoluble in water",
+        density: "8.5 g/cm³",
+        meltingPoint: "900-1000°C"
+      },
+      packaging: ["25kg drums", "5kg containers"],
+      safetyInfo: ["Avoid inhalation", "Flammable powder", "Store in dry place"]
+    },
+    {
+      id: 414,
+      name: "Silica Matting Agent",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Additives",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Synthetic silica for creating matte finishes.",
+      featured: false,
+      chemicalFormula: "SiO2",
+      casNumber: "7631-86-9",
+      hsCode: "2811.22.00",
+      purity: "99%",
+      applications: ["Matte paints", "Varnishes", "Powder coatings", "Printing inks"],
+      specifications: {
+        appearance: "White powder",
+        solubility: "Insoluble in water",
+        density: "2.2 g/cm³",
+        ph: "6.0-8.0"
+      },
+      packaging: ["20kg bags", "500kg big bags"],
+      safetyInfo: ["Avoid inhalation", "Use respiratory protection", "Synthetic amorphous silica"]
+    },
+    {
+      id: 415,
+      name: "Wax Additive",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Additives",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Micronized wax for surface protection and feel.",
+      featured: false,
+      chemicalFormula: "Polyethylene wax",
+      casNumber: "9002-88-4",
+      hsCode: "3404.90.00",
+      purity: "95%",
+      applications: ["Scratch resistance", "Surface feel", "Anti-blocking", "Matting effect"],
+      specifications: {
+        appearance: "White powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "105-115°C",
+        density: "0.92 g/cm³"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Generally safe", "Avoid dust inhalation", "Thermoplastic material"]
+    },
+    {
+      id: 416,
+      name: "Defoamer",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Additives",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Silicone-based defoaming agent for paint formulations.",
+      featured: false,
+      chemicalFormula: "Silicone polymer",
+      casNumber: "63148-62-9",
+      hsCode: "3910.00.00",
+      purity: "100% active",
+      applications: ["Paint defoaming", "Coating production", "Ink manufacturing", "Adhesive production"],
+      specifications: {
+        appearance: "Clear to milky liquid",
+        solubility: "Insoluble in water",
+        density: "0.98 g/cm³",
+        ph: "6.0-8.0"
+      },
+      packaging: ["200L drums", "25L cans"],
+      safetyInfo: ["Generally safe", "Avoid eye contact", "Use as directed"]
+    },
+    {
+      id: 417,
+      name: "Dispersing Agent",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Additives",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Polymeric dispersant for pigment stabilization.",
+      featured: false,
+      chemicalFormula: "Acrylic copolymer",
+      casNumber: "Various",
+      hsCode: "3906.90.00",
+      purity: "40% active",
+      applications: ["Pigment dispersion", "Color stability", "Viscosity control", "Grinding aid"],
+      specifications: {
+        appearance: "Clear to amber liquid",
+        solubility: "Soluble in organic solvents",
+        density: "1.05 g/cm³",
+        ph: "7.0-9.0"
+      },
+      packaging: ["200L drums", "25L cans"],
+      safetyInfo: ["Avoid skin contact", "Use in ventilated area", "Polymer solution"]
+    },
+    {
+      id: 418,
+      name: "UV Absorber",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Additives",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Benzotriazole UV absorber for coating protection.",
+      featured: false,
+      chemicalFormula: "C20H25N3O",
+      casNumber: "3147-75-9",
+      hsCode: "2933.99.00",
+      purity: "99%",
+      applications: ["UV protection", "Color retention", "Polymer stabilization", "Outdoor coatings"],
+      specifications: {
+        appearance: "Light yellow powder",
+        solubility: "Soluble in organic solvents",
+        meltingPoint: "81-86°C",
+        density: "1.2 g/cm³"
+      },
+      packaging: ["25kg drums", "5kg containers"],
+      safetyInfo: ["Avoid skin contact", "Light sensitive", "Use respiratory protection"]
+    },
+    {
+      id: 419,
+      name: "Antioxidant",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Additives",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Hindered phenol antioxidant for coating stability.",
+      featured: false,
+      chemicalFormula: "C35H62O3",
+      casNumber: "6683-19-8",
+      hsCode: "2907.29.00",
+      purity: "98%",
+      applications: ["Oxidation prevention", "Color stability", "Polymer protection", "Shelf life extension"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Soluble in organic solvents",
+        meltingPoint: "110-125°C",
+        density: "1.03 g/cm³"
+      },
+      packaging: ["25kg drums", "5kg containers"],
+      safetyInfo: ["Generally safe", "Avoid dust inhalation", "Phenolic antioxidant"]
+    },
+    {
+      id: 420,
+      name: "Rheology Modifier",
+      category: "Paint, Ink & Coatings",
+      subcategory: "Additives",
+      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
+      description: "Associative thickener for water-based coatings.",
+      featured: false,
+      chemicalFormula: "Polyurethane polymer",
+      casNumber: "Various",
+      hsCode: "3909.50.00",
+      purity: "20% active",
+      applications: ["Viscosity control", "Sag resistance", "Leveling improvement", "Brush drag reduction"],
+      specifications: {
+        appearance: "White to off-white liquid",
+        solubility: "Dispersible in water",
+        density: "1.02 g/cm³",
+        ph: "7.0-9.0"
+      },
+      packaging: ["200L drums", "25L cans"],
+      safetyInfo: ["Generally safe", "Avoid eye contact", "Aqueous dispersion"]
+    },
+
+    // Cattle & Poultry Feed (20 products)
     {
       id: 5,
-      name: "Nutritional Supplements",
-      category: "Food Feed",
-      subcategory: "Nutrition",
-      image: "https://www.emro.who.int/images/stories/nutrition/balanced-diet.jpg",
-      description: "High-quality nutritional supplements and fortification ingredients for food and feed applications.",
-      featured: false,
-      hsCode: "2309",
-      casNumber: "Various",
-      chemicalFormula: "Nutritional compounds",
-      molecularWeight: "Variable",
-      purity: "≥99%",
-      appearance: "Powder/granules",
-      solubility: "Water soluble",
-      applications: [
-        "Food fortification",
-        "Dietary supplements",
-        "Animal feed additives",
-        "Functional foods",
-        "Nutritional beverages"
-      ],
-      specifications: {
-        "Purity": "≥99%",
-        "Moisture": "≤5%",
-        "Heavy Metals": "≤10 ppm",
-        "Microbiological": "Compliant",
-        "Particle Size": "80-120 mesh"
-      },
-      safetyInfo: [
-        "Safe for human and animal consumption",
-        "Store in dry conditions",
-        "Avoid contamination",
-        "Follow recommended dosage"
-      ],
-      packaging: [
-        "25 kg fiber drums",
-        "500 kg big bags",
-        "Custom packaging available",
-        "Sterile packaging options"
-      ],
-      storageConditions: "Store in cool, dry place below 25°C",
-      shelfLife: "36 months in original packaging",
-      certifications: ["GMP Certified", "HACCP", "Organic Certified"],
-      relatedProducts: [3, 6, 10]
-    },
-    {
-      id: 6,
-      name: "Agrochemical Intermediates",
-      category: "Food Feed",
-      subcategory: "Food Grow Supplements",
-      image: "https://blog.sathguru.com/wp-content/uploads/2021/01/Opportunity-for-India-becoming-a-global-agro-chemical-manufacturing-hub.jpg",
-      description: "Essential intermediates for agrochemical production, supporting crop protection and agricultural enhancement.",
-      featured: false,
-      hsCode: "3808",
-      casNumber: "Various",
-      chemicalFormula: "Agricultural compounds",
-      molecularWeight: "Variable",
-      purity: "≥98%",
-      appearance: "Crystalline powder",
-      solubility: "Organic solvents",
-      applications: [
-        "Pesticide manufacturing",
-        "Herbicide production",
-        "Fungicide formulations",
-        "Plant growth regulators",
-        "Crop protection products"
-      ],
-      specifications: {
-        "Purity": "≥98%",
-        "Water Content": "≤0.5%",
-        "Residual Solvents": "≤100 ppm",
-        "Heavy Metals": "≤20 ppm",
-        "Particle Size": "Fine powder"
-      },
-      safetyInfo: [
-        "Handle with appropriate PPE",
-        "Store in secure, ventilated area",
-        "Avoid environmental release",
-        "Follow regulatory guidelines"
-      ],
-      packaging: [
-        "25 kg fiber drums",
-        "200 kg steel drums",
-        "500 kg big bags",
-        "Specialized containers"
-      ],
-      storageConditions: "Store at 15-25°C, protect from moisture",
-      shelfLife: "24 months from manufacture",
-      certifications: ["EPA Registered", "REACH Compliant", "GLP Certified"],
-      relatedProducts: [5, 7, 13]
-    },
-    {
-      id: 7,
-      name: "Water Treatment Chemicals",
-      category: "Water Refinary",
-      subcategory: "Base Chemicals",
-      image: "https://jkmchemtrade.com/upload/categories/4471230925113924.jpg",
-      description: "Specialized chemicals for water treatment, purification, and aquaculture applications.",
-      featured: false,
-      hsCode: "3824",
-      casNumber: "Various",
-      chemicalFormula: "Water treatment compounds",
-      molecularWeight: "Variable",
-      purity: "≥99%",
-      appearance: "White powder/liquid",
-      solubility: "Water soluble",
-      applications: [
-        "Water purification",
-        "Wastewater treatment",
-        "Swimming pool chemicals",
-        "Aquaculture applications",
-        "Industrial water treatment"
-      ],
-      specifications: {
-        "Purity": "≥99%",
-        "pH": "6.0-8.0",
-        "Chlorine Content": "≥65%",
-        "Moisture": "≤1%",
-        "Insoluble Matter": "≤0.1%"
-      },
-      safetyInfo: [
-        "Avoid mixing with acids",
-        "Store in dry, cool place",
-        "Use proper ventilation",
-        "Wear protective equipment"
-      ],
-      packaging: [
-        "25 kg HDPE bags",
-        "50 kg plastic drums",
-        "500 kg big bags",
-        "Bulk delivery available"
-      ],
-      storageConditions: "Store below 30°C, protect from moisture",
-      shelfLife: "12 months from manufacture",
-      certifications: ["NSF Certified", "EPA Approved", "WHO Standards"],
-      relatedProducts: [1, 4, 14]
-    },
-    {
-      id: 8,
-      name: "Industrial Polymers",
-      category: "Polymers",
-      subcategory: "Industrial Polymers",
-      image: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-performance polymers and resins for industrial manufacturing and specialized applications.",
-      featured: false,
-      hsCode: "3901",
-      casNumber: "Various",
-      chemicalFormula: "Polymer chains",
-      molecularWeight: "High molecular weight",
-      purity: "≥99%",
-      appearance: "Pellets/powder",
-      solubility: "Organic solvents",
-      applications: [
-        "Plastic manufacturing",
-        "Composite materials",
-        "Adhesive production",
-        "Coating applications",
-        "Engineering plastics"
-      ],
-      specifications: {
-        "Purity": "≥99%",
-        "Melt Index": "Variable",
-        "Density": "0.9-1.4 g/cm³",
-        "Tensile Strength": "High",
-        "Thermal Stability": "Excellent"
-      },
-      safetyInfo: [
-        "Avoid high temperatures during storage",
-        "Use dust masks when handling powder",
-        "Store away from oxidizing agents",
-        "Ensure proper ventilation"
-      ],
-      packaging: [
-        "25 kg paper bags",
-        "500 kg big bags",
-        "1000 kg octabins",
-        "Bulk delivery available"
-      ],
-      storageConditions: "Store at room temperature, protect from UV",
-      shelfLife: "60 months from manufacture",
-      certifications: ["ISO 9001", "REACH Registered", "RoHS Compliant"],
-      relatedProducts: [1, 4, 9]
-    },
-    {
-      id: 9,
-      name: "Chemical Intermediates",
-      category: "Upper Chemicals",
-      subcategory: "Various Industries",
-      image: "https://www.thoughtco.com/thmb/X4xEq_SMbjth5zJgBkOjGetWw3k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/scientist-pouring-iron-chloride-into-beaker-of-potassium-thiocyanate-702545775-58cc47493df78c3c4fa0bdef.jpg",
-      description: "Essential chemical intermediates for pharmaceutical, agrochemical, and specialty chemical manufacturing.",
-      featured: false,
-      hsCode: "2918",
-      casNumber: "Various",
-      chemicalFormula: "Organic intermediates",
-      molecularWeight: "Variable",
-      purity: "≥99%",
-      appearance: "Crystalline solid",
-      solubility: "Organic solvents",
-      applications: [
-        "Pharmaceutical synthesis",
-        "Agrochemical production",
-        "Dye manufacturing",
-        "Specialty chemicals",
-        "Research applications"
-      ],
-      specifications: {
-        "Purity": "≥99%",
-        "Water Content": "≤0.2%",
-        "Heavy Metals": "≤10 ppm",
-        "Residual Solvents": "≤50 ppm",
-        "Melting Point": "As specified"
-      },
-      safetyInfo: [
-        "Handle in fume hood",
-        "Use appropriate PPE",
-        "Store under inert atmosphere",
-        "Avoid contact with skin and eyes"
-      ],
-      packaging: [
-        "1 kg aluminum bottles",
-        "25 kg fiber drums",
-        "Custom packaging available",
-        "Inert atmosphere packaging"
-      ],
-      storageConditions: "Store at 2-8°C under inert atmosphere",
-      shelfLife: "24 months under proper conditions",
-      certifications: ["GMP Certified", "ICH Guidelines", "cGMP Compliant"],
-      relatedProducts: [4, 6, 11]
-    },
-    {
-      id: 10,
-      name: "Animal Feed Additives",
-      category: "Animal Feed",
-      subcategory: "Animal Supplement",
+      name: "Calcium Carbonate",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Feed Additives",
       image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
-      description: "Nutritional additives and supplements for cattle, poultry, and livestock feed formulations.",
+      description: "Essential calcium supplement for animal nutrition and feed formulations.",
       featured: false,
-      hsCode: "2309",
-      casNumber: "Various",
-      chemicalFormula: "Feed additives",
-      molecularWeight: "Variable",
-      purity: "Feed grade",
-      appearance: "Powder/granules",
-      solubility: "Water dispersible",
-      applications: [
-        "Cattle feed supplementation",
-        "Poultry nutrition",
-        "Swine feed additives",
-        "Aquaculture feeds",
-        "Pet food ingredients"
-      ],
+      chemicalFormula: "CaCO3",
+      casNumber: "471-34-1",
+      hsCode: "2836.50.00",
+      purity: "98.5%",
+      applications: ["Animal feed supplement", "Poultry nutrition", "Cattle feed", "Aquaculture"],
       specifications: {
-        "Purity": "Feed Grade",
-        "Moisture": "≤10%",
-        "Protein Content": "≥40%",
-        "Fat Content": "≤5%",
-        "Ash Content": "≤8%"
+        appearance: "White powder",
+        solubility: "Slightly soluble in water",
+        density: "2.71 g/cm³",
+        ph: "8.0-10.0"
       },
-      safetyInfo: [
-        "Safe for animal consumption",
-        "Store in dry conditions",
-        "Prevent rodent contamination",
-        "Follow feeding guidelines"
-      ],
-      packaging: [
-        "25 kg paper bags",
-        "50 kg woven bags",
-        "500 kg big bags",
-        "Bulk delivery available"
-      ],
-      storageConditions: "Store in cool, dry place below 25°C",
-      shelfLife: "18 months from manufacture",
-      certifications: ["Feed Grade", "HACCP", "ISO 22000"],
-      relatedProducts: [5, 6, 15]
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Feed grade quality", "Store in dry conditions", "Avoid contamination"]
     },
     {
-      id: 11,
-      name: "Cosmetic Active Ingredients",
-      category: "Natural Products",
-      subcategory: "Active Ingredients",
-      image: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Premium active ingredients for cosmetic formulations, including anti-aging and skin care compounds.",
+      id: 501,
+      name: "Dicalcium Phosphate",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Mineral Supplements",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential phosphorus and calcium source for animal nutrition.",
       featured: false,
-      hsCode: "3304",
-      casNumber: "Various",
-      chemicalFormula: "Cosmetic actives",
-      molecularWeight: "Variable",
-      purity: "≥95%",
-      appearance: "White powder",
-      solubility: "Water/oil soluble",
-      applications: [
-        "Anti-aging creams",
-        "Skin whitening products",
-        "Sunscreen formulations",
-        "Hair care products",
-        "Makeup formulations"
-      ],
+      chemicalFormula: "CaHPO4",
+      casNumber: "7757-93-9",
+      hsCode: "2835.25.00",
+      purity: "98%",
+      applications: ["Poultry feed", "Cattle nutrition", "Swine feed", "Aquaculture"],
       specifications: {
-        "Purity": "≥95%",
-        "Heavy Metals": "≤5 ppm",
-        "Microbiological": "Compliant",
-        "pH": "4.0-7.0",
-        "Loss on Drying": "≤5%"
+        appearance: "White powder",
+        solubility: "Slightly soluble in water",
+        density: "2.32 g/cm³",
+        ph: "7.0-8.0"
       },
-      safetyInfo: [
-        "Dermatologically tested",
-        "Non-comedogenic",
-        "Hypoallergenic",
-        "Safe for topical use"
-      ],
-      packaging: [
-        "1 kg aluminum containers",
-        "5 kg plastic drums",
-        "25 kg fiber drums",
-        "Custom packaging"
-      ],
-      storageConditions: "Store below 25°C, protect from light",
-      shelfLife: "36 months from manufacture",
-      certifications: ["COSMOS", "Ecocert", "INCI Listed"],
-      relatedProducts: [2, 12, 16]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Store in dry place", "Essential mineral supplement"]
     },
     {
-      id: 12,
-      name: "Fragrance Compounds",
-      category: "Flavours & Fragrances",
-      subcategory: "Aromatic Compounds",
-      image: "https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-quality fragrance compounds and aromatic chemicals for perfume and cosmetic applications.",
+      id: 502,
+      name: "Monocalcium Phosphate",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Mineral Supplements",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Highly bioavailable phosphorus source for animal feeds.",
       featured: false,
-      hsCode: "3302",
-      casNumber: "Various",
-      chemicalFormula: "Aromatic compounds",
-      molecularWeight: "Variable",
-      purity: "≥98%",
-      appearance: "Liquid/solid",
-      solubility: "Alcohol soluble",
-      applications: [
-        "Perfume manufacturing",
-        "Cosmetic fragrances",
-        "Household products",
-        "Personal care items",
-        "Air fresheners"
-      ],
+      chemicalFormula: "Ca(H2PO4)2",
+      casNumber: "7758-23-8",
+      hsCode: "2835.24.00",
+      purity: "98%",
+      applications: ["Poultry starter feeds", "Young animal nutrition", "Aquaculture", "Pet food"],
       specifications: {
-        "Purity": "≥98%",
-        "Specific Gravity": "Variable",
-        "Refractive Index": "As specified",
-        "Flash Point": ">60°C",
-        "Color": "Colorless to pale yellow"
+        appearance: "White granular powder",
+        solubility: "Soluble in water",
+        density: "2.22 g/cm³",
+        ph: "3.5-4.5"
       },
-      safetyInfo: [
-        "Store away from heat sources",
-        "Use in well-ventilated areas",
-        "Avoid skin sensitization",
-        "Follow IFRA guidelines"
-      ],
-      packaging: [
-        "1 kg glass bottles",
-        "25 kg steel drums",
-        "200 kg steel drums",
-        "Specialized containers"
-      ],
-      storageConditions: "Store at 15-25°C, protect from light",
-      shelfLife: "24 months from manufacture",
-      certifications: ["IFRA Compliant", "REACH Registered", "Kosher Certified"],
-      relatedProducts: [2, 11, 17]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Acidic nature", "Handle with care"]
     },
     {
-      id: 13,
-      name: "Pharmaceutical Excipients",
-      category: "Upper Chemicals",
-      subcategory: "Pharmaceutical",
-      image: "https://images.pexels.com/photos/3786126/pexels-photo-3786126.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-quality pharmaceutical excipients and inactive ingredients for drug formulation and manufacturing.",
+      id: 503,
+      name: "Salt (Sodium Chloride)",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Mineral Supplements",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential electrolyte for animal health and feed palatability.",
       featured: false,
-      hsCode: "3003",
-      casNumber: "Various",
-      chemicalFormula: "Pharmaceutical compounds",
-      molecularWeight: "Variable",
-      purity: "USP/EP grade",
-      appearance: "White powder",
-      solubility: "Variable",
-      applications: [
-        "Tablet manufacturing",
-        "Capsule formulations",
-        "Injectable preparations",
-        "Topical formulations",
-        "Oral solutions"
-      ],
+      chemicalFormula: "NaCl",
+      casNumber: "7647-14-5",
+      hsCode: "2501.00.00",
+      purity: "99%",
+      applications: ["Feed additive", "Electrolyte balance", "Feed palatability", "Preservation"],
       specifications: {
-        "Purity": "USP/EP Grade",
-        "Heavy Metals": "≤10 ppm",
-        "Loss on Drying": "≤5%",
-        "Residue on Ignition": "≤0.1%",
-        "Microbiological": "Compliant"
+        appearance: "White crystalline powder",
+        solubility: "Highly soluble in water",
+        density: "2.16 g/cm³",
+        ph: "7.0"
       },
-      safetyInfo: [
-        "GMP manufacturing conditions",
-        "Pharmaceutical grade quality",
-        "Suitable for human consumption",
-        "Compliant with pharmacopeias"
-      ],
-      packaging: [
-        "25 kg fiber drums",
-        "500 kg big bags",
-        "Custom pharmaceutical packaging",
-        "Sterile packaging available"
-      ],
-      storageConditions: "Store in controlled environment, 15-25°C",
-      shelfLife: "60 months from manufacture",
-      certifications: ["GMP Certified", "FDA DMF", "CEP Available"],
-      relatedProducts: [9, 14, 18]
+      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
+      safetyInfo: ["Feed grade", "Store in dry place", "Essential mineral"]
     },
     {
-      id: 14,
-      name: "Textile Chemicals",
-      category: "Industrial Products",
-      subcategory: "Textile Processing",
-      image: "https://images.pexels.com/photos/6069112/pexels-photo-6069112.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Specialized chemicals for textile processing, dyeing, and finishing applications.",
+      id: 504,
+      name: "Magnesium Oxide",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Mineral Supplements",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Magnesium supplement for preventing grass tetany in ruminants.",
       featured: false,
-      hsCode: "3809",
-      casNumber: "Various",
-      chemicalFormula: "Textile auxiliaries",
-      molecularWeight: "Variable",
-      purity: "≥95%",
-      appearance: "Liquid/powder",
-      solubility: "Water soluble",
-      applications: [
-        "Fabric dyeing",
-        "Textile finishing",
-        "Fabric softening",
-        "Water repellent treatments",
-        "Anti-microbial treatments"
-      ],
+      chemicalFormula: "MgO",
+      casNumber: "1309-48-4",
+      hsCode: "2519.90.00",
+      purity: "95%",
+      applications: ["Cattle feed", "Sheep nutrition", "Goat feed", "Ruminant supplements"],
       specifications: {
-        "Purity": "≥95%",
-        "pH": "6.0-8.0",
-        "Ionic Nature": "As specified",
-        "Solubility": "Complete",
-        "Stability": "Excellent"
+        appearance: "White powder",
+        solubility: "Slightly soluble in water",
+        density: "3.58 g/cm³",
+        ph: "10.3"
       },
-      safetyInfo: [
-        "Use appropriate ventilation",
-        "Avoid skin and eye contact",
-        "Store away from incompatibles",
-        "Follow textile industry guidelines"
-      ],
-      packaging: [
-        "25 kg plastic drums",
-        "200 kg steel drums",
-        "1000 kg IBC containers",
-        "Bulk delivery available"
-      ],
-      storageConditions: "Store at 10-40°C, protect from freezing",
-      shelfLife: "12 months from manufacture",
-      certifications: ["OEKO-TEX", "ZDHC Compliant", "ISO 14001"],
-      relatedProducts: [1, 7, 19]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Alkaline material", "Store in dry place"]
     },
     {
-      id: 15,
-      name: "Veterinary APIs",
-      category: "Animal Feed",
-      subcategory: "Veterinary Medicine",
-      image: "https://images.pexels.com/photos/6235234/pexels-photo-6235234.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Active pharmaceutical ingredients for veterinary medicines and animal health products.",
+      id: 505,
+      name: "Zinc Oxide",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Trace Minerals",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential zinc supplement for animal growth and immunity.",
       featured: false,
-      hsCode: "3004",
-      casNumber: "Various",
-      chemicalFormula: "Veterinary APIs",
-      molecularWeight: "Variable",
-      purity: "≥99%",
-      appearance: "Crystalline powder",
-      solubility: "Variable",
-      applications: [
-        "Veterinary medicines",
-        "Animal antibiotics",
-        "Growth promoters",
-        "Anti-parasitic drugs",
-        "Nutritional supplements"
-      ],
+      chemicalFormula: "ZnO",
+      casNumber: "1314-13-2",
+      hsCode: "2817.00.00",
+      purity: "99%",
+      applications: ["Piglet feed", "Poultry nutrition", "Cattle supplements", "Aquaculture"],
       specifications: {
-        "Purity": "≥99%",
-        "Heavy Metals": "≤20 ppm",
-        "Residual Solvents": "≤100 ppm",
-        "Water Content": "≤0.5%",
-        "Related Substances": "≤1%"
+        appearance: "White powder",
+        solubility: "Insoluble in water",
+        density: "5.61 g/cm³",
+        meltingPoint: "1975°C"
       },
-      safetyInfo: [
-        "Handle with appropriate PPE",
-        "Store under controlled conditions",
-        "Follow veterinary guidelines",
-        "Prevent cross-contamination"
-      ],
-      packaging: [
-        "1 kg aluminum bottles",
-        "25 kg fiber drums",
-        "Custom pharmaceutical packaging",
-        "Controlled atmosphere packaging"
-      ],
-      storageConditions: "Store at 2-8°C, protect from light",
-      shelfLife: "36 months under proper conditions",
-      certifications: ["GMP Certified", "Veterinary Grade", "FDA Approved"],
-      relatedProducts: [10, 13, 20]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Essential trace mineral", "Avoid overdosing"]
     },
     {
-      id: 16,
-      name: "Natural Extracts",
-      category: "Natural Products",
-      subcategory: "Plant Extracts",
-      image: "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Premium natural plant extracts for cosmetic, pharmaceutical, and nutraceutical applications.",
+      id: 506,
+      name: "Iron Sulfate",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Trace Minerals",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Iron supplement for preventing anemia in animals.",
       featured: false,
-      hsCode: "1302",
-      casNumber: "Various",
-      chemicalFormula: "Natural compounds",
-      molecularWeight: "Variable",
-      purity: "≥95%",
-      appearance: "Brown powder",
-      solubility: "Water/alcohol soluble",
-      applications: [
-        "Herbal medicines",
-        "Cosmetic formulations",
-        "Dietary supplements",
-        "Functional foods",
-        "Traditional medicines"
-      ],
+      chemicalFormula: "FeSO4·7H2O",
+      casNumber: "7782-63-0",
+      hsCode: "2833.21.00",
+      purity: "98%",
+      applications: ["Piglet feed", "Poultry nutrition", "Cattle supplements", "Iron deficiency prevention"],
       specifications: {
-        "Purity": "≥95%",
-        "Active Content": "As specified",
-        "Heavy Metals": "≤10 ppm",
-        "Pesticide Residues": "≤0.1 ppm",
-        "Microbiological": "Compliant"
+        appearance: "Blue-green crystals",
+        solubility: "Soluble in water",
+        density: "1.9 g/cm³",
+        ph: "3.0-4.0"
       },
-      safetyInfo: [
-        "Natural and safe ingredients",
-        "No synthetic additives",
-        "Sustainably sourced",
-        "Quality tested extracts"
-      ],
-      packaging: [
-        "1 kg aluminum bags",
-        "25 kg fiber drums",
-        "Custom packaging available",
-        "Nitrogen flushed packaging"
-      ],
-      storageConditions: "Store below 25°C, protect from light and moisture",
-      shelfLife: "24 months from manufacture",
-      certifications: ["Organic Certified", "Fair Trade", "Kosher Certified"],
-      relatedProducts: [2, 11, 21]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Acidic solution", "Store in dry place"]
     },
     {
-      id: 17,
-      name: "Essential Oils",
-      category: "Flavours & Fragrances",
-      subcategory: "Natural Oils",
-      image: "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Pure essential oils extracted from natural sources for aromatherapy, cosmetics, and flavoring applications.",
+      id: 507,
+      name: "Copper Sulfate",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Trace Minerals",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Copper supplement for animal growth and enzyme function.",
       featured: false,
-      hsCode: "3301",
-      casNumber: "Various",
-      chemicalFormula: "Natural oil compounds",
-      molecularWeight: "Variable",
-      purity: "100% pure",
-      appearance: "Clear to colored liquid",
-      solubility: "Oil soluble",
-      applications: [
-        "Aromatherapy products",
-        "Natural perfumes",
-        "Cosmetic formulations",
-        "Food flavoring",
-        "Therapeutic applications"
-      ],
+      chemicalFormula: "CuSO4·5H2O",
+      casNumber: "7758-99-8",
+      hsCode: "2833.25.00",
+      purity: "98%",
+      applications: ["Cattle feed", "Sheep nutrition", "Poultry supplements", "Hoof health"],
       specifications: {
-        "Purity": "100% Pure",
-        "Specific Gravity": "As specified",
-        "Refractive Index": "As specified",
-        "Optical Rotation": "As specified",
-        "Flash Point": ">60°C"
+        appearance: "Blue crystals",
+        solubility: "Soluble in water",
+        density: "2.28 g/cm³",
+        ph: "3.5-4.5"
       },
-      safetyInfo: [
-        "Natural and pure oils",
-        "Patch test before use",
-        "Store away from heat",
-        "Use as directed"
-      ],
-      packaging: [
-        "100 ml amber bottles",
-        "1 kg aluminum bottles",
-        "25 kg steel drums",
-        "Custom packaging"
-      ],
-      storageConditions: "Store at 15-25°C, protect from light",
-      shelfLife: "36 months from manufacture",
-      certifications: ["Organic Certified", "GC-MS Tested", "Therapeutic Grade"],
-      relatedProducts: [12, 16, 22]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Toxic in excess", "Use precise dosing"]
     },
     {
-      id: 18,
-      name: "Laboratory Reagents",
-      category: "Upper Chemicals",
-      subcategory: "Analytical Grade",
-      image: "https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-purity laboratory reagents and analytical grade chemicals for research and testing applications.",
+      id: 508,
+      name: "Manganese Oxide",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Trace Minerals",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Manganese supplement for bone development and reproduction.",
       featured: false,
-      hsCode: "3822",
-      casNumber: "Various",
-      chemicalFormula: "Analytical compounds",
-      molecularWeight: "Variable",
-      purity: "≥99.9%",
-      appearance: "Various",
-      solubility: "Variable",
-      applications: [
-        "Analytical testing",
-        "Research applications",
-        "Quality control",
-        "Method development",
-        "Educational purposes"
-      ],
+      chemicalFormula: "MnO",
+      casNumber: "1344-43-0",
+      hsCode: "2820.10.00",
+      purity: "95%",
+      applications: ["Poultry feed", "Cattle nutrition", "Swine feed", "Bone development"],
       specifications: {
-        "Purity": "≥99.9%",
-        "Water Content": "≤0.01%",
-        "Heavy Metals": "≤1 ppm",
-        "Chloride": "≤1 ppm",
-        "Sulfate": "≤1 ppm"
+        appearance: "Brown-black powder",
+        solubility: "Insoluble in water",
+        density: "5.37 g/cm³",
+        meltingPoint: "1842°C"
       },
-      safetyInfo: [
-        "Handle in laboratory conditions",
-        "Use appropriate safety equipment",
-        "Store according to chemical compatibility",
-        "Follow laboratory protocols"
-      ],
-      packaging: [
-        "100 g glass bottles",
-        "1 kg plastic bottles",
-        "25 kg containers",
-        "Custom laboratory packaging"
-      ],
-      storageConditions: "Store according to individual requirements",
-      shelfLife: "Variable, typically 3-5 years",
-      certifications: ["ACS Grade", "ISO 17025", "Analytical Grade"],
-      relatedProducts: [9, 13, 23]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Essential trace mineral", "Avoid dust inhalation"]
     },
     {
-      id: 19,
-      name: "Cleaning Chemicals",
-      category: "Industrial Products",
-      subcategory: "Cleaning Agents",
-      image: "https://images.pexels.com/photos/4099354/pexels-photo-4099354.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Industrial and commercial cleaning chemicals for various cleaning and sanitization applications.",
+      id: 509,
+      name: "Cobalt Carbonate",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Trace Minerals",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Cobalt supplement for vitamin B12 synthesis in ruminants.",
       featured: false,
-      hsCode: "3402",
-      casNumber: "Various",
-      chemicalFormula: "Cleaning compounds",
-      molecularWeight: "Variable",
-      purity: "≥95%",
-      appearance: "Liquid/powder",
-      solubility: "Water soluble",
-      applications: [
-        "Industrial cleaning",
-        "Commercial sanitization",
-        "Equipment cleaning",
-        "Surface disinfection",
-        "Maintenance cleaning"
-      ],
+      chemicalFormula: "CoCO3",
+      casNumber: "513-79-1",
+      hsCode: "2836.99.00",
+      purity: "98%",
+      applications: ["Cattle feed", "Sheep nutrition", "Goat supplements", "Vitamin B12 synthesis"],
       specifications: {
-        "Purity": "≥95%",
-        "pH": "Variable",
-        "Active Content": "≥10%",
-        "Foam Level": "As specified",
-        "Stability": "Excellent"
+        appearance: "Pink powder",
+        solubility: "Insoluble in water",
+        density: "4.13 g/cm³",
+        meltingPoint: "427°C"
       },
-      safetyInfo: [
-        "Use appropriate PPE",
-        "Ensure adequate ventilation",
-        "Avoid mixing with other chemicals",
-        "Follow safety data sheets"
-      ],
-      packaging: [
-        "5 kg plastic containers",
-        "25 kg plastic drums",
-        "200 kg steel drums",
-        "Bulk delivery available"
-      ],
-      storageConditions: "Store at 5-40°C, protect from freezing",
-      shelfLife: "24 months from manufacture",
-      certifications: ["EPA Registered", "NSF Listed", "Green Certified"],
-      relatedProducts: [1, 7, 14]
+      packaging: ["25kg bags", "100kg drums"],
+      safetyInfo: ["Feed grade", "Use in small quantities", "Essential for ruminants"]
     },
     {
-      id: 20,
-      name: "Nutraceutical Ingredients",
-      category: "Food Feed",
-      subcategory: "Health Supplements",
-      image: "https://images.pexels.com/photos/3683107/pexels-photo-3683107.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Premium nutraceutical ingredients for dietary supplements and functional food applications.",
+      id: 510,
+      name: "Selenium Yeast",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Organic Minerals",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Organic selenium supplement for antioxidant function.",
       featured: false,
-      hsCode: "2106",
+      chemicalFormula: "Organic Se",
       casNumber: "Various",
-      chemicalFormula: "Nutraceutical compounds",
-      molecularWeight: "Variable",
-      purity: "≥98%",
-      appearance: "Powder/granules",
-      solubility: "Water soluble",
-      applications: [
-        "Dietary supplements",
-        "Functional foods",
-        "Health beverages",
-        "Nutritional bars",
-        "Wellness products"
-      ],
+      hsCode: "2106.90.00",
+      purity: "0.2% Se",
+      applications: ["Poultry feed", "Cattle nutrition", "Swine feed", "Antioxidant support"],
       specifications: {
-        "Purity": "≥98%",
-        "Heavy Metals": "≤10 ppm",
-        "Microbiological": "Compliant",
-        "Moisture": "≤5%",
-        "Particle Size": "80-120 mesh"
+        appearance: "Light brown powder",
+        solubility: "Partially soluble in water",
+        density: "1.4 g/cm³",
+        ph: "6.0-7.0"
       },
-      safetyInfo: [
-        "Safe for human consumption",
-        "GRAS status ingredients",
-        "No harmful additives",
-        "Quality assured products"
-      ],
-      packaging: [
-        "1 kg aluminum bags",
-        "25 kg fiber drums",
-        "Custom packaging available",
-        "Tamper-evident packaging"
-      ],
-      storageConditions: "Store in cool, dry place below 25°C",
-      shelfLife: "36 months from manufacture",
-      certifications: ["GMP Certified", "Organic Certified", "Non-GMO"],
-      relatedProducts: [5, 15, 16]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Organic form", "Better bioavailability"]
     },
     {
-      id: 21,
-      name: "Herbal Powders",
-      category: "Natural Products",
-      subcategory: "Herbal Medicine",
-      image: "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Traditional herbal powders and medicinal plant preparations for therapeutic and wellness applications.",
+      id: 511,
+      name: "Chromium Yeast",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Organic Minerals",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Organic chromium for glucose metabolism in animals.",
       featured: false,
-      hsCode: "1211",
+      chemicalFormula: "Organic Cr",
       casNumber: "Various",
-      chemicalFormula: "Herbal compounds",
-      molecularWeight: "Variable",
-      purity: "≥95%",
-      appearance: "Fine powder",
-      solubility: "Water extractable",
-      applications: [
-        "Traditional medicine",
-        "Herbal supplements",
-        "Ayurvedic preparations",
-        "Tea blends",
-        "Wellness products"
-      ],
+      hsCode: "2106.90.00",
+      purity: "0.1% Cr",
+      applications: ["Dairy cattle", "Beef cattle", "Swine nutrition", "Glucose metabolism"],
       specifications: {
-        "Purity": "≥95%",
-        "Moisture": "≤10%",
-        "Ash Content": "≤15%",
-        "Heavy Metals": "≤20 ppm",
-        "Microbiological": "Compliant"
+        appearance: "Light brown powder",
+        solubility: "Partially soluble in water",
+        density: "1.3 g/cm³",
+        ph: "6.0-7.0"
       },
-      safetyInfo: [
-        "Natural herbal ingredients",
-        "Traditionally used herbs",
-        "Quality tested materials",
-        "Safe for consumption"
-      ],
-      packaging: [
-        "1 kg aluminum bags",
-        "25 kg fiber drums",
-        "Custom herbal packaging",
-        "Moisture-proof packaging"
-      ],
-      storageConditions: "Store in cool, dry place below 25°C",
-      shelfLife: "24 months from manufacture",
-      certifications: ["Organic Certified", "Ayush Licensed", "GMP Certified"],
-      relatedProducts: [16, 17, 20]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Organic chelated form", "Improved absorption"]
     },
     {
-      id: 22,
-      name: "Flavor Enhancers",
-      category: "Flavours & Fragrances",
-      subcategory: "Food Flavoring",
-      image: "https://images.pexels.com/photos/4110251/pexels-photo-4110251.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Natural and artificial flavor enhancers for food and beverage applications.",
+      id: 512,
+      name: "Lysine HCl",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Amino Acids",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential amino acid for protein synthesis and growth.",
       featured: false,
-      hsCode: "3302",
-      casNumber: "Various",
-      chemicalFormula: "Flavor compounds",
-      molecularWeight: "Variable",
-      purity: "Food grade",
-      appearance: "Liquid/powder",
-      solubility: "Water/oil soluble",
-      applications: [
-        "Food flavoring",
-        "Beverage enhancement",
-        "Confectionery products",
-        "Bakery applications",
-        "Snack foods"
-      ],
+      chemicalFormula: "C6H14N2O2·HCl",
+      casNumber: "657-27-2",
+      hsCode: "2922.41.00",
+      purity: "98.5%",
+      applications: ["Poultry feed", "Swine nutrition", "Aquaculture", "Pet food"],
       specifications: {
-        "Purity": "Food Grade",
-        "Heavy Metals": "≤5 ppm",
-        "Arsenic": "≤1 ppm",
-        "Lead": "≤2 ppm",
-        "Microbiological": "Compliant"
+        appearance: "White crystalline powder",
+        solubility: "Freely soluble in water",
+        meltingPoint: "263-264°C",
+        ph: "5.0-6.0"
       },
-      safetyInfo: [
-        "GRAS status ingredients",
-        "Safe for food use",
-        "No harmful additives",
-        "Compliant with food regulations"
-      ],
-      packaging: [
-        "1 kg plastic bottles",
-        "25 kg steel drums",
-        "Custom food-grade packaging",
-        "Tamper-evident containers"
-      ],
-      storageConditions: "Store at 15-25°C, protect from light",
-      shelfLife: "24 months from manufacture",
-      certifications: ["FDA Approved", "FEMA GRAS", "Kosher Certified"],
-      relatedProducts: [3, 17, 20]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Essential amino acid", "Store in dry place"]
     },
     {
-      id: 23,
-      name: "Specialty Catalysts",
-      category: "Upper Chemicals",
-      subcategory: "Catalysts",
-      image: "https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "High-performance catalysts for chemical synthesis and industrial processes.",
+      id: 513,
+      name: "Methionine",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Amino Acids",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Sulfur-containing amino acid for feather and wool development.",
       featured: false,
-      hsCode: "3815",
-      casNumber: "Various",
-      chemicalFormula: "Catalyst compounds",
-      molecularWeight: "Variable",
-      purity: "≥99%",
-      appearance: "Powder/pellets",
-      solubility: "Variable",
-      applications: [
-        "Chemical synthesis",
-        "Polymerization reactions",
-        "Pharmaceutical manufacturing",
-        "Petrochemical processes",
-        "Fine chemical production"
-      ],
+      chemicalFormula: "C5H11NO2S",
+      casNumber: "63-68-3",
+      hsCode: "2930.40.00",
+      purity: "99%",
+      applications: ["Poultry feed", "Cattle nutrition", "Sheep feed", "Aquaculture"],
       specifications: {
-        "Purity": "≥99%",
-        "Surface Area": "High",
-        "Activity": "Excellent",
-        "Selectivity": "High",
-        "Stability": "Excellent"
+        appearance: "White crystalline powder",
+        solubility: "Soluble in water",
+        meltingPoint: "281°C",
+        ph: "5.6-6.1"
       },
-      safetyInfo: [
-        "Handle under inert atmosphere",
-        "Use appropriate PPE",
-        "Store in dry conditions",
-        "Avoid contamination"
-      ],
-      packaging: [
-        "1 kg aluminum bottles",
-        "25 kg steel drums",
-        "Custom catalyst packaging",
-        "Inert atmosphere packaging"
-      ],
-      storageConditions: "Store under inert atmosphere, 15-25°C",
-      shelfLife: "36 months under proper conditions",
-      certifications: ["ISO 9001", "Technical Grade", "Research Grade"],
-      relatedProducts: [9, 18, 24]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Essential amino acid", "Sulfur source"]
     },
     {
-      id: 24,
-      name: "Electronic Chemicals",
-      category: "Industrial Products",
-      subcategory: "Electronics",
-      image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Ultra-pure chemicals for semiconductor and electronic component manufacturing.",
+      id: 514,
+      name: "Threonine",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Amino Acids",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential amino acid for intestinal health and immunity.",
       featured: false,
-      hsCode: "3824",
-      casNumber: "Various",
-      chemicalFormula: "Electronic grade compounds",
-      molecularWeight: "Variable",
-      purity: "≥99.99%",
-      appearance: "Various",
-      solubility: "Variable",
-      applications: [
-        "Semiconductor manufacturing",
-        "PCB production",
-        "Electronic cleaning",
-        "Etching processes",
-        "Component fabrication"
-      ],
+      chemicalFormula: "C4H9NO3",
+      casNumber: "72-19-5",
+      hsCode: "2922.49.00",
+      purity: "98.5%",
+      applications: ["Poultry feed", "Swine nutrition", "Aquaculture", "Young animal feeds"],
       specifications: {
-        "Purity": "≥99.99%",
-        "Metal Impurities": "≤1 ppm",
-        "Particle Count": "Ultra-low",
-        "Water Content": "≤10 ppm",
-        "Conductivity": "Ultra-pure"
+        appearance: "White crystalline powder",
+        solubility: "Freely soluble in water",
+        meltingPoint: "255-257°C",
+        ph: "5.2-6.2"
       },
-      safetyInfo: [
-        "Handle in cleanroom environment",
-        "Use ultra-pure containers",
-        "Prevent contamination",
-        "Follow semiconductor protocols"
-      ],
-      packaging: [
-        "1 L ultra-pure bottles",
-        "25 L containers",
-        "Custom cleanroom packaging",
-        "Contamination-free packaging"
-      ],
-      storageConditions: "Store in cleanroom conditions, 15-25°C",
-      shelfLife: "12 months from manufacture",
-      certifications: ["Electronic Grade", "SEMI Standards", "ISO 14644"],
-      relatedProducts: [1, 18, 23]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Essential amino acid", "Supports gut health"]
     },
     {
-      id: 25,
-      name: "Ceramic Materials",
-      category: "Industrial Products",
-      subcategory: "Advanced Materials",
-      image: "https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Advanced ceramic materials and precursors for high-temperature and specialty applications.",
+      id: 515,
+      name: "Tryptophan",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Amino Acids",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential amino acid for serotonin synthesis and behavior.",
       featured: false,
-      hsCode: "6909",
-      casNumber: "Various",
-      chemicalFormula: "Ceramic compounds",
-      molecularWeight: "Variable",
-      purity: "≥99%",
-      appearance: "Powder",
-      solubility: "Insoluble",
-      applications: [
-        "Advanced ceramics",
-        "Refractory materials",
-        "Electronic ceramics",
-        "Bioceramics",
-        "Structural ceramics"
-      ],
+      chemicalFormula: "C11H12N2O2",
+      casNumber: "73-22-3",
+      hsCode: "2933.99.00",
+      purity: "98%",
+      applications: ["Swine feed", "Poultry nutrition", "Stress reduction", "Behavior modification"],
       specifications: {
-        "Purity": "≥99%",
-        "Particle Size": "Submicron",
-        "Surface Area": "High",
-        "Thermal Stability": "Excellent",
-        "Chemical Inertness": "High"
+        appearance: "White to off-white powder",
+        solubility: "Slightly soluble in water",
+        meltingPoint: "289°C",
+        ph: "5.5-7.0"
       },
-      safetyInfo: [
-        "Avoid inhalation of dust",
-        "Use dust masks",
-        "Store in dry conditions",
-        "Handle with care"
-      ],
-      packaging: [
-        "25 kg paper bags",
-        "500 kg big bags",
-        "Custom ceramic packaging",
-        "Moisture-proof packaging"
-      ],
-      storageConditions: "Store in dry place, protect from moisture",
-      shelfLife: "Indefinite under proper storage",
-      certifications: ["Technical Grade", "ISO 9001", "Advanced Materials"],
-      relatedProducts: [8, 23, 24]
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Light sensitive", "Store protected from light"]
+    },
+    {
+      id: 516,
+      name: "Choline Chloride",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Vitamins",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential nutrient for fat metabolism and liver function.",
+      featured: false,
+      chemicalFormula: "C5H14ClNO",
+      casNumber: "67-48-1",
+      hsCode: "2923.10.00",
+      purity: "60%",
+      applications: ["Poultry feed", "Swine nutrition", "Cattle feed", "Aquaculture"],
+      specifications: {
+        appearance: "Brown hygroscopic powder",
+        solubility: "Freely soluble in water",
+        density: "1.2 g/cm³",
+        ph: "6.5-8.5"
+      },
+      packaging: ["25kg bags", "500kg big bags"],
+      safetyInfo: ["Feed grade", "Hygroscopic", "Store in dry place"]
+    },
+    {
+      id: 517,
+      name: "Biotin",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Vitamins",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential B vitamin for hoof health and reproduction.",
+      featured: false,
+      chemicalFormula: "C10H16N2O3S",
+      casNumber: "58-85-5",
+      hsCode: "2936.29.00",
+      purity: "2%",
+      applications: ["Cattle feed", "Swine nutrition", "Hoof health", "Reproduction"],
+      specifications: {
+        appearance: "White to off-white powder",
+        solubility: "Slightly soluble in water",
+        meltingPoint: "232-233°C",
+        ph: "4.5-6.5"
+      },
+      packaging: ["25kg bags", "100kg drums"],
+      safetyInfo: ["Feed grade", "Essential vitamin", "Use in small quantities"]
+    },
+    {
+      id: 518,
+      name: "Vitamin E Acetate",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Vitamins",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Stable form of vitamin E for antioxidant protection.",
+      featured: false,
+      chemicalFormula: "C31H52O3",
+      casNumber: "58-95-7",
+      hsCode: "2936.28.00",
+      purity: "50%",
+      applications: ["Poultry feed", "Cattle nutrition", "Swine feed", "Antioxidant protection"],
+      specifications: {
+        appearance: "Light yellow oil",
+        solubility: "Insoluble in water",
+        density: "0.95 g/cm³",
+        boilingPoint: "200°C"
+      },
+      packaging: ["25kg drums", "200kg drums"],
+      safetyInfo: ["Feed grade", "Light sensitive", "Store in cool place"]
+    },
+    {
+      id: 519,
+      name: "Vitamin A Acetate",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Vitamins",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential vitamin for vision and immune function.",
+      featured: false,
+      chemicalFormula: "C22H32O2",
+      casNumber: "127-47-9",
+      hsCode: "2936.21.00",
+      purity: "1.7 MIU/g",
+      applications: ["Poultry feed", "Cattle nutrition", "Swine feed", "Vision support"],
+      specifications: {
+        appearance: "Light yellow oil",
+        solubility: "Insoluble in water",
+        density: "0.92 g/cm³",
+        boilingPoint: "137-138°C"
+      },
+      packaging: ["25kg drums", "200kg drums"],
+      safetyInfo: ["Feed grade", "Light and air sensitive", "Store under nitrogen"]
+    },
+    {
+      id: 520,
+      name: "Vitamin D3",
+      category: "Cattle & Poultry Feed",
+      subcategory: "Vitamins",
+      image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
+      description: "Essential vitamin for calcium absorption and bone health.",
+      featured: false,
+      chemicalFormula: "C27H44O",
+      casNumber: "67-97-0",
+      hsCode: "2936.29.00",
+      purity: "40 MIU/g",
+      applications: ["Poultry feed", "Cattle nutrition", "Swine feed", "Bone development"],
+      specifications: {
+        appearance: "White crystalline powder",
+        solubility: "Insoluble in water",
+        meltingPoint: "84-85°C",
+        density: "0.97 g/cm³"
+      },
+      packaging: ["25kg drums", "100kg drums"],
+      safetyInfo: ["Feed grade", "Light sensitive", "Use precise dosing"]
     }
   ];
 
-  const product = products.find(p => p.id === parseInt(id || '0'));
+  useEffect(() => {
+    if (id) {
+      const foundProduct = allProducts.find(p => p.id === parseInt(id));
+      if (foundProduct) {
+        setProduct(foundProduct);
+        
+        // Get related products from the same category (up to 20)
+        const related = allProducts
+          .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
+          .slice(0, 19); // 19 + 1 (current product) = 20 total
+        
+        setRelatedProducts(related);
+      }
+    }
+  }, [id]);
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
 
   if (!product) {
     return (
       <div className="pt-24 pb-20">
         <div className="container-custom">
-          <div className="text-center py-16">
-            <h1 className="text-3xl font-bold mb-4">Product Not Found</h1>
-            <p className="text-gray-600 mb-8">The product you're looking for doesn't exist.</p>
+          <div className="text-center py-20">
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">Product Not Found</h1>
             <Link to="/products" className="btn btn-primary">
               Back to Products
             </Link>
@@ -1229,185 +2393,132 @@ const ProductDetailPage: React.FC = () => {
     );
   }
 
-  const handleInquirySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormSubmitted(true);
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setFormSubmitted(false);
-      setInquiryForm({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        quantity: '',
-        message: ''
-      });
-    }, 3000);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setInquiryForm(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const tabs = [
-    { id: 'overview', label: 'Overview', icon: <Info size={18} /> },
-    { id: 'specifications', label: 'Specifications', icon: <CheckCircle size={18} /> },
-    { id: 'applications', label: 'Applications', icon: <Package size={18} /> },
-    { id: 'safety', label: 'Safety & Storage', icon: <Shield size={18} /> }
-  ];
-
   return (
     <div className="pt-24 pb-20">
       {/* Breadcrumb */}
       <section className="bg-gray-50 py-4">
         <div className="container-custom">
           <div className="flex items-center space-x-2 text-sm">
-            <Link to="/" className="text-gray-500 hover:text-primary">Home</Link>
+            <Link to="/" className="text-gray-600 hover:text-primary">Home</Link>
             <span className="text-gray-400">/</span>
-            <Link to="/products" className="text-gray-500 hover:text-primary">Products</Link>
+            <Link to="/products" className="text-gray-600 hover:text-primary">Products</Link>
             <span className="text-gray-400">/</span>
             <span className="text-gray-800">{product.name}</span>
           </div>
         </div>
       </section>
 
-      {/* Product Header */}
-      <section className="py-8 bg-white">
+      {/* Product Details */}
+      <section className="py-16">
         <div className="container-custom">
-          <div className="flex items-center justify-between mb-6">
-            <Link 
-              to="/products" 
-              className="flex items-center text-primary hover:text-primary-dark transition-colors"
-            >
-              <ArrowLeft size={20} className="mr-2" />
-              Back to Products
-            </Link>
-            <div className="flex space-x-2">
-              <button className="p-2 border border-gray-300 rounded-md hover:bg-gray-50">
-                <Share2 size={18} />
-              </button>
-              <button className="p-2 border border-gray-300 rounded-md hover:bg-gray-50">
-                <Download size={18} />
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
             {/* Product Image */}
             <div>
-              <div className="bg-gray-100 rounded-lg overflow-hidden mb-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+              >
                 <img 
                   src={product.image} 
                   alt={product.name}
                   className="w-full h-96 object-cover"
                 />
-              </div>
-              {product.featured && (
-                <div className="flex items-center text-accent font-medium">
-                  <Star size={18} className="mr-1 fill-current" />
-                  Featured Product
-                </div>
-              )}
+              </motion.div>
             </div>
 
             {/* Product Info */}
             <div>
-              <div className="mb-4">
-                <span className="text-primary font-medium">{product.category}</span>
-                {product.hsCode && (
-                  <div className="text-sm text-gray-600 mt-1">
-                    HS Code: {product.hsCode} | CAS NO.: {product.casNumber}
-                  </div>
-                )}
-              </div>
-              
-              <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-              
-              {product.chemicalFormula && (
-                <div className="mb-4">
-                  <span className="text-sm font-medium text-gray-700">Chemical Formula: </span>
-                  <span className="text-sm text-gray-600">{product.chemicalFormula}</span>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div className="flex items-center space-x-2 mb-2">
+                  <span className="text-sm text-primary font-medium">{product.category}</span>
+                  {product.featured && (
+                    <span className="bg-accent/10 text-accent text-xs px-2 py-1 rounded-full font-medium">
+                      Featured
+                    </span>
+                  )}
                 </div>
-              )}
+                
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">{product.name}</h1>
+                <p className="text-lg text-gray-600 mb-6">{product.description}</p>
 
-              <p className="text-gray-600 mb-6 leading-relaxed">{product.description}</p>
+                {/* Key Information */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                  {product.chemicalFormula && (
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h3 className="font-semibold text-gray-800 mb-1">Chemical Formula</h3>
+                      <p className="text-gray-600">{product.chemicalFormula}</p>
+                    </div>
+                  )}
+                  {product.casNumber && (
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h3 className="font-semibold text-gray-800 mb-1">CAS Number</h3>
+                      <p className="text-gray-600">{product.casNumber}</p>
+                    </div>
+                  )}
+                  {product.purity && (
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h3 className="font-semibold text-gray-800 mb-1">Purity</h3>
+                      <p className="text-gray-600">{product.purity}</p>
+                    </div>
+                  )}
+                  {product.hsCode && (
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h3 className="font-semibold text-gray-800 mb-1">HS Code</h3>
+                      <p className="text-gray-600">{product.hsCode}</p>
+                    </div>
+                  )}
+                </div>
 
-              {/* Key Features */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center mb-2">
-                    <CheckCircle size={16} className="text-success mr-2" />
-                    <span className="font-medium">Purity</span>
+                {/* Trust Indicators */}
+                <div className="flex flex-wrap gap-4 mb-8">
+                  <div className="flex items-center">
+                    <ShieldCheck className="h-5 w-5 text-success mr-2" />
+                    <span className="text-sm text-gray-600">Quality Certified</span>
                   </div>
-                  <span className="text-sm text-gray-600">{product.purity}</span>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center mb-2">
-                    <Package size={16} className="text-primary mr-2" />
-                    <span className="font-medium">Appearance</span>
+                  <div className="flex items-center">
+                    <Truck className="h-5 w-5 text-primary mr-2" />
+                    <span className="text-sm text-gray-600">Fast Delivery</span>
                   </div>
-                  <span className="text-sm text-gray-600">{product.appearance}</span>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center mb-2">
-                    <Clock size={16} className="text-accent mr-2" />
-                    <span className="font-medium">Shelf Life</span>
+                  <div className="flex items-center">
+                    <Award className="h-5 w-5 text-accent mr-2" />
+                    <span className="text-sm text-gray-600">Industry Standard</span>
                   </div>
-                  <span className="text-sm text-gray-600">{product.shelfLife}</span>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center mb-2">
-                    <Shield size={16} className="text-secondary mr-2" />
-                    <span className="font-medium">Certifications</span>
-                  </div>
-                  <span className="text-sm text-gray-600">{product.certifications.join(', ')}</span>
-                </div>
-              </div>
 
-              {/* Quick Contact */}
-              <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
-                <h3 className="font-semibold mb-2">Need More Information?</h3>
-                <p className="text-sm text-gray-600 mb-3">Contact our product specialists for detailed specifications and pricing.</p>
-                <div className="flex space-x-3">
-                  <a href="tel:+919510691989" className="flex items-center text-primary hover:text-primary-dark">
-                    <Phone size={16} className="mr-1" />
-                    <span className="text-sm">Call Now</span>
-                  </a>
-                  <a href="mailto:vinayakenterprise2011@gmail.com" className="flex items-center text-primary hover:text-primary-dark">
-                    <Mail size={16} className="mr-1" />
-                    <span className="text-sm">Email Us</span>
-                  </a>
-                </div>
-              </div>
+                {/* CTA Button */}
+                <Link 
+                  to="/contact" 
+                  className="btn btn-primary px-8 py-3 rounded-md inline-flex items-center"
+                >
+                  Request Quote
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </motion.div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Product Details Tabs */}
-      <section className="py-12 bg-gray-50">
-        <div className="container-custom">
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          {/* Detailed Information Tabs */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
             {/* Tab Navigation */}
             <div className="border-b border-gray-200">
               <nav className="flex space-x-8 px-6">
-                {tabs.map((tab) => (
+                {['overview', 'specifications', 'applications', 'packaging', 'safety'].map((tab) => (
                   <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center space-x-2 py-4 border-b-2 font-medium text-sm transition-colors ${
-                      activeTab === tab.id
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`py-4 px-2 border-b-2 font-medium text-sm capitalize transition-colors ${
+                      activeTab === tab
                         ? 'border-primary text-primary'
-                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                     }`}
                   >
-                    {tab.icon}
-                    <span>{tab.label}</span>
+                    {tab}
                   </button>
                 ))}
               </nav>
@@ -1416,275 +2527,135 @@ const ProductDetailPage: React.FC = () => {
             {/* Tab Content */}
             <div className="p-6">
               {activeTab === 'overview' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="text-xl font-semibold mb-4">General Description</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">{product.description}</p>
-                  
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">Product Overview</h3>
+                  <p className="text-gray-600 mb-6">{product.description}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="font-semibold mb-3">Basic Properties</h4>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Chemical Formula:</span>
-                          <span className="font-medium">{product.chemicalFormula}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Molecular Weight:</span>
-                          <span className="font-medium">{product.molecularWeight}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Solubility:</span>
-                          <span className="font-medium">{product.solubility}</span>
-                        </div>
-                      </div>
+                      <h4 className="font-semibold mb-2">Category</h4>
+                      <p className="text-gray-600">{product.category}</p>
                     </div>
-                    
                     <div>
-                      <h4 className="font-semibold mb-3">Product Information</h4>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">HS Code:</span>
-                          <span className="font-medium">{product.hsCode}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">CAS Number:</span>
-                          <span className="font-medium">{product.casNumber}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">Category:</span>
-                          <span className="font-medium">{product.category}</span>
-                        </div>
-                      </div>
+                      <h4 className="font-semibold mb-2">Subcategory</h4>
+                      <p className="text-gray-600">{product.subcategory}</p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {activeTab === 'specifications' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
+                <div>
                   <h3 className="text-xl font-semibold mb-4">Technical Specifications</h3>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse border border-gray-300">
-                      <thead>
-                        <tr className="bg-gray-50">
-                          <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Parameter</th>
-                          <th className="border border-gray-300 px-4 py-2 text-left font-semibold">Specification</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Object.entries(product.specifications).map(([key, value]) => (
-                          <tr key={key}>
-                            <td className="border border-gray-300 px-4 py-2 text-gray-600">{key}</td>
-                            <td className="border border-gray-300 px-4 py-2 font-medium">{value}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {Object.entries(product.specifications).map(([key, value]) => (
+                      value && (
+                        <div key={key}>
+                          <h4 className="font-semibold mb-1 capitalize">{key.replace(/([A-Z])/g, ' $1')}</h4>
+                          <p className="text-gray-600">{value}</p>
+                        </div>
+                      )
+                    ))}
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {activeTab === 'applications' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="text-xl font-semibold mb-4">Applications & Usage</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold mb-3">Primary Applications</h4>
-                      <ul className="space-y-2">
-                        {product.applications.map((app, index) => (
-                          <li key={index} className="flex items-start">
-                            <CheckCircle size={16} className="text-success mt-0.5 mr-2 flex-shrink-0" />
-                            <span className="text-gray-600">{app}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-semibold mb-3">Packaging Options</h4>
-                      <ul className="space-y-2">
-                        {product.packaging.map((pack, index) => (
-                          <li key={index} className="flex items-start">
-                            <Package size={16} className="text-primary mt-0.5 mr-2 flex-shrink-0" />
-                            <span className="text-gray-600">{pack}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">Applications</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {product.applications.map((application, index) => (
+                      <div key={index} className="flex items-center">
+                        <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                        <span className="text-gray-600">{application}</span>
+                      </div>
+                    ))}
                   </div>
-                </motion.div>
+                </div>
+              )}
+
+              {activeTab === 'packaging' && (
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">Packaging Options</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {product.packaging.map((pack, index) => (
+                      <div key={index} className="bg-gray-50 p-4 rounded-lg text-center">
+                        <div className="text-primary font-semibold">{pack}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
 
               {activeTab === 'safety' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="text-xl font-semibold mb-4">Safety & Storage Information</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold mb-3 flex items-center">
-                        <AlertTriangle size={18} className="text-warning mr-2" />
-                        Safety Precautions
-                      </h4>
-                      <ul className="space-y-2">
-                        {product.safetyInfo.map((info, index) => (
-                          <li key={index} className="flex items-start">
-                            <Shield size={16} className="text-warning mt-0.5 mr-2 flex-shrink-0" />
-                            <span className="text-gray-600">{info}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-semibold mb-3">Storage Conditions</h4>
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <p className="text-gray-600 mb-2">{product.storageConditions}</p>
-                        <div className="text-sm text-gray-500">
-                          <strong>Shelf Life:</strong> {product.shelfLife}
-                        </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-4">Safety Information</h3>
+                  <div className="space-y-3">
+                    {product.safetyInfo.map((info, index) => (
+                      <div key={index} className="flex items-start">
+                        <ShieldCheck className="h-5 w-5 text-warning mr-3 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-600">{info}</span>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Inquiry Form */}
-      <section className="py-12 bg-white">
+      {/* Related Products */}
+      <section className="py-16 bg-gray-50">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">Request Information</h2>
-              <p className="text-gray-600">
-                Interested in this product? Fill out the form below and our team will get back to you with detailed information and pricing.
-              </p>
-            </div>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">More Products in {product.category}</h2>
+            <p className="text-xl text-gray-600">
+              Explore our complete range of {product.category.toLowerCase()} products
+            </p>
+          </div>
 
-            <div className="bg-gray-50 rounded-lg p-8">
-              {formSubmitted ? (
+          {relatedProducts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedProducts.map((relatedProduct) => (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-8"
+                  key={relatedProduct.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4 }}
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
-                  <CheckCircle size={48} className="text-success mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Thank You!</h3>
-                  <p className="text-gray-600">Your inquiry has been submitted successfully. We'll contact you soon.</p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleInquirySubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={inquiryForm.name}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={inquiryForm.email}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Phone
-                      </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={inquiryForm.phone}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Company
-                      </label>
-                      <input
-                        type="text"
-                        name="company"
-                        value={inquiryForm.company}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Required Quantity
-                    </label>
-                    <input
-                      type="text"
-                      name="quantity"
-                      value={inquiryForm.quantity}
-                      onChange={handleInputChange}
-                      placeholder="e.g., 100 kg, 1 ton"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  <div className="h-48 overflow-hidden">
+                    <img 
+                      src={relatedProduct.image} 
+                      alt={relatedProduct.name}
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                     />
                   </div>
-                  
-                  <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Message
-                    </label>
-                    <textarea
-                      name="message"
-                      value={inquiryForm.message}
-                      onChange={handleInputChange}
-                      rows={4}
-                      placeholder="Please provide details about your requirements..."
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                    ></textarea>
+                  <div className="p-4">
+                    <h3 className="font-semibold mb-2 line-clamp-2">{relatedProduct.name}</h3>
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">{relatedProduct.description}</p>
+                    <Link 
+                      to={`/products/${relatedProduct.id}`}
+                      className="text-primary font-medium inline-flex items-center hover:underline text-sm"
+                    >
+                      View Details
+                      <ArrowRight className="ml-1 h-3 w-3" />
+                    </Link>
                   </div>
-                  
-                  <button
-                    type="submit"
-                    className="w-full btn btn-primary flex items-center justify-center space-x-2 py-3"
-                  >
-                    <Send size={18} />
-                    <span>Send Inquiry</span>
-                  </button>
-                </form>
-              )}
+                </motion.div>
+              ))}
             </div>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-gray-600">No related products found.</p>
+            </div>
+          )}
+
+          <div className="text-center mt-12">
+            <Link to="/products" className="btn btn-primary px-8 py-3 rounded-md">
+              View All Products
+            </Link>
           </div>
         </div>
       </section>
