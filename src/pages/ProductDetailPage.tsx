@@ -2029,7 +2029,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 6,
       name: "Ferrous Sulphate",
-      category: "Cosmetic & Personal Care",
+      category: "Agriculture",
       subcategory: "Surfactants",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Anionic surfactant widely used in personal care and cleaning products.",
