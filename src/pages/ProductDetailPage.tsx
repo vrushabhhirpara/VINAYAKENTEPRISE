@@ -106,7 +106,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 103,
-      name: "Ethanol",
+      name: "Sodium Meta Bi Sulphite",
       category: "Industrial Solvents",
       subcategory: "Alcohols",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
