@@ -501,7 +501,7 @@ const ProductDetailPage: React.FC = () => {
       safetyInfo: ["Penetrates skin rapidly", "Generally low toxicity", "Store away from light"]
     },
 
-    // Personal Care (20 products)
+    // Cosmetic & Personal Care (20 products)
     {
       id: 2,
       name: "Sodium Lauryl Sulfate",
