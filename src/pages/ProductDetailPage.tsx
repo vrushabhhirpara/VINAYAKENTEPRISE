@@ -238,7 +238,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 109,
-      name: "Dichloromethane",
+      name: "Toluene Industrial Chemical",
       category: "Industrial Solvents",
       subcategory: "Chlorinated Solvents",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
