@@ -136,7 +136,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C3H8O",
       casNumber: "67-63-0",
-      hsCode: "2905.12.00",
+      hsCode: "29053200",
       purity: "99%",
       applications: ["Cleaning agent", "Disinfectant", "Solvent", "Dehydrating agent"],
       specifications: {
