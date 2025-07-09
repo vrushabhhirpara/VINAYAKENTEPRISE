@@ -480,7 +480,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 120,
-      name: "Dimethyl Sulfoxide",
+      name: "Titanium Dioxide Powder",
       category: "Industrial Solvents",
       subcategory: "Sulfur Compounds",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
