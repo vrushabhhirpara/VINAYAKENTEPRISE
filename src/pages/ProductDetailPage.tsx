@@ -202,7 +202,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C8H10",
       casNumber: "1330-20-7",
-      hsCode: "2902.41.00",
+      hsCode: "29161210",
       purity: "98%",
       applications: ["Paint thinner", "Printing inks", "Rubber production", "Leather processing"],
       specifications: {
