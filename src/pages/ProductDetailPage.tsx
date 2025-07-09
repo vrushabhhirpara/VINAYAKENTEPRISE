@@ -422,7 +422,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C4H10O",
       casNumber: "60-29-7",
-      hsCode: "2909.11.00",
+      hsCode: "28281010",
       purity: "99.5%",
       applications: ["Extraction solvent", "Laboratory reagent", "Chemical synthesis", "Anesthetic (historical)"],
       specifications: {
