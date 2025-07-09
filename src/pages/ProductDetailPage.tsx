@@ -444,7 +444,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C4H8O",
       casNumber: "109-99-9",
-      hsCode: "2932.20.00",
+      hsCode: "29152100",
       purity: "99%",
       applications: ["Polymer solvent", "Chemical synthesis", "Extraction medium", "Reaction solvent"],
       specifications: {
