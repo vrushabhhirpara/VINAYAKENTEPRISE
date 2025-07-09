@@ -334,7 +334,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C6H14",
       casNumber: "110-54-3",
-      hsCode: "2901.10.00",
+      hsCode: "29051620",
       purity: "95%",
       applications: ["Oil extraction", "Cleaning agent", "Adhesive production", "Laboratory reagent"],
       specifications: {
