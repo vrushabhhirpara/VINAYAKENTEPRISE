@@ -356,7 +356,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C7H16",
       casNumber: "142-82-5",
-      hsCode: "2901.10.00",
+      hsCode: "29153200",
       purity: "99%",
       applications: ["Laboratory standard", "Extraction solvent", "Fuel component", "Chemical synthesis"],
       specifications: {
