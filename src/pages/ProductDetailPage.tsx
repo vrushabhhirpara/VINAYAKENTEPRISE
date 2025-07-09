@@ -268,7 +268,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C4H8O2",
       casNumber: "141-78-6",
-      hsCode: "2915.31.00",
+      hsCode: "29141300",
       purity: "99%",
       applications: ["Paint solvent", "Nail polish", "Glue solvent", "Extraction medium"],
       specifications: {
