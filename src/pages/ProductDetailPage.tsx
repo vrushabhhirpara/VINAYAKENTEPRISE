@@ -616,7 +616,7 @@ const ProductDetailPage: React.FC = () => {
       id: 205,
       name: "Acid Slurry Labsa",
       category: "Cosmetic & Personal Care",
-      subcategory: "Surfactants",
+      subcategory: "",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Mild amphoteric surfactant for gentle cleansing products.",
       featured: false,
