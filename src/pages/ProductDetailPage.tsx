@@ -84,7 +84,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 102,
-      name: "Methanol",
+      name: "NP 4.5 Mole",
       category: "Industrial Solvents",
       subcategory: "Alcohols",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
