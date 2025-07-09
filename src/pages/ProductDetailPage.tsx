@@ -2049,9 +2049,9 @@ const ProductDetailPage: React.FC = () => {
       safetyInfo: ["Avoid inhalation", "Use in well-ventilated area", "Keep away from heat"]
     },
     {
-      id: 201,
-      name: "EDTA Disodium Salt",
-      category: "Cosmetic & Personal Care",
+      id: 111,
+      name: "Copper Sulphate Crystals",
+      category: "Agriculture",
       subcategory: "",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Versatile solvent and humectant for pharmaceutical and cosmetic applications.",
