@@ -504,7 +504,7 @@ const ProductDetailPage: React.FC = () => {
     // Cosmetic & Personal Care (20 products)
     {
       id: 2,
-      name: "Sodium Lauryl Sulfate",
+      name: "Phenoxyethanol Liquid",
       category: "Cosmetic & Personal Care",
       subcategory: "Surfactants",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
@@ -512,7 +512,7 @@ const ProductDetailPage: React.FC = () => {
       featured: true,
       chemicalFormula: "C12H25SO4Na",
       casNumber: "151-21-3",
-      hsCode: "3402.11.00",
+      hsCode: "29094910",
       purity: "95%",
       applications: ["Shampoos", "Toothpaste", "Detergents", "Industrial cleaners"],
       specifications: {
