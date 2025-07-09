@@ -378,7 +378,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "Mixed hydrocarbons",
       casNumber: "8052-41-3",
-      hsCode: "2710.12.00",
+      hsCode: "29126000",
       purity: "98%",
       applications: ["Paint thinner", "Degreasing", "Dry cleaning", "Metal cleaning"],
       specifications: {
