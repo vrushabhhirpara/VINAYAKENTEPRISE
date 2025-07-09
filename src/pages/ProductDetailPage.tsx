@@ -534,7 +534,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "H(OCH2CH2)nOH",
       casNumber: "25322-68-3",
-      hsCode: "3907.20.00",
+      hsCode: "29122100",
       purity: "99%",
       applications: ["Pharmaceutical formulations", "Cosmetic products", "Industrial solvents", "Food additives"],
       specifications: {
