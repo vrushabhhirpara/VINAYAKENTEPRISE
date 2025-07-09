@@ -526,7 +526,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 201,
-      name: "Polyethylene Glycol 400",
+      name: "EDTA Disodium Salt",
       category: "Cosmetic & Personal Care",
       subcategory: "Solvents",
       image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
