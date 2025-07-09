@@ -482,7 +482,7 @@ const ProductDetailPage: React.FC = () => {
       id: 120,
       name: "Titanium Dioxide Powder",
       category: "Industrial Solvents",
-      subcategory: "Sulfur Compounds",
+      subcategory: "",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Highly polar solvent with unique properties.",
       featured: false,
