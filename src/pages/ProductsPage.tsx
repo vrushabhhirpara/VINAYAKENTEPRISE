@@ -114,7 +114,7 @@ const ProductsPage: React.FC = () => {
       category: "",
       subcategory: "",
       image: "https://www.pcaplindia.com/images/banner5.jpg",
-      description: "We provide compassionate and professional home care services to help you or your loved ones maintain independence and quality of life in the comfort of your own home.",
+      description: "A website focused on agriculture can be used to showcase farm products, share farming techniques, or provide information about sustainable agriculture practices.",
       featured: false,
      },
   ];
