@@ -505,7 +505,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 2,
       name: "Sodium Lauryl Sulfate",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Surfactants",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Anionic surfactant widely used in personal care and cleaning products.",
@@ -527,7 +527,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 201,
       name: "Polyethylene Glycol 400",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Solvents",
       image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Versatile solvent and humectant for pharmaceutical and cosmetic applications.",
@@ -549,7 +549,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 202,
       name: "Glycerin",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Humectants",
       image: "https://5.imimg.com/data5/SELLER/Default/2023/10/351523658/UT/NP/JG/143402947/homecare-products.jpg",
       description: "Pure glycerin for cosmetic, pharmaceutical, and food applications.",
@@ -571,7 +571,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 203,
       name: "Cetyl Alcohol",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Fatty Alcohols",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Fatty alcohol used as emulsifier and thickener in cosmetics.",
@@ -593,7 +593,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 204,
       name: "Stearyl Alcohol",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Fatty Alcohols",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Long-chain fatty alcohol for cosmetic formulations.",
@@ -615,7 +615,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 205,
       name: "Cocamidopropyl Betaine",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Surfactants",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Mild amphoteric surfactant for gentle cleansing products.",
@@ -637,7 +637,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 206,
       name: "Sodium Laureth Sulfate",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Surfactants",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Milder alternative to SLS for personal care products.",
@@ -659,7 +659,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 207,
       name: "Propylene Glycol",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Solvents",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Versatile solvent and humectant for cosmetic applications.",
@@ -681,7 +681,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 208,
       name: "Butylene Glycol",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Solvents",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Multifunctional ingredient for skincare formulations.",
@@ -703,7 +703,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 209,
       name: "Hyaluronic Acid",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Active Ingredients",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "High molecular weight humectant for anti-aging products.",
@@ -725,7 +725,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 210,
       name: "Niacinamide",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Active Ingredients",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Vitamin B3 derivative for skincare applications.",
@@ -747,7 +747,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 211,
       name: "Retinol",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Active Ingredients",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Vitamin A for anti-aging and skin renewal products.",
@@ -769,7 +769,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 212,
       name: "Salicylic Acid",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Active Ingredients",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Beta hydroxy acid for exfoliating and acne treatments.",
@@ -791,7 +791,7 @@ const ProductDetailPage: React.FC = () => {
     {
       id: 213,
       name: "Lactic Acid",
-      category: "Personal Care",
+      category: "Cosmetic & Personal Care",
       subcategory: "Active Ingredients",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Alpha hydroxy acid for gentle exfoliation.",
