@@ -92,7 +92,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "CH3OH",
       casNumber: "67-56-1",
-      hsCode: "2905.11.00",
+      hsCode: "34021300",
       purity: "99.9%",
       applications: ["Solvent", "Fuel additive", "Chemical synthesis", "Antifreeze"],
       specifications: {
