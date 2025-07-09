@@ -488,7 +488,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C2H6OS",
       casNumber: "67-68-5",
-      hsCode: "2930.90.00",
+      hsCode: "28230010",
       purity: "99.9%",
       applications: ["Reaction solvent", "Cryoprotectant", "Pharmaceutical applications", "Electronics industry"],
       specifications: {
