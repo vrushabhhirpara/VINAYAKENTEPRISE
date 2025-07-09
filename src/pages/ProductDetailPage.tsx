@@ -246,7 +246,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "CH2Cl2",
       casNumber: "75-09-2",
-      hsCode: "2903.12.00",
+      hsCode: "29023000",
       purity: "99.5%",
       applications: ["Paint stripper", "Degreasing agent", "Extraction solvent", "Aerosol propellant"],
       specifications: {
