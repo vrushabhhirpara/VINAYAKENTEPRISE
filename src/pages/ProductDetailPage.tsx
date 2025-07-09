@@ -348,7 +348,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 114,
-      name: "Heptane",
+      name: "Vinayle Acrylate Monomer (VAM)",
       category: "Industrial Solvents",
       subcategory: "Aliphatics",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
