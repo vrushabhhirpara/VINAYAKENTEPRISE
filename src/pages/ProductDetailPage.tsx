@@ -458,7 +458,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 119,
-      name: "Dimethylformamide",
+      name: "Glacial Acetic Acid",
       category: "Industrial Solvents",
       subcategory: "Amides",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
