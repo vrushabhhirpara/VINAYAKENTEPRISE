@@ -414,7 +414,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 117,
-      name: "Diethyl Ether",
+      name: "Stable Bleaching Powder",
       category: "Industrial Solvents",
       subcategory: "Ethers",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
