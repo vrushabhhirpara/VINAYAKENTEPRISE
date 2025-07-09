@@ -578,7 +578,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C16H34O",
       casNumber: "36653-82-4",
-      hsCode: "2905.17.00",
+      hsCode: "3404",
       purity: "95%",
       applications: ["Cosmetic emulsifier", "Hair conditioner", "Skin cream", "Lotion thickener"],
       specifications: {
