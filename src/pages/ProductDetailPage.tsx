@@ -2027,7 +2027,7 @@ const ProductDetailPage: React.FC = () => {
     }
         // Agriculture (20 products)
     {
-      id: 6,
+      id: 10,
       name: "Ferrous Sulphate",
       category: "Agriculture",
       subcategory: "",
