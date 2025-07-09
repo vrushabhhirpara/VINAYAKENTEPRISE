@@ -312,7 +312,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C6H12",
       casNumber: "110-82-7",
-      hsCode: "2902.11.00",
+      hsCode: "39069040",
       purity: "99%",
       applications: ["Paint thinner", "Rubber cement", "Extraction solvent", "Chemical intermediate"],
       specifications: {
