@@ -38,255 +38,86 @@ const ProductsPage: React.FC = () => {
   const products: Product[] = [
     {
       id: 1,
-      name: "Nonylphenol Ethoxylate",
-      category: "Industrial Solvents",
+      name: "Industrial Solvents",
+      category: "",
       subcategory: "Surfactants",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Non-ionic surfactant used in industrial cleaning and textile processing.",
       featured: true,
-      chemicalFormula: "C15H24O(C2H4O)nH",
-      casNumber: "9016-45-9",
-      hsCode: "3402.13.00",
-      purity: "99%",
-      applications: ["Industrial cleaning", "Textile processing", "Paint formulations", "Agricultural chemicals"],
-      specifications: {
-        appearance: "Clear to pale yellow liquid",
-        solubility: "Soluble in water and organic solvents",
-        density: "1.02-1.06 g/cm³",
-        ph: "6.0-8.0"
-      },
-      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
-      safetyInfo: ["Wear protective equipment", "Avoid skin contact", "Store in cool, dry place"]
     },
     {
       id: 2,
-      name: "Sodium Lauryl Sulfate",
-      category: "Personal Care",
+      name: "Cosmetic & Personal Care",
+      category: "",
       subcategory: "Surfactants",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Anionic surfactant widely used in personal care and cleaning products.",
       featured: true,
-      chemicalFormula: "C12H25SO4Na",
-      casNumber: "151-21-3",
-      hsCode: "3402.11.00",
-      purity: "95%",
-      applications: ["Shampoos", "Toothpaste", "Detergents", "Industrial cleaners"],
-      specifications: {
-        appearance: "White crystalline powder",
-        solubility: "Easily soluble in water",
-        meltingPoint: "204-207°C",
-        ph: "7.0-9.5"
-      },
-      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
-      safetyInfo: ["Avoid inhalation", "Use in well-ventilated area", "Keep away from heat"]
     },
     {
       id: 3,
-      name: "Citric Acid Monohydrate",
-      category: "Food & Nutrition",
+      name: "Food & Nutrition",
+      category: "",
       subcategory: "Food Additives",
       image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Natural preservative and flavoring agent for food and beverage industry.",
       featured: true,
-      chemicalFormula: "C6H8O7·H2O",
-      casNumber: "5949-29-1",
-      hsCode: "2918.14.00",
-      purity: "99.5%",
-      applications: ["Food preservation", "Beverage acidulant", "Pharmaceutical excipient", "Cosmetic formulations"],
-      specifications: {
-        appearance: "White crystalline powder",
-        solubility: "Very soluble in water",
-        meltingPoint: "153°C",
-        ph: "1.85 (0.5% solution)"
-      },
-      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
-      safetyInfo: ["Food grade quality", "Store in dry conditions", "Avoid moisture"]
     },
     {
       id: 4,
-      name: "Titanium Dioxide",
-      category: "Paint, Ink & Coatings",
+      name: "Paint, Ink & Coatings",
+      category: "",
       subcategory: "Pigments",
       image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
       description: "High-quality white pigment for paints, coatings, and plastic applications.",
       featured: true,
-      chemicalFormula: "TiO2",
-      casNumber: "13463-67-7",
-      hsCode: "3206.11.00",
-      purity: "98%",
-      applications: ["Paint manufacturing", "Plastic coloring", "Paper coating", "Cosmetic formulations"],
-      specifications: {
-        appearance: "White powder",
-        solubility: "Insoluble in water",
-        meltingPoint: "1843°C",
-        density: "4.23 g/cm³"
-      },
-      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
-      safetyInfo: ["Avoid inhalation of dust", "Use respiratory protection", "Store in dry place"]
     },
     {
       id: 5,
-      name: "Calcium Carbonate",
-      category: "Cattle & Poultry Feed",
+      name: "Cattle & Poultry Feed",
+      category: "",
       subcategory: "Feed Additives",
       image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
       description: "Essential calcium supplement for animal nutrition and feed formulations.",
       featured: false,
-      chemicalFormula: "CaCO3",
-      casNumber: "471-34-1",
-      hsCode: "2836.50.00",
-      purity: "98.5%",
-      applications: ["Animal feed supplement", "Poultry nutrition", "Cattle feed", "Aquaculture"],
-      specifications: {
-        appearance: "White powder",
-        solubility: "Slightly soluble in water",
-        density: "2.71 g/cm³",
-        ph: "8.0-10.0"
-      },
-      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
-      safetyInfo: ["Feed grade quality", "Store in dry conditions", "Avoid contamination"]
-    },
-    {
-      id: 6,
-      name: "Polyethylene Glycol 400",
-      category: "Personal Care",
-      subcategory: "Solvents",
-      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Versatile solvent and humectant for pharmaceutical and cosmetic applications.",
-      featured: false,
-      chemicalFormula: "H(OCH2CH2)nOH",
-      casNumber: "25322-68-3",
-      hsCode: "3907.20.00",
-      purity: "99%",
-      applications: ["Pharmaceutical formulations", "Cosmetic products", "Industrial solvents", "Food additives"],
-      specifications: {
-        appearance: "Clear, colorless liquid",
-        solubility: "Miscible with water",
-        boilingPoint: "250°C",
-        density: "1.13 g/cm³"
-      },
-      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
-      safetyInfo: ["Generally recognized as safe", "Avoid prolonged skin contact", "Store at room temperature"]
     },
     {
       id: 7,
-      name: "Sodium Hydroxide",
-      category: "Industrial Solvents",
+      name: "Water Treatment",
+      category: "",
       subcategory: "Alkalis",
       image: "https://jkmchemtrade.com/upload/categories/4471230925113924.jpg",
-      description: "Strong alkali used in various industrial processes and water treatment.",
+      description: "Water treatment is a process that improves water quality by removing contaminants and undesirable components.",
       featured: false,
-      chemicalFormula: "NaOH",
-      casNumber: "1310-73-2",
-      hsCode: "2815.11.00",
-      purity: "99%",
-      applications: ["Water treatment", "Soap manufacturing", "Paper production", "Chemical processing"],
-      specifications: {
-        appearance: "White solid pellets",
-        solubility: "Highly soluble in water",
-        meltingPoint: "318°C",
-        density: "2.13 g/cm³"
-      },
-      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
-      safetyInfo: ["Highly corrosive", "Wear protective equipment", "Avoid contact with skin and eyes"]
     },
     {
       id: 8,
-      name: "Acetic Acid",
-      category: "Food & Nutrition",
+      name: "Textile Dyes",
+      category: "",
       subcategory: "Preservatives",
-      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      image: "https://content.jdmagicbox.com/comp/def_content_category/textile-auxiliary-dealers/4bdc0a53ed-textile-auxiliary-dealers-1-m5o87.jpg",
       description: "Food-grade acetic acid for preservation and flavoring applications.",
       featured: false,
-      chemicalFormula: "CH3COOH",
-      casNumber: "64-19-7",
-      hsCode: "2915.21.00",
-      purity: "99.5%",
-      applications: ["Food preservation", "Vinegar production", "Chemical synthesis", "Textile processing"],
-      specifications: {
-        appearance: "Clear, colorless liquid",
-        solubility: "Miscible with water",
-        boilingPoint: "118°C",
-        density: "1.05 g/cm³"
-      },
-      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
-      safetyInfo: ["Corrosive liquid", "Use in ventilated area", "Avoid inhalation of vapors"]
-    },
-    {
-      id: 9,
-      name: "Iron Oxide Red",
-      category: "Paint, Ink & Coatings",
-      subcategory: "Pigments",
-      image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
-      description: "High-quality red iron oxide pigment for paints and coatings.",
-      featured: false,
-      chemicalFormula: "Fe2O3",
-      casNumber: "1309-37-1",
-      hsCode: "2821.10.00",
-      purity: "95%",
-      applications: ["Paint coloring", "Concrete coloring", "Plastic pigmentation", "Ceramic glazes"],
-      specifications: {
-        appearance: "Red powder",
-        solubility: "Insoluble in water",
-        meltingPoint: "1565°C",
-        density: "5.24 g/cm³"
-      },
-      packaging: ["25kg bags", "500kg big bags", "1000kg big bags"],
-      safetyInfo: ["Avoid inhalation of dust", "Use dust mask", "Store in dry place"]
-    },
-    {
-      id: 10,
-      name: "Potassium Sorbate",
-      category: "Food & Nutrition",
-      subcategory: "Preservatives",
-      image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      description: "Effective food preservative with antimicrobial properties.",
-      featured: false,
-      chemicalFormula: "C6H7KO2",
-      casNumber: "24634-61-5",
-      hsCode: "2916.19.00",
-      purity: "99%",
-      applications: ["Food preservation", "Beverage preservation", "Cosmetic preservation", "Wine making"],
-      specifications: {
-        appearance: "White crystalline powder",
-        solubility: "Soluble in water",
-        meltingPoint: "270°C",
-        ph: "7.0-8.5"
-      },
-      packaging: ["25kg bags", "500kg big bags"],
-      safetyInfo: ["Food grade quality", "Store in cool, dry place", "Avoid moisture"]
     },
     {
       id: 11,
-      name: "Glycerin",
-      category: "Personal Care",
-      subcategory: "Humectants",
+      name: "Home Care",
+      category: "",
+      subcategory: "",
       image: "https://5.imimg.com/data5/SELLER/Default/2023/10/351523658/UT/NP/JG/143402947/homecare-products.jpg",
-      description: "Pure glycerin for cosmetic, pharmaceutical, and food applications.",
+      description: "We provide compassionate and professional home care services to help you or your loved ones maintain independence and quality of life in the comfort of your own home.",
       featured: false,
-      chemicalFormula: "C3H8O3",
-      casNumber: "56-81-5",
-      hsCode: "2905.45.00",
-      purity: "99.5%",
-      applications: ["Cosmetic formulations", "Pharmaceutical products", "Food additive", "Industrial applications"],
-      specifications: {
-        appearance: "Clear, colorless liquid",
-        solubility: "Miscible with water",
-        boilingPoint: "290°C",
-        density: "1.26 g/cm³"
-      },
-      packaging: ["200L drums", "1000L IBC", "Bulk tankers"],
-      safetyInfo: ["Generally recognized as safe", "Store at room temperature", "Avoid contamination"]
-    }
+    },
   ];
   
   const categories = [
     "All",
     "Cattle & Poultry Feed",
-    "Personal Care",
+    "Cosmetic & Personal Care",
     "Food & Nutrition",
     "Paint, Ink & Coatings",
     "Industrial Solvents"
+    "Home Care"
   ];
   
   // Filter products based on selected category and search query
