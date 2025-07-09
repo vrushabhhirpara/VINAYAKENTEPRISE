@@ -622,7 +622,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C19H38N2O3",
       casNumber: "61789-40-0",
-      hsCode: "3402.13.00",
+      hsCode: "3402",
       purity: "30% active",
       applications: ["Baby shampoo", "Facial cleansers", "Body wash", "Mild detergents"],
       specifications: {
