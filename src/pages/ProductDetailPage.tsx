@@ -260,7 +260,7 @@ const ProductDetailPage: React.FC = () => {
     },
     {
       id: 110,
-      name: "Ethyl Acetate",
+      name: "Methyl Iso Butyl Ketone",
       category: "Industrial Solvents",
       subcategory: "Esters",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
