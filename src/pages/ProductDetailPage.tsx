@@ -70,7 +70,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "NaOH",
       casNumber: "1310-73-2",
-      hsCode: "2815.11.00",
+      hsCode: "3823",
       purity: "99%",
       applications: ["Water treatment", "Soap manufacturing", "Paper production", "Chemical processing"],
       specifications: {
