@@ -290,7 +290,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C6H12O2",
       casNumber: "123-86-4",
-      hsCode: "2915.33.00",
+      hsCode: "28364000",
       purity: "99%",
       applications: ["Lacquer solvent", "Paint thinner", "Printing inks", "Adhesives"],
       specifications: {
