@@ -114,7 +114,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C2H5OH",
       casNumber: "64-17-5",
-      hsCode: "2207.10.00",
+      hsCode: "28321010",
       purity: "99.5%",
       applications: ["Solvent", "Disinfectant", "Chemical intermediate", "Fuel additive"],
       specifications: {
