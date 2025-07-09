@@ -35,7 +35,7 @@ const ProductDetailPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
-  // All products with 20 products per category
+  // All products with 40 products per category
   const allProducts: Product[] = [
     // Industrial Solvents (20 products)
     {
