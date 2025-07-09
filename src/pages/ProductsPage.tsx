@@ -108,6 +108,15 @@ const ProductsPage: React.FC = () => {
       description: "We provide compassionate and professional home care services to help you or your loved ones maintain independence and quality of life in the comfort of your own home.",
       featured: false,
     },
+    {
+      id: 11,
+      name: "Home Care",
+      category: "",
+      subcategory: "",
+      image: "https://5.imimg.com/data5/SELLER/Default/2023/10/351523658/UT/NP/JG/143402947/homecare-products.jpg",
+      description: "We provide compassionate and professional home care services to help you or your loved ones maintain independence and quality of life in the comfort of your own home.",
+      featured: false,
+     },
   ];
   
   const categories = [
