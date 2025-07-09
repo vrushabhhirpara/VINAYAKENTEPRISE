@@ -556,7 +556,7 @@ const ProductDetailPage: React.FC = () => {
       featured: false,
       chemicalFormula: "C3H8O3",
       casNumber: "56-81-5",
-      hsCode: "2905.45.00",
+      hsCode: "29182990",
       purity: "99.5%",
       applications: ["Cosmetic formulations", "Pharmaceutical products", "Food additive", "Industrial applications"],
       specifications: {
