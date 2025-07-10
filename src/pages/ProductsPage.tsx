@@ -39,93 +39,306 @@ const ProductsPage: React.FC = () => {
     {
       id: 1,
       name: "Industrial Solvents",
-      category: "",
+      category: "Industrial Products",
       subcategory: "Surfactants",
       image: "https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Non-ionic surfactant used in industrial cleaning and textile processing.",
       featured: true,
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "2909.00",
+      purity: "99%+",
+      applications: [
+        "Industrial cleaning",
+        "Paint thinning",
+        "Degreasing operations",
+        "Chemical synthesis",
+        "Extraction processes"
+      ],
+      specifications: {
+        appearance: "Clear liquid",
+        solubility: "Miscible with organic solvents",
+        boilingPoint: "Various ranges",
+        density: "0.8-1.2 g/cm³",
+        ph: "6.5-7.5"
+      },
+      packaging: ["25L drums", "200L drums", "1000L IBC tanks"],
+      safetyInfo: [
+        "Store in cool, dry place",
+        "Keep away from heat sources",
+        "Use proper ventilation",
+        "Wear protective equipment"
+      ]
     },
     {
       id: 2,
       name: "Cosmetic & Personal Care",
-      category: "",
+      category: "Personal Care",
       subcategory: "Surfactants",
       image: "https://cdn.shopify.com/s/files/1/0646/1551/4330/files/Importance_of_Personal_Care_Products_480x480.webp?v=1673811372",
       description: "Anionic surfactant widely used in personal care and cleaning products.",
       featured: true,
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "3304.00",
+      purity: "Cosmetic grade",
+      applications: [
+        "Skincare products",
+        "Hair care formulations",
+        "Makeup products",
+        "Personal hygiene items",
+        "Anti-aging treatments"
+      ],
+      specifications: {
+        appearance: "Various forms",
+        solubility: "Water/oil soluble variants",
+        ph: "5.5-7.0"
+      },
+      packaging: ["1kg containers", "5kg containers", "25kg drums"],
+      safetyInfo: [
+        "Cosmetic grade quality",
+        "Dermatologically tested",
+        "Store in controlled environment",
+        "Follow GMP guidelines"
+      ]
     },
     {
       id: 3,
       name: "Food & Nutrition",
-      category: "",
+      category: "Food & Beverage",
       subcategory: "Food Additives",
       image: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       description: "Natural preservative and flavoring agent for food and beverage industry.",
       featured: true,
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "2106.00",
+      purity: "Food grade",
+      applications: [
+        "Food preservation",
+        "Flavor enhancement",
+        "Nutritional fortification",
+        "Texture improvement",
+        "Color enhancement"
+      ],
+      specifications: {
+        appearance: "Various forms",
+        solubility: "Water soluble",
+        ph: "6.0-8.0"
+      },
+      packaging: ["1kg bags", "25kg bags", "500kg big bags"],
+      safetyInfo: [
+        "Food grade certified",
+        "HACCP compliant",
+        "Store in dry conditions",
+        "Follow food safety protocols"
+      ]
     },
     {
       id: 4,
       name: "Paint, Ink & Coatings",
-      category: "",
+      category: "Paint & Coatings",
       subcategory: "Pigments",
       image: "https://www.pciplindia.com/webfiles/Industry/Medium/30342020033427Paint_text.webp",
       description: "High-quality white pigment for paints, coatings, and plastic applications.",
       featured: true,
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "3206.00",
+      purity: "Industrial grade",
+      applications: [
+        "Architectural paints",
+        "Industrial coatings",
+        "Printing inks",
+        "Automotive paints",
+        "Marine coatings"
+      ],
+      specifications: {
+        appearance: "Powder/liquid",
+        solubility: "Various",
+        ph: "7.0-9.0"
+      },
+      packaging: ["25kg bags", "500kg big bags", "1000kg containers"],
+      safetyInfo: [
+        "Avoid dust inhalation",
+        "Use protective equipment",
+        "Store in dry place",
+        "Follow MSDS guidelines"
+      ]
     },
     {
       id: 5,
       name: "Cattle & Poultry Feed",
-      category: "",
+      category: "Animal Feed",
       subcategory: "Feed Additives",
       image: "https://www.unirayvet.com/public/Products/1Lagl7vwvL7aYAJwntvw3ZxI1T2kzv2iICc6enBQ.jpg",
       description: "Essential calcium supplement for animal nutrition and feed formulations.",
       featured: false,
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "2309.00",
+      purity: "Feed grade",
+      applications: [
+        "Cattle nutrition",
+        "Poultry feed",
+        "Swine nutrition",
+        "Aquaculture feed",
+        "Pet food"
+      ],
+      specifications: {
+        appearance: "Powder/granules",
+        solubility: "Water dispersible",
+        ph: "6.0-8.0"
+      },
+      packaging: ["25kg bags", "500kg big bags", "1000kg containers"],
+      safetyInfo: [
+        "Feed grade certified",
+        "Store in dry conditions",
+        "Prevent contamination",
+        "Follow feeding guidelines"
+      ]
     },
     {
       id: 7,
       name: "Water Treatment",
-      category: "",
-      subcategory: "Alkalis",
+      category: "Water Treatment",
+      subcategory: "Chemicals",
       image: "https://jkmchemtrade.com/upload/categories/4471230925113924.jpg",
       description: "Water treatment is a process that improves water quality by removing contaminants and undesirable components.",
       featured: false,
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "3824.00",
+      purity: "Technical grade",
+      applications: [
+        "Water purification",
+        "Wastewater treatment",
+        "Swimming pool treatment",
+        "Industrial water treatment",
+        "Drinking water treatment"
+      ],
+      specifications: {
+        appearance: "Powder/liquid",
+        solubility: "Water soluble",
+        ph: "Various"
+      },
+      packaging: ["25kg bags", "50kg drums", "1000kg IBC tanks"],
+      safetyInfo: [
+        "Handle with care",
+        "Use protective equipment",
+        "Store in cool, dry place",
+        "Follow safety protocols"
+      ]
     },
     {
       id: 8,
       name: "Textile Dyes",
-      category: "",
-      subcategory: "Preservatives",
+      category: "Textile",
+      subcategory: "Dyes & Chemicals",
       image: "https://content.jdmagicbox.com/comp/def_content_category/textile-auxiliary-dealers/4bdc0a53ed-textile-auxiliary-dealers-1-m5o87.jpg",
       description: "Food-grade acetic acid for preservation and flavoring applications.",
       featured: false,
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "3204.00",
+      purity: "Textile grade",
+      applications: [
+        "Fabric dyeing",
+        "Textile printing",
+        "Color fastness",
+        "Fabric finishing",
+        "Garment processing"
+      ],
+      specifications: {
+        appearance: "Powder/liquid",
+        solubility: "Water soluble",
+        ph: "6.0-8.0"
+      },
+      packaging: ["25kg drums", "200kg drums", "1000kg containers"],
+      safetyInfo: [
+        "Avoid skin contact",
+        "Use in well-ventilated area",
+        "Store away from light",
+        "Follow textile safety standards"
+      ]
     },
     {
       id: 9,
       name: "Home Care",
-      category: "",
-      subcategory: "",
+      category: "Home Care",
+      subcategory: "Cleaning Agents",
       image: "https://5.imimg.com/data5/SELLER/Default/2023/10/351523658/UT/NP/JG/143402947/homecare-products.jpg",
       description: "We provide compassionate and professional home care services to help you or your loved ones maintain independence and quality of life in the comfort of your own home.",
       featured: false,
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "3402.00",
+      purity: "Consumer grade",
+      applications: [
+        "Surface cleaning",
+        "Laundry care",
+        "Dishwashing",
+        "Floor cleaning",
+        "Bathroom cleaning"
+      ],
+      specifications: {
+        appearance: "Liquid/powder",
+        solubility: "Water soluble",
+        ph: "7.0-10.0"
+      },
+      packaging: ["500ml bottles", "1L bottles", "5L containers"],
+      safetyInfo: [
+        "Keep away from children",
+        "Use as directed",
+        "Store in cool place",
+        "Avoid mixing with other chemicals"
+      ]
     },
     {
       id: 10,
       name: "Agriculture",
-      category: "",
-      subcategory: "",
+      category: "Agriculture",
+      subcategory: "Fertilizers & Pesticides",
       image: "https://www.pcaplindia.com/images/banner5.jpg",
       description: "A website focused on agriculture can be used to showcase farm products, share farming techniques, or provide information about sustainable agriculture practices.",
       featured: false,
-     },
+      chemicalFormula: "Various",
+      casNumber: "Multiple",
+      hsCode: "3105.00",
+      purity: "Agricultural grade",
+      applications: [
+        "Crop nutrition",
+        "Pest control",
+        "Soil conditioning",
+        "Plant growth regulation",
+        "Harvest preservation"
+      ],
+      specifications: {
+        appearance: "Granules/powder",
+        solubility: "Water soluble",
+        ph: "6.0-8.0"
+      },
+      packaging: ["1kg bags", "25kg bags", "500kg big bags"],
+      safetyInfo: [
+        "Follow application guidelines",
+        "Use protective equipment",
+        "Store away from food",
+        "Observe pre-harvest intervals"
+      ]
+    }
   ];
   
   const categories = [
     "All",
-    "Cattle & Poultry Feed",
-    "Cosmetic & Personal Care",
+    "Animal Feed",
+    "Personal Care",
     "Food & Nutrition",
-    "Paint, Ink & Coatings",
-    "Industrial Solvents"
+    "Paint & Coatings",
+    "Industrial Products",
+    "Water Treatment",
+    "Textile",
+    "Home Care",
+    "Agriculture"
   ];
   
   // Filter products based on selected category and search query
